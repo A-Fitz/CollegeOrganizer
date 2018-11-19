@@ -17,7 +17,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="15dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -31,58 +32,66 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 app:columnCount="4"
+                app:orientation="vertical"
                 app:rowCount="2">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:baselineAligned="false"
                     android:orientation="horizontal"
                     app:layout_row="0">
 
                     <Button
-                        android:id="@+id/button_academic"
+                        android:id="@+id/button_data_academic"
                         android:layout_width="@dimen/main_button_width"
                         android:layout_height="@dimen/main_button_height"
                         android:text="Academic"
                         android:textAllCaps="false" />
 
                     <Button
-                        android:id="@+id/button_academic8"
+                        android:id="@+id/button_data_physical"
                         android:layout_width="@dimen/main_button_width"
                         android:layout_height="@dimen/main_button_height"
                         android:text="Physical Activity"
                         android:textAllCaps="false" />
 
                     <Button
-                        android:id="@+id/button_academic9"
                         android:layout_width="@dimen/main_button_width"
                         android:layout_height="@dimen/main_button_height"
-                        android:layout_weight="1"
-                        android:text="Physical Activity"
                         android:textAllCaps="false" />
 
                     <Button
-                        android:id="@+id/button_academic10"
                         android:layout_width="@dimen/main_button_width"
                         android:layout_height="@dimen/main_button_height"
-                        android:layout_weight="1"
-                        android:text="Physical Activity"
                         android:textAllCaps="false" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:baselineAligned="false"
                     android:orientation="horizontal"
                     app:layout_row="1">
 
                     <Button
-                        android:id="@+id/a"
                         android:layout_width="@dimen/main_button_width"
                         android:layout_height="@dimen/main_button_height"
-                        android:text="aaa"
+                        android:textAllCaps="false" />
+
+                    <Button
+                        android:layout_width="@dimen/main_button_width"
+                        android:layout_height="@dimen/main_button_height"
+                        android:textAllCaps="false" />
+
+                    <Button
+                        android:layout_width="@dimen/main_button_width"
+                        android:layout_height="@dimen/main_button_height"
+                        android:textAllCaps="false" />
+
+                    <Button
+                        android:layout_width="@dimen/main_button_width"
+                        android:layout_height="@dimen/main_button_height"
                         android:textAllCaps="false" />
 
                 </LinearLayout>
@@ -93,11 +102,9 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="50dp">
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Applets"
@@ -109,55 +116,76 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 app:columnCount="4"
+                app:orientation="vertical"
                 app:rowCount="2">
 
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Button" />
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    app:layout_row="0">
 
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button" />
+                    <Button
+                        android:layout_width="@dimen/main_button_width"
+                        android:layout_height="@dimen/main_button_height"
+                        android:textAllCaps="false" />
 
-                <Button
-                    android:id="@+id/button3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button" />
+                    <Button
+                        android:layout_width="@dimen/main_button_width"
+                        android:layout_height="@dimen/main_button_height"
+                        android:textAllCaps="false" />
 
-                <Button
-                    android:id="@+id/button4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button" />
+                    <Button
+                        android:layout_width="@dimen/main_button_width"
+                        android:layout_height="@dimen/main_button_height"
+                        android:layout_weight="1"
+                        android:textAllCaps="false" />
 
-                <Button
-                    android:id="@+id/button5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button" />
+                    <Button
+                        android:layout_width="@dimen/main_button_width"
+                        android:layout_height="@dimen/main_button_height"
+                        android:layout_weight="1"
+                        android:textAllCaps="false" />
+                </LinearLayout>
 
-                <Button
-                    android:id="@+id/button6"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Button" />
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    app:layout_row="1">
 
-                <Button
-                    android:id="@+id/button7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button" />
+                    <Button
+                        android:id="@+id/button9"
+                        android:layout_width="@dimen/main_button_width"
+                        android:layout_height="@dimen/main_button_height"
+                        android:layout_weight="1"
+                        android:textAllCaps="false" />
 
-                <Button
-                    android:id="@+id/button8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button" />
+                    <Button
+                        android:id="@+id/button10"
+                        android:layout_width="@dimen/main_button_width"
+                        android:layout_height="@dimen/main_button_height"
+                        android:layout_weight="1"
+                        android:textAllCaps="false" />
+
+                    <Button
+                        android:id="@+id/button11"
+                        android:layout_width="@dimen/main_button_width"
+                        android:layout_height="@dimen/main_button_height"
+                        android:layout_weight="1"
+                        android:textAllCaps="false" />
+
+                    <Button
+                        android:id="@+id/button12"
+                        android:layout_width="@dimen/main_button_width"
+                        android:layout_height="@dimen/main_button_height"
+                        android:layout_weight="1"
+                        android:textAllCaps="false" />
+
+                </LinearLayout>
+
             </android.support.v7.widget.GridLayout>
         </LinearLayout>
 
