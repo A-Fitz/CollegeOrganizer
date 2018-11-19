@@ -57,13 +57,17 @@
                         android:textAllCaps="false" />
 
                     <Button
+                        android:id="@+id/button_data_social"
                         android:layout_width="@dimen/main_button_width"
                         android:layout_height="@dimen/main_button_height"
+                        android:text="Social"
                         android:textAllCaps="false" />
 
                     <Button
+                        android:id="@+id/button_data_diet"
                         android:layout_width="@dimen/main_button_width"
                         android:layout_height="@dimen/main_button_height"
+                        android:text="Diet"
                         android:textAllCaps="false" />
                 </LinearLayout>
 
@@ -75,8 +79,17 @@
                     app:layout_row="1">
 
                     <Button
+                        android:id="@+id/button_data_sleep"
                         android:layout_width="@dimen/main_button_width"
                         android:layout_height="@dimen/main_button_height"
+                        android:text="Sleep"
+                        android:textAllCaps="false" />
+
+                    <Button
+                        android:id="@+id/button_data_mood"
+                        android:layout_width="@dimen/main_button_width"
+                        android:layout_height="@dimen/main_button_height"
+                        android:text="Mood"
                         android:textAllCaps="false" />
 
                     <Button
@@ -85,12 +98,6 @@
                         android:textAllCaps="false" />
 
                     <Button
-                        android:layout_width="@dimen/main_button_width"
-                        android:layout_height="@dimen/main_button_height"
-                        android:textAllCaps="false" />
-
-                    <Button
-                        android:id="@+id/button12"
                         android:layout_width="@dimen/main_button_width"
                         android:layout_height="@dimen/main_button_height"
                         android:textAllCaps="false" />
@@ -128,25 +135,33 @@
                     app:layout_row="0">
 
                     <Button
+                        android:id="@+id/button_applet_calendar"
                         android:layout_width="@dimen/main_button_width"
                         android:layout_height="@dimen/main_button_height"
+                        android:text="Calendar"
                         android:textAllCaps="false" />
 
                     <Button
+                        android:id="@+id/button_applet_academic"
                         android:layout_width="@dimen/main_button_width"
                         android:layout_height="@dimen/main_button_height"
+                        android:text="Academic"
                         android:textAllCaps="false" />
 
                     <Button
+                        android:id="@+id/button_applet_physical"
                         android:layout_width="@dimen/main_button_width"
                         android:layout_height="@dimen/main_button_height"
                         android:layout_weight="1"
+                        android:text="Physical Activity Scheduler"
                         android:textAllCaps="false" />
 
                     <Button
+                        android:id="@+id/button_applet_social"
                         android:layout_width="@dimen/main_button_width"
                         android:layout_height="@dimen/main_button_height"
                         android:layout_weight="1"
+                        android:text="Social Scheduler"
                         android:textAllCaps="false" />
                 </LinearLayout>
 
@@ -158,28 +173,30 @@
                     app:layout_row="1">
 
                     <Button
-                        android:id="@+id/button9"
+                        android:id="@+id/button_applet_diet"
                         android:layout_width="@dimen/main_button_width"
                         android:layout_height="@dimen/main_button_height"
                         android:layout_weight="1"
+                        android:text="Diet Recorder"
                         android:textAllCaps="false" />
 
                     <Button
-                        android:id="@+id/button10"
+                        android:id="@+id/button_applet_sleep"
                         android:layout_width="@dimen/main_button_width"
                         android:layout_height="@dimen/main_button_height"
                         android:layout_weight="1"
+                        android:text="Sleep Recorder"
                         android:textAllCaps="false" />
 
                     <Button
-                        android:id="@+id/button11"
+                        android:id="@+id/button_applet_mood"
                         android:layout_width="@dimen/main_button_width"
                         android:layout_height="@dimen/main_button_height"
                         android:layout_weight="1"
+                        android:text="Mood Recorder"
                         android:textAllCaps="false" />
 
                     <Button
-                        android:id="@+id/button12"
                         android:layout_width="@dimen/main_button_width"
                         android:layout_height="@dimen/main_button_height"
                         android:layout_weight="1"
