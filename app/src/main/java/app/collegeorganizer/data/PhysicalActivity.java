@@ -83,9 +83,10 @@ public class PhysicalActivity {
         String toRtr = "";
         for(String s : repeating)
         {
-            toRtr += s;
+            toRtr += s + "-";
         }
-        return toRtr;
+
+        return toRtr.substring(0, toRtr.length()-1);
     }
 
 }
