@@ -14,12 +14,12 @@ import app.collegeorganizer.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link GradeRecorder.OnFragmentInteractionListener} interface
+ * {@link Fragment_AcademicSchedule.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link GradeRecorder#newInstance} factory method to
+ * Use the {@link Fragment_AcademicSchedule#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GradeRecorder extends Fragment {
+public class Fragment_AcademicSchedule extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,7 +31,7 @@ public class GradeRecorder extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public GradeRecorder() {
+    public Fragment_AcademicSchedule() {
         // Required empty public constructor
     }
 
@@ -41,11 +41,11 @@ public class GradeRecorder extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment GradeRecorder.
+     * @return A new instance of fragment Fragment_AcademicSchedule.
      */
     // TODO: Rename and change types and number of parameters
-    public static GradeRecorder newInstance(String param1, String param2) {
-        GradeRecorder fragment = new GradeRecorder();
+    public static Fragment_AcademicSchedule newInstance(String param1, String param2) {
+        Fragment_AcademicSchedule fragment = new Fragment_AcademicSchedule();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,7 +66,7 @@ public class GradeRecorder extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_grade_recorder, container, false);
+        return inflater.inflate(R.layout.fragment_schedule, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
