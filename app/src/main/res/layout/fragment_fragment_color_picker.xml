@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.Fragment_ColorPicker">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:columnCount="3"
+        app:rowCount="4">
+
+        <Button
+            android:id="@+id/tomato"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@color/tomato" />
+
+        <Button
+            android:id="@+id/flamingo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@color/flamingo" />
+
+        <Button
+            android:id="@+id/tangerine"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@color/tangerine" />
+
+        <Button
+            android:id="@+id/banana"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@color/banana" />
+
+        <Button
+            android:id="@+id/sage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@color/sage" />
+
+        <Button
+            android:id="@+id/basil"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@color/basil" />
+
+        <Button
+            android:id="@+id/peacock"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@color/peacock" />
+
+        <Button
+            android:id="@+id/blueberry"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@color/blueberry" />
+
+        <Button
+            android:id="@+id/lavender"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@color/lavender" />
+
+        <Button
+            android:id="@+id/grape"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@color/grape" />
+
+        <Button
+            android:id="@+id/graphite"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@color/graphite" />
+    </android.support.v7.widget.GridLayout>
+</FrameLayout>
