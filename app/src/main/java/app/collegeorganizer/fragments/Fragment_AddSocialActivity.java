@@ -10,18 +10,14 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,27 +26,24 @@ import java.util.List;
 import app.collegeorganizer.OnColorChosenListener;
 import app.collegeorganizer.R;
 import app.collegeorganizer.activities.Activity_Main;
-import app.collegeorganizer.data.PhysicalActivity;
-import app.collegeorganizer.data.PhysicalActivityIntensity;
+import app.collegeorganizer.data.SocialEvent;
 
 @SuppressLint("NewApi")
-public class Fragment_EditPhysicalActivity extends DialogFragment {
-
-    private PhysicalActivity item;
+public class Fragment_AddSocialActivity extends DialogFragment {
 
     private String name;
     private Date time;
     private int color;
     private String details;
+    private String location;
     private List<String> repeating = new ArrayList<String>();
     private Date startDate;
     private Date endDate;
-    private PhysicalActivityIntensity intensity;
 
     private EditText edit_name;
     private EditText edit_time;
     private EditText edit_details;
-    private Spinner edit_intensity;
+    private EditText edit_location;
     private CheckBox edit_repeats;
     private EditText edit_startDate;
     private EditText edit_endDate;
@@ -63,99 +56,17 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
     private CheckBox edit_saturday;
     private Button color_button;
 
-    private ImageButton delete_button;
     private ImageButton cancel_button;
     private ImageButton save_button;
 
     private boolean isRepeating = false;
-    private Date temp_endDate;
     private Date temp_startDate;
+    private Date temp_endDate;
     private Date temp_time;
-    private int temp_color;
+    private int temp_color = 0;
 
-    String[] dropdown_intensity_items = { "Light", "Heavy" };
-
-    public static Fragment_EditPhysicalActivity newInstance() {
-        return new Fragment_EditPhysicalActivity();
-    }
-
-    private void getItemParts()
-    {
-        name = item.getName();
-        time = item.getTime();
-        color = item.getColor();
-        details = item.getDetails();
-        startDate = item.getStartDate();
-        intensity = item.getIntensity();
-        if(item.getRepeatingDays().length() != 0)
-            isRepeating = true;
-
-        if(isRepeating) {
-            repeating = item.getRepeating();
-            endDate = item.getEndDate();
-        }
-    }
-
-    public void setItem(PhysicalActivity item)
-    {
-        this.item = item;
-    }
-
-    private void setInitialValues()
-    {
-        edit_name.setText(name);
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        edit_time.setText(String.format(dateFormat.format(item.getTime())));
-        temp_time = item.getTime();
-        edit_details.setText(details);
-        dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        edit_startDate.setText(String.format(dateFormat.format(item.getStartDate())));
-        temp_startDate = item.getStartDate();
-        switch(intensity)
-        {
-            case LIGHT:
-                edit_intensity.setSelection(0);
-                break;
-            case HEAVY:
-                edit_intensity.setSelection(1);
-        }
-        edit_repeats.setChecked(isRepeating);
-        if(isRepeating)
-        {
-            changeRepeatBoxes();
-            dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-            edit_endDate.setText(String.format(dateFormat.format(item.getEndDate())));
-            temp_endDate = item.getEndDate();
-            for(String s : item.getRepeating())
-            {
-                switch(s)
-                {
-                    case "SU":
-                        edit_sunday.setChecked(true);
-                        break;
-                    case "M":
-                        edit_monday.setChecked(true);
-                        break;
-                    case "T":
-                        edit_tuesday.setChecked(true);
-                        break;
-                    case "W":
-                        edit_wednesday.setChecked(true);
-                        break;
-                    case "TH":
-                        edit_thursday.setChecked(true);
-                        break;
-                    case "F":
-                        edit_friday.setChecked(true);
-                        break;
-                    case "S":
-                        edit_saturday.setChecked(true);
-                        break;
-                }
-            }
-        }
-        temp_color = item.getColor();
-        color_button.setBackgroundColor(temp_color);
+    public static Fragment_AddSocialActivity newInstance() {
+        return new Fragment_AddSocialActivity();
     }
 
     @Override
@@ -170,15 +81,15 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_add_edit_physical_activity, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_edit_social_activity, container, false);
 
         edit_name = v.findViewById(R.id.textinput_name);
         edit_time = v.findViewById(R.id.textinput_time);
         edit_details = v.findViewById(R.id.textinput_details);
-        edit_intensity = v.findViewById(R.id.activity_intensity_dropdown);
+        edit_location = v.findViewById(R.id.textinput_location);
         edit_repeats = v.findViewById(R.id.repeats_checkbox);
-        edit_endDate = v.findViewById(R.id.endDate);
         edit_startDate = v.findViewById(R.id.startDate);
+        edit_endDate = v.findViewById(R.id.endDate);
         edit_sunday = v.findViewById(R.id.radio_sunday);
         edit_monday = v.findViewById(R.id.radio_monday);
         edit_tuesday = v.findViewById(R.id.radio_tuesday);
@@ -188,34 +99,24 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
         edit_saturday = v.findViewById(R.id.radio_saturday);
         color_button = v.findViewById(R.id.color_button);
 
-        delete_button = v.findViewById(R.id.delete_button);
         cancel_button = v.findViewById(R.id.cancel_button);
         save_button = v.findViewById(R.id.save_button);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, dropdown_intensity_items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        edit_intensity.setAdapter(adapter);
-
-        delete_button.setVisibility(View.VISIBLE);
-
-        getItemParts();
-        setInitialValues();
 
         return v;
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        edit_endDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePicker(false);
-            }
-        });
         edit_startDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePicker(true);
+            }
+        });
+        edit_endDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePicker(false);
             }
         });
         color_button.setOnClickListener(new View.OnClickListener() {
@@ -237,14 +138,6 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
                 changeRepeatBoxes();
             }
         });
-        delete_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //ask if sure TODO
-                Activity_Main.physicalActivityList.remove(item);
-                dismiss();
-            }
-        });
         cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -255,83 +148,65 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkInput())
-                {
+                if (checkInput()) {
                     name = edit_name.getText().toString();
                     time = temp_time;
                     details = edit_details.getText().toString();
-                    switch(edit_intensity.getSelectedItem().toString()) {
-                        case "Light":
-                            intensity = PhysicalActivityIntensity.LIGHT;
-                            break;
-                        case "Heavy":
-                            intensity = PhysicalActivityIntensity.HEAVY;
-                            break;
-                    }
+                    location = edit_location.getText().toString();
                     startDate = temp_startDate;
                     color = temp_color;
-                    PhysicalActivity py;
-                    if(isRepeating)
-                    {
-                        changeRepeatBoxes();
-                        if(repeating != null)
-                            repeating.clear();
-                        if(edit_sunday.isChecked())
+                    SocialEvent se;
+                    if (isRepeating) {
+                        if (edit_sunday.isChecked())
                             repeating.add("SU");
-                        if(edit_monday.isChecked())
+                        if (edit_monday.isChecked())
                             repeating.add("M");
-                        if(edit_tuesday.isChecked())
+                        if (edit_tuesday.isChecked())
                             repeating.add("T");
-                        if(edit_wednesday.isChecked())
+                        if (edit_wednesday.isChecked())
                             repeating.add("W");
-                        if(edit_thursday.isChecked())
+                        if (edit_thursday.isChecked())
                             repeating.add("TH");
-                        if(edit_friday.isChecked())
+                        if (edit_friday.isChecked())
                             repeating.add("F");
-                        if(edit_saturday.isChecked())
+                        if (edit_saturday.isChecked())
                             repeating.add("S");
 
                         endDate = temp_endDate;
-                        py = new PhysicalActivity(name, time, color, details, repeating, startDate, endDate, intensity);
+                        se = new SocialEvent(name, details, location, time, startDate, endDate, repeating, color);
                     } else
-                        py = new PhysicalActivity(name, time, color, details, startDate, intensity);
+                        se = new SocialEvent(name, details, location, time, startDate, color);
 
-                    int index = Activity_Main.physicalActivityList.indexOf(item);
-
-                    Activity_Main.physicalActivityList.set(index, py);
+                    Activity_Main.socialEventList.add(se);
 
                     dismiss();
-                } else
-                {
+                } else {
                     Toast.makeText(getContext(), "Please make sure all fields are filled. Repeating and details are optional.", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
     }
 
-    private boolean checkInput()
-    {
-        boolean mainFields = (!isEditTextEmpty(edit_name) && !isEditTextEmpty(edit_time) && !isEditTextEmpty(edit_startDate) && temp_color != 0);
+    private boolean checkInput() {
+        boolean mainFields = (!isEditTextEmpty(edit_name) && !isEditTextEmpty(edit_location) && !isEditTextEmpty(edit_time) && !isEditTextEmpty(edit_startDate) && temp_color != 0);
         boolean repeatingFields = isOneRepeatCheckBokChecked() && !isEditTextEmpty(edit_endDate);
-        if(!isRepeating)
+        if (!isRepeating)
             return mainFields;
         else
             return (mainFields && repeatingFields);
     }
 
-    private boolean isOneRepeatCheckBokChecked ()
-    {
+    private boolean isOneRepeatCheckBokChecked() {
         return (edit_sunday.isChecked() || edit_monday.isChecked() || edit_tuesday.isChecked() ||
                 edit_wednesday.isChecked() || edit_thursday.isChecked() || edit_friday.isChecked() || edit_saturday.isChecked());
     }
 
-    private boolean isEditTextEmpty(EditText et)
-    {
+    private boolean isEditTextEmpty(EditText et) {
         return (et.getText().toString().matches(""));
     }
 
-    private void changeRepeatBoxes()
-    {
+    private void changeRepeatBoxes() {
         edit_endDate.setEnabled(isRepeating);
         edit_sunday.setEnabled(isRepeating);
         edit_monday.setEnabled(isRepeating);
@@ -356,7 +231,7 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
         /**
          * Set Call back to capture selected date
          */
-        if(start_date)
+        if (start_date)
             date.setCallBack(start_date_listener);
         else
             date.setCallBack(end_date_listener);
@@ -388,25 +263,23 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
 
     DatePickerDialog.OnDateSetListener end_date_listener = new DatePickerDialog.OnDateSetListener() {
 
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
-        {
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             Calendar calendar = Calendar.getInstance();
             calendar.set(year, monthOfYear, dayOfMonth);
             temp_endDate = calendar.getTime();
 
-            edit_endDate.setText(String.valueOf(monthOfYear+1) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
+            edit_endDate.setText(String.valueOf(monthOfYear + 1) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
         }
     };
 
     DatePickerDialog.OnDateSetListener start_date_listener = new DatePickerDialog.OnDateSetListener() {
 
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
-        {
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             Calendar calendar = Calendar.getInstance();
             calendar.set(year, monthOfYear, dayOfMonth);
             temp_startDate = calendar.getTime();
 
-            edit_startDate.setText(String.valueOf(monthOfYear+1) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
+            edit_startDate.setText(String.valueOf(monthOfYear + 1) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
         }
     };
 
@@ -421,10 +294,9 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
 
     TimePickerDialog.OnTimeSetListener ontime = new TimePickerDialog.OnTimeSetListener() {
 
-        public void onTimeSet(TimePicker view, int hour, int minute)
-        {
+        public void onTimeSet(TimePicker view, int hour, int minute) {
             Calendar calendar = Calendar.getInstance();
-            calendar.set(0,0,0, hour, minute);
+            calendar.set(0, 0, 0, hour, minute);
             temp_time = calendar.getTime();
 
             edit_time.setText(String.format("%02d:%02d", hour, minute));
@@ -433,8 +305,7 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
 
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
