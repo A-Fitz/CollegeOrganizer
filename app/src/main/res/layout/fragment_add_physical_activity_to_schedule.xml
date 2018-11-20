@@ -46,8 +46,7 @@
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/add_physical_activity_textinput_height"
-            android:entries="Light, Heavy" />
+            android:layout_height="@dimen/add_physical_activity_textinput_height" />
 
         <EditText
             android:id="@+id/textinput_time"

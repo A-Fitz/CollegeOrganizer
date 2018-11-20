@@ -16,8 +16,6 @@ public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_add_physical_activity_to_schedule, container, false);
-        View tv = v.findViewById(R.id.text);
-        ((TextView)tv).setText("This is an instance of MyDialogFragment");
         return v;
     }
 }
