@@ -22,6 +22,9 @@ public class PhysicalSchedulerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 DialogFragment newFragment = Fragment_AddPhysicalActivityToSchedule.newInstance();
                 newFragment.show(getSupportFragmentManager(), "Add Physical Activity");
+                int width = getResources().getDimensionPixelSize(R.dimen.popup_width);
+                int height = getResources().getDimensionPixelSize(R.dimen.popup_height);
+                getDialog().getWindow().setLayout(width, height);
             }
         });
     }
