@@ -51,11 +51,16 @@ public class Activity_PhysicalActivityScheduler extends AppCompatActivity implem
             }
         });
 
-
+        refreshList();
     }
 
     @Override
     public void onDismiss(final DialogInterface dialog) {
+        refreshList();
+    }
+
+    private void refreshList()
+    {
         list.setAdapter(null);
         final ListView lv = (ListView) findViewById(R.id.physical_activity_schedule);
         lv.setAdapter(new PhysicalActivityAdapter(this, Activity_Main.physicalActivityList));

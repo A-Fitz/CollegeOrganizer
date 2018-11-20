@@ -63,6 +63,7 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
     private CheckBox edit_saturday;
     private Button color_button;
 
+    private ImageButton delete_button;
     private ImageButton cancel_button;
     private ImageButton save_button;
 
@@ -169,7 +170,7 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_add_physical_activity_to_schedule, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_edit_physical_activity, container, false);
 
         edit_name = (EditText) v.findViewById(R.id.textinput_name);
         edit_time = (EditText) v.findViewById(R.id.textinput_time);
@@ -187,12 +188,15 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
         edit_saturday = (CheckBox) v.findViewById(R.id.radio_saturday);
         color_button = (Button) v.findViewById(R.id.color_button);
 
+        delete_button = (ImageButton) v.findViewById(R.id.delete_button);
         cancel_button = (ImageButton) v.findViewById(R.id.cancel_button);
         save_button = (ImageButton) v.findViewById(R.id.save_button);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, dropdown_intensity_items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         edit_intensity.setAdapter(adapter);
+
+        delete_button.setVisibility(View.VISIBLE);
 
         getItemParts();
         setInitialValues();
@@ -233,11 +237,19 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
                 changeRepeatBoxes();
             }
         });
+        delete_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //ask if sure TODO
+                Activity_Main.physicalActivityList.remove(item);
+                dismiss();
+            }
+        });
         cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
                 //ask if sure TODO
+                dismiss();
             }
         });
         save_button.setOnClickListener(new View.OnClickListener() {

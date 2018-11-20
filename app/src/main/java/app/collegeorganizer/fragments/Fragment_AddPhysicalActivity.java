@@ -86,7 +86,7 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_add_physical_activity_to_schedule, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_edit_physical_activity, container, false);
 
         edit_name = (EditText) v.findViewById(R.id.textinput_name);
         edit_time = (EditText) v.findViewById(R.id.textinput_time);

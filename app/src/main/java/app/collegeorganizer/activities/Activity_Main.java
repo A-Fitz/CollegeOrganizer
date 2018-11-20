@@ -11,10 +11,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import app.collegeorganizer.R;
+import app.collegeorganizer.data.GoogleCalendarColors;
 import app.collegeorganizer.data.PhysicalActivity;
+import app.collegeorganizer.data.PhysicalActivityIntensity;
 
 public class Activity_Main extends AppCompatActivity {
     public static List<PhysicalActivity> physicalActivityList = new ArrayList<PhysicalActivity>();
@@ -42,6 +46,8 @@ public class Activity_Main extends AppCompatActivity {
                 Activity_Main.this.startActivity(myIntent);
             }
         });
+
+        addTestObjects();
     }
 
     @Override
@@ -72,6 +78,22 @@ public class Activity_Main extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addTestObjects()
+    {
+        Calendar calender = Calendar.getInstance();
+        GoogleCalendarColors googleCalendarColors = new GoogleCalendarColors();
+        physicalActivityList.add(new PhysicalActivity( "test1", calender.getTime(), googleCalendarColors.tomato, "test details1" , calender.getTime(), PhysicalActivityIntensity.LIGHT));
+        physicalActivityList.add(new PhysicalActivity( "test2", calender.getTime(), googleCalendarColors.grape, "test details2" , calender.getTime(), PhysicalActivityIntensity.LIGHT));
+
+        List<String> repeating = new ArrayList<String>();
+        Calendar calender2 = calender;
+        calender2.set(2009, 5, 19, 20, 14, 00);
+        repeating.add("M");
+        repeating.add("W");
+        repeating.add("F");
+        physicalActivityList.add(new PhysicalActivity( "test3", calender.getTime(), googleCalendarColors.blueberry, "test details3" , repeating, calender.getTime(), calender2.getTime(), PhysicalActivityIntensity.LIGHT));
     }
 
 }
