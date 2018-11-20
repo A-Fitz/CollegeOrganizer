@@ -54,7 +54,9 @@ public class PhysicalActivityAdapter extends BaseAdapter {
 
         holder.txtName.setText(searchArrayList.get(position).getName());
         holder.txtIntensity.setText(searchArrayList.get(position)
-                .getIntensity().toString().toLowerCase());
+                .getIntensity().toString().substring(0, 1).toUpperCase() + searchArrayList.get(position)
+                .getIntensity().toString().substring(1).toLowerCase());
+
         DateFormat dateFormat = new SimpleDateFormat("HH:mm");
         holder.txtTime.setText(String.format(dateFormat.format(searchArrayList.get(position).getTime())));
         holder.txtDays.setText(String.format(searchArrayList.get(position).getRepeatingDays()));

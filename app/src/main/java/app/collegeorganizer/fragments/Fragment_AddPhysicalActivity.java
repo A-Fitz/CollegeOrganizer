@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,7 +32,7 @@ import app.collegeorganizer.data.PhysicalActivity;
 import app.collegeorganizer.data.PhysicalActivityIntensity;
 
 @SuppressLint("NewApi")
-public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
+public class Fragment_AddPhysicalActivity extends DialogFragment {
 
     private String name;
     private Date time;
@@ -65,12 +66,12 @@ public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
     private Date temp_startDate;
     private Date temp_endDate;
     private Date temp_time;
-    private int temp_color;
+    private int temp_color = 0;
 
     String[] dropdown_intensity_items = { "Light", "Heavy" };
 
-    public static Fragment_AddPhysicalActivityToSchedule newInstance() {
-        return new Fragment_AddPhysicalActivityToSchedule();
+    public static Fragment_AddPhysicalActivity newInstance() {
+        return new Fragment_AddPhysicalActivity();
     }
 
     @Override
@@ -150,51 +151,81 @@ public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
             @Override
             public void onClick(View v) {
                 //ask if sure TODO
+                dismiss();
             }
         });
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO first check if values are not null
-                name = edit_name.getText().toString();
-                time = temp_time;
-                details = edit_details.getText().toString();
-                switch(edit_intensity.getSelectedItem().toString()) {
-                    case "Light":
-                        intensity = PhysicalActivityIntensity.LIGHT;
-                        break;
-                    case "Heavy":
-                        intensity = PhysicalActivityIntensity.HEAVY;
-                        break;
-                }
-                startDate = temp_startDate;
-                if(isRepeating)
+                if(checkInput())
                 {
-                    if(edit_sunday.isChecked())
-                        repeating.add("SU");
-                    if(edit_monday.isChecked())
-                        repeating.add("M");
-                    if(edit_tuesday.isChecked())
-                        repeating.add("T");
-                    if(edit_wednesday.isChecked())
-                        repeating.add("W");
-                    if(edit_thursday.isChecked())
-                        repeating.add("TH");
-                    if(edit_friday.isChecked())
-                        repeating.add("F");
-                    if(edit_saturday.isChecked())
-                        repeating.add("S");
+                    name = edit_name.getText().toString();
+                    time = temp_time;
+                    details = edit_details.getText().toString();
+                    switch(edit_intensity.getSelectedItem().toString()) {
+                        case "Light":
+                            intensity = PhysicalActivityIntensity.LIGHT;
+                            break;
+                        case "Heavy":
+                            intensity = PhysicalActivityIntensity.HEAVY;
+                            break;
+                    }
+                    startDate = temp_startDate;
+                    color = temp_color;
+                    PhysicalActivity py;
+                    if(isRepeating)
+                    {
+                        if(edit_sunday.isChecked())
+                            repeating.add("SU");
+                        if(edit_monday.isChecked())
+                            repeating.add("M");
+                        if(edit_tuesday.isChecked())
+                            repeating.add("T");
+                        if(edit_wednesday.isChecked())
+                            repeating.add("W");
+                        if(edit_thursday.isChecked())
+                            repeating.add("TH");
+                        if(edit_friday.isChecked())
+                            repeating.add("F");
+                        if(edit_saturday.isChecked())
+                            repeating.add("S");
 
-                    endDate = temp_endDate;
+                        endDate = temp_endDate;
+                        py = new PhysicalActivity(name, time, color, details, repeating, startDate, endDate, intensity);
+                    } else
+                        py = new PhysicalActivity(name, time, color, details, startDate, intensity);
+
+                    Activity_Main.physicalActivityList.add(py);
+
+                    dismiss();
+                } else
+                {
+                    Toast.makeText(getContext(), "Please make sure all fields are filled. Repeating is optional.", Toast.LENGTH_SHORT).show();
                 }
-                color = temp_color;
-
-                PhysicalActivity py = new PhysicalActivity(name, time, color, details, repeating, startDate, endDate, intensity);
-                Activity_Main.physicalActivityList.add(py);
-
-                dismiss();
+                
             }
         });
+    }
+
+    private boolean checkInput()
+    {
+        boolean mainFields = (!isEditTextEmpty(edit_name) && !isEditTextEmpty(edit_details) && !isEditTextEmpty(edit_time) && !isEditTextEmpty(edit_startDate) && temp_color != 0);
+        boolean repeatingFields = isOneRepeatCheckBokChecked() && !isEditTextEmpty(edit_endDate);
+        if(!isRepeating)
+            return mainFields;
+        else
+            return (mainFields && repeatingFields);
+    }
+
+    private boolean isOneRepeatCheckBokChecked ()
+    {
+        return (edit_sunday.isChecked() || edit_monday.isChecked() || edit_tuesday.isChecked() ||
+                edit_wednesday.isChecked() || edit_thursday.isChecked() || edit_friday.isChecked() || edit_saturday.isChecked());
+    }
+
+    private boolean isEditTextEmpty(EditText et)
+    {
+        return (et.getText().toString().matches(""));
     }
 
     private void changeRepeatBoxes()

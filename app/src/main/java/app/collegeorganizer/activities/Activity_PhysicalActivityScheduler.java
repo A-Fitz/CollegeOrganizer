@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import app.collegeorganizer.fragments.Fragment_AddPhysicalActivityToSchedule;
+import app.collegeorganizer.fragments.Fragment_AddPhysicalActivity;
 import app.collegeorganizer.fragments.Fragment_EditPhysicalActivity;
 import app.collegeorganizer.PhysicalActivityAdapter;
 import app.collegeorganizer.R;
@@ -35,7 +35,7 @@ public class Activity_PhysicalActivityScheduler extends AppCompatActivity implem
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragment newFragment = Fragment_AddPhysicalActivityToSchedule.newInstance();
+                DialogFragment newFragment = Fragment_AddPhysicalActivity.newInstance();
                 newFragment.show(getSupportFragmentManager(), "Add Physical Activity");
 
             }

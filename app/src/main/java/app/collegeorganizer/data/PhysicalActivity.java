@@ -13,6 +13,7 @@ public class PhysicalActivity {
     private Date endDate;
     private PhysicalActivityIntensity intensity;
 
+    //with repetition
     public PhysicalActivity(String name, Date time, int color, String details, List<String> repeating, Date startDate, Date endDate, PhysicalActivityIntensity intensity) {
         this.name = name;
         this.time = time;
@@ -21,6 +22,16 @@ public class PhysicalActivity {
         this.repeating = repeating;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.intensity = intensity;
+    }
+
+    //without repetition
+    public PhysicalActivity(String name, Date time, int color, String details, Date startDate, PhysicalActivityIntensity intensity) {
+        this.name = name;
+        this.time = time;
+        this.color = color;
+        this.details = details;
+        this.startDate = startDate;
         this.intensity = intensity;
     }
 
@@ -90,7 +101,7 @@ public class PhysicalActivity {
 
     public String getRepeatingDays()
     {
-        if(repeating.size() == 0)
+        if(repeating == null || repeating.size() == 0)
             return "";
         else
         {
