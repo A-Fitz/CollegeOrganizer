@@ -14,9 +14,13 @@ import android.widget.ActionMenuView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import app.collegeorganizer.data.PhysicalActivity;
 
 public class MainActivity extends AppCompatActivity {
+    public static List<PhysicalActivity> physicalActivityList = new ArrayList<PhysicalActivity>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

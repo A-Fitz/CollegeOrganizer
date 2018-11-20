@@ -3,4 +3,16 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="tomato">#d73f24</color>
+    <color name="flamingo">#e67c73</color>
+    <color name="tangerine">#ec4f29</color>
+    <color name="banana">#f6bf31</color>
+    <color name="sage">#5ab779</color>
+    <color name="basil">#3f8143</color>
+    <color name="peacock">#2f9ce5</color>
+    <color name="blueberry">#3f51b5</color>
+    <color name="lavender">#7986cb</color>
+    <color name="grape">#914aaa</color>
+    <color name="graphite">#616161</color>
 </resources>

@@ -1,28 +1,24 @@
 package app.collegeorganizer.data;
 
-import android.graphics.Color;
-
-import java.sql.Time;
-import java.time.DayOfWeek;
 import java.util.Date;
 import java.util.List;
 
 public class PhysicalActivity {
     private String name;
-    private Date date;
-    private Time time;
-    private Color color;
+    private Date time;
+    private int color;
     private String details;
-    private List<DayOfWeek> repeating;
+    private List<String> repeating;
+    private Date endDate;
     private PhysicalActivityIntensity intensity;
 
-    public PhysicalActivity(String name, Date date, Time time, Color color, String details, List<DayOfWeek> repeating, PhysicalActivityIntensity intensity) {
+    public PhysicalActivity(String name, Date time, int color, String details, List<String> repeating, Date endDate, PhysicalActivityIntensity intensity) {
         this.name = name;
-        this.date = date;
         this.time = time;
         this.color = color;
         this.details = details;
         this.repeating = repeating;
+        this.endDate = endDate;
         this.intensity = intensity;
     }
 
@@ -34,27 +30,19 @@ public class PhysicalActivity {
         this.name = name;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Time getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
-    public Color getColor() {
+    public int getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(int color) {
         this.color = color;
     }
 
@@ -66,12 +54,20 @@ public class PhysicalActivity {
         this.details = details;
     }
 
-    public List<DayOfWeek> getRepeating() {
+    public List<String> getRepeating() {
         return repeating;
     }
 
-    public void setRepeating(List<DayOfWeek> repeating) {
+    public void setRepeating(List<String> repeating) {
         this.repeating = repeating;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public PhysicalActivityIntensity getIntensity() {
@@ -81,4 +77,15 @@ public class PhysicalActivity {
     public void setIntensity(PhysicalActivityIntensity intensity) {
         this.intensity = intensity;
     }
+
+    public String getRepeatingDays()
+    {
+        String toRtr = "";
+        for(String s : repeating)
+        {
+            toRtr += s;
+        }
+        return toRtr;
+    }
+
 }

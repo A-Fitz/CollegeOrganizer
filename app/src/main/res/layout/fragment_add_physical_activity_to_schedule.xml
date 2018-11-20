@@ -8,29 +8,11 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/close_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:clickable="true"
-        android:src="@drawable/ic_close" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:clickable="true"
-        android:src="@drawable/ic_check" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="@dimen/default_gap">
+        android:padding="15dp">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -43,24 +25,13 @@
                 android:hint="Name" />
         </android.support.design.widget.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/add_physical_activity_textinput_height" />
-
         <EditText
             android:id="@+id/textinput_time"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="time" />
-
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="date" />
+            android:layout_height="@dimen/add_physical_activity_textinput_height"
+            android:clickable="true"
+            android:editable="false"
+            android:hint="Time" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -69,9 +40,137 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/textinput_details"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="@dimen/add_physical_activity_textinput_height"
                 android:hint="Details" />
 
         </android.support.design.widget.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/activity_intensity_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/add_physical_activity_textinput_height" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/repeats_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/add_physical_activity_textinput_height"
+                android:layout_weight="1"
+                android:text="Repeats?" />
+
+            <EditText
+                android:id="@+id/endDate"
+                android:layout_width="200dp"
+                android:layout_height="@dimen/add_physical_activity_textinput_height"
+                android:clickable="true"
+                android:editable="false"
+                android:enabled="false"
+                android:hint="End Date" />
+
+        </LinearLayout>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/add_physical_activity_textinput_height"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/radio_sunday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:singleLine="true"
+                android:text="S" />
+
+            <CheckBox
+                android:id="@+id/radio_monday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:singleLine="true"
+                android:text="M" />
+
+            <CheckBox
+                android:id="@+id/radio_tuesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:singleLine="true"
+                android:text="T" />
+
+            <CheckBox
+                android:id="@+id/radio_wednesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:singleLine="true"
+                android:text="W" />
+
+            <CheckBox
+                android:id="@+id/radio_thursday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:singleLine="true"
+                android:text="T" />
+
+            <CheckBox
+                android:id="@+id/radio_friday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:singleLine="true"
+                android:text="F" />
+
+            <CheckBox
+                android:id="@+id/radio_saturday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:singleLine="true"
+                android:text="S" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/color_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Color"
+            android:textAllCaps="false" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/cancel_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_close" />
+
+            <ImageButton
+                android:id="@+id/save_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_check" />
+        </LinearLayout>
     </LinearLayout>
+
 </FrameLayout>
