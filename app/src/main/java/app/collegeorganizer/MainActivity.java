@@ -11,7 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ActionMenuView;
+import android.widget.Button;
 import android.widget.Toast;
+
+import app.collegeorganizer.data.PhysicalActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +26,21 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("College Organizer");
         //getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        final Button button_data_academic = findViewById(R.id.button_data_academic);
+        button_data_academic.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+            }
+        });
+
+        final Button button_data_physical = findViewById(R.id.button_data_physical);
+        button_data_physical.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent myIntent = new Intent(MainActivity.this, PhysicalSchedulerActivity.class);
+                MainActivity.this.startActivity(myIntent);
+            }
+        });
     }
 
     @Override
@@ -31,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
