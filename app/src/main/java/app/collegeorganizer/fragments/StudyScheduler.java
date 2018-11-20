@@ -14,12 +14,12 @@ import app.collegeorganizer.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Fragment_StudySchedule.OnFragmentInteractionListener} interface
+ * {@link StudyScheduler.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Fragment_StudySchedule#newInstance} factory method to
+ * Use the {@link StudyScheduler#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_StudySchedule extends Fragment {
+public class StudyScheduler extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,7 +31,7 @@ public class Fragment_StudySchedule extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public Fragment_StudySchedule() {
+    public StudyScheduler() {
         // Required empty public constructor
     }
 
@@ -41,11 +41,11 @@ public class Fragment_StudySchedule extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_StudySchedule.
+     * @return A new instance of fragment StudyScheduler.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_StudySchedule newInstance(String param1, String param2) {
-        Fragment_StudySchedule fragment = new Fragment_StudySchedule();
+    public static StudyScheduler newInstance(String param1, String param2) {
+        StudyScheduler fragment = new StudyScheduler();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
