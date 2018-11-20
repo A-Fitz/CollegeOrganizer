@@ -1,4 +1,4 @@
-package app.collegeorganizer;
+package app.collegeorganizer.activities;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -21,6 +21,8 @@ import android.view.MenuItem;
 
 import java.util.List;
 
+import app.collegeorganizer.R;
+
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
  * handset devices, settings are presented as a single list. On tablets,
@@ -32,7 +34,7 @@ import java.util.List;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class SettingsActivity extends AppCompatPreferenceActivity {
+public class Activity_Settings extends Activity_AppCompatPreference {
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -185,7 +187,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                startActivity(new Intent(getActivity(), Activity_Settings.class));
                 return true;
             }
             return super.onOptionsItemSelected(item);
@@ -215,7 +217,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                startActivity(new Intent(getActivity(), Activity_Settings.class));
                 return true;
             }
             return super.onOptionsItemSelected(item);
@@ -245,7 +247,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                startActivity(new Intent(getActivity(), Activity_Settings.class));
                 return true;
             }
             return super.onOptionsItemSelected(item);

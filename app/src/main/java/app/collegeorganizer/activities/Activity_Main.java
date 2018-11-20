@@ -1,25 +1,22 @@
-package app.collegeorganizer;
+package app.collegeorganizer.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ActionMenuView;
 import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import app.collegeorganizer.R;
 import app.collegeorganizer.data.PhysicalActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class Activity_Main extends AppCompatActivity {
     public static List<PhysicalActivity> physicalActivityList = new ArrayList<PhysicalActivity>();
 
     @Override
@@ -41,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         final Button button_data_physical = findViewById(R.id.button_data_physical);
         button_data_physical.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, PhysicalSchedulerActivity.class);
-                MainActivity.this.startActivity(myIntent);
+                Intent myIntent = new Intent(Activity_Main.this, Activity_PhysicalActivityScheduler.class);
+                Activity_Main.this.startActivity(myIntent);
             }
         });
     }
@@ -64,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
         switch(id) {
             case R.id.action_settings: {
-                Intent myIntent = new Intent(MainActivity.this, SettingsActivity.class);
-                MainActivity.this.startActivity(myIntent);
+                Intent myIntent = new Intent(Activity_Main.this, Activity_Settings.class);
+                Activity_Main.this.startActivity(myIntent);
                 return true;
             }
             case R.id.action_moveicons: {

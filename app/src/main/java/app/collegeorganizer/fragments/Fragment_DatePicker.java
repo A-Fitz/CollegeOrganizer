@@ -1,4 +1,4 @@
-package app.collegeorganizer;
+package app.collegeorganizer.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -6,11 +6,11 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
-public class DatePickerFragment extends DialogFragment {
+public class Fragment_DatePicker extends DialogFragment {
     DatePickerDialog.OnDateSetListener ondateSet;
     private int year, month, day;
 
-    public DatePickerFragment() {}
+    public Fragment_DatePicker() {}
 
     public void setCallBack(DatePickerDialog.OnDateSetListener ondate) {
         ondateSet = ondate;

@@ -80,13 +80,18 @@ public class PhysicalActivity {
 
     public String getRepeatingDays()
     {
-        String toRtr = "";
-        for(String s : repeating)
+        if(repeating.size() == 0)
+            return "";
+        else
         {
-            toRtr += s + "-";
-        }
+            String toRtr = "";
+            for(String s : repeating)
+            {
+                toRtr += s + "-";
+            }
 
-        return toRtr.substring(0, toRtr.length()-1);
+            return toRtr.substring(0, toRtr.length()-1);
+        }
     }
 
 }

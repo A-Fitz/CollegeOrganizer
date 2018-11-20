@@ -1,4 +1,4 @@
-package app.collegeorganizer;
+package app.collegeorganizer.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -19,12 +19,14 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
-import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import app.collegeorganizer.OnColorChosenListener;
+import app.collegeorganizer.R;
+import app.collegeorganizer.activities.Activity_Main;
 import app.collegeorganizer.data.PhysicalActivity;
 import app.collegeorganizer.data.PhysicalActivityIntensity;
 
@@ -64,7 +66,7 @@ public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
 
     String[] dropdown_intensity_items = { "Light", "Heavy" };
 
-    static Fragment_AddPhysicalActivityToSchedule newInstance() {
+    public static Fragment_AddPhysicalActivityToSchedule newInstance() {
         return new Fragment_AddPhysicalActivityToSchedule();
     }
 
@@ -177,7 +179,7 @@ public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
                 color = temp_color;
 
                 PhysicalActivity py = new PhysicalActivity(name, time, color, details, repeating, endDate, intensity);
-                MainActivity.physicalActivityList.add(py);
+                Activity_Main.physicalActivityList.add(py);
 
                 dismiss();
             }
@@ -197,7 +199,7 @@ public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
     }
 
     private void showDatePicker() {
-        DatePickerFragment date = new DatePickerFragment();
+        Fragment_DatePicker date = new Fragment_DatePicker();
         /**
          * Set Up Current Date Into dialog
          */
@@ -215,13 +217,13 @@ public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
     }
 
     private void showColorPicker() {
-        fragment_color_picker color_picker = new fragment_color_picker();
+        Fragment_ColorPicker color_picker = new Fragment_ColorPicker();
         color_picker.show(getFragmentManager(), "Color Picker");
         color_picker.DismissListener(color_picker_closeListener);
     }
 
     private void showTimePicker() {
-        TimePickerFragment time = new TimePickerFragment();
+        Fragment_TimePicker time = new Fragment_TimePicker();
         /**
          * Set Up Current Date Into dialog
          */

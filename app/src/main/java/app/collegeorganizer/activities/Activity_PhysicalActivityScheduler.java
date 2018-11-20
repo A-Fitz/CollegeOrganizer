@@ -1,7 +1,6 @@
-package app.collegeorganizer;
+package app.collegeorganizer.activities;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
@@ -11,10 +10,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import app.collegeorganizer.fragments.Fragment_AddPhysicalActivityToSchedule;
+import app.collegeorganizer.fragments.Fragment_EditPhysicalActivity;
+import app.collegeorganizer.PhysicalActivityAdapter;
+import app.collegeorganizer.R;
 import app.collegeorganizer.data.PhysicalActivity;
 
 
-public class PhysicalSchedulerActivity extends AppCompatActivity implements DialogInterface.OnDismissListener {
+public class Activity_PhysicalActivityScheduler extends AppCompatActivity implements DialogInterface.OnDismissListener {
 
     private ListView list;
 
@@ -55,7 +58,7 @@ public class PhysicalSchedulerActivity extends AppCompatActivity implements Dial
     public void onDismiss(final DialogInterface dialog) {
         list.setAdapter(null);
         final ListView lv = (ListView) findViewById(R.id.physical_activity_schedule);
-        lv.setAdapter(new PhysicalActivityAdapter(this, MainActivity.physicalActivityList));
+        lv.setAdapter(new PhysicalActivityAdapter(this, Activity_Main.physicalActivityList));
     }
 
 }

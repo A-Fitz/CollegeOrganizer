@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.Activity_Main"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -20,10 +20,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name=".activities.Activity_Settings"
             android:label="@string/title_activity_settings" />
         <activity
-            android:name=".PhysicalSchedulerActivity"
+            android:name=".activities.Activity_PhysicalActivityScheduler"
             android:label="@string/title_activity_physical_scheduler"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

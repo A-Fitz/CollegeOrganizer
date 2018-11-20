@@ -1,4 +1,4 @@
-package app.collegeorganizer;
+package app.collegeorganizer.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -7,11 +7,11 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
-public class TimePickerFragment extends DialogFragment {
+public class Fragment_TimePicker extends DialogFragment {
     TimePickerDialog.OnTimeSetListener ontimeset;
     private int hour, minute;
 
-    public TimePickerFragment() {}
+    public Fragment_TimePicker() {}
 
     public void setCallBack(TimePickerDialog.OnTimeSetListener ontime) {
         ontimeset = ontime;

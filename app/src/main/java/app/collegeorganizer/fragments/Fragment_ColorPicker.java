@@ -1,4 +1,4 @@
-package app.collegeorganizer;
+package app.collegeorganizer.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -14,9 +14,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import app.collegeorganizer.OnColorChosenListener;
+import app.collegeorganizer.R;
 import app.collegeorganizer.data.GoogleCalendarColors;
 
-public class fragment_color_picker extends DialogFragment {
+public class Fragment_ColorPicker extends DialogFragment {
     private OnColorChosenListener onColorChosenListener;
     private int color;
     private GoogleCalendarColors goog_colors = new GoogleCalendarColors();
