@@ -41,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.startActivity(myIntent);
             }
         });
+
+        final Button button_applet_academic = findViewById(R.id.button_applet_academic);
+        button_applet_academic.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent myIntent = new Intent(MainActivity.this, AcademicActivity.class);
+                MainActivity.this.startActivity(myIntent);
+            }
+        });
     }
 
     @Override

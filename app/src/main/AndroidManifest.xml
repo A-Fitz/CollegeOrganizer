@@ -25,6 +25,10 @@
         <activity
             android:name=".PhysicalSchedulerActivity"
             android:label="@string/title_activity_physical_scheduler"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AcademicActivity"
+            android:label="@string/title_activity_academic"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
