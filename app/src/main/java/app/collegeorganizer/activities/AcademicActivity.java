@@ -1,4 +1,4 @@
-package app.collegeorganizer;
+package app.collegeorganizer.activities;
 
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+
+import app.collegeorganizer.R;
 
 public class AcademicActivity extends AppCompatActivity {
 
