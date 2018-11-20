@@ -3,16 +3,17 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:paddingBottom="10dip"
     android:paddingLeft="10dip"
-    android:paddingTop="10dip" >
+    android:paddingTop="10dip"
+    android:paddingRight="10dip"
+    android:paddingBottom="10dip">
 
     <TextView
         android:id="@+id/list_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="name "
-        android:textColor="@color/colorAccent"
+        android:textColor="@android:color/white"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -25,21 +26,24 @@
             android:id="@+id/list_item_intensity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="left" />
+            android:gravity="left"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/list_item_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:gravity="center_horizontal" />
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/white"/>
 
         <TextView
             android:id="@+id/list_item_days"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:gravity="right" />
+            android:gravity="right"
+            android:textColor="@android:color/white"/>
     </LinearLayout>
 
 </LinearLayout>

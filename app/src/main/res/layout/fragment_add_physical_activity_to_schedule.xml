@@ -50,6 +50,15 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/add_physical_activity_textinput_height" />
 
+        <EditText
+            android:id="@+id/startDate"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/add_physical_activity_textinput_height"
+            android:clickable="true"
+            android:editable="false"
+            android:enabled="true"
+            android:hint="Start Date" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

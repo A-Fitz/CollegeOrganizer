@@ -9,17 +9,27 @@ public class PhysicalActivity {
     private int color;
     private String details;
     private List<String> repeating;
+    private Date startDate;
     private Date endDate;
     private PhysicalActivityIntensity intensity;
 
-    public PhysicalActivity(String name, Date time, int color, String details, List<String> repeating, Date endDate, PhysicalActivityIntensity intensity) {
+    public PhysicalActivity(String name, Date time, int color, String details, List<String> repeating, Date startDate, Date endDate, PhysicalActivityIntensity intensity) {
         this.name = name;
         this.time = time;
         this.color = color;
         this.details = details;
         this.repeating = repeating;
+        this.startDate = startDate;
         this.endDate = endDate;
         this.intensity = intensity;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     public String getName() {

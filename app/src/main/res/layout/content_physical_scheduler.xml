@@ -12,6 +12,7 @@
         android:id="@+id/physical_activity_schedule"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="10dp"
         android:scrollbars="vertical">
 
     </ListView>

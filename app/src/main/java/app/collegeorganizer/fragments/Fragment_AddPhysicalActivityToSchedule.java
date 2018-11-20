@@ -38,6 +38,7 @@ public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
     private int color;
     private String details;
     private List<String> repeating = new ArrayList<String>();
+    private Date startDate;
     private Date endDate;
     private PhysicalActivityIntensity intensity;
 
@@ -46,6 +47,7 @@ public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
     private EditText edit_details;
     private Spinner edit_intensity;
     private CheckBox edit_repeats;
+    private EditText edit_startDate;
     private EditText edit_endDate;
     private CheckBox edit_sunday;
     private CheckBox edit_monday;
@@ -60,6 +62,7 @@ public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
     private ImageButton save_button;
 
     private boolean isRepeating = false;
+    private Date temp_startDate;
     private Date temp_endDate;
     private Date temp_time;
     private int temp_color;
@@ -89,6 +92,7 @@ public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
         edit_details = (EditText) v.findViewById(R.id.textinput_details);
         edit_intensity = (Spinner) v.findViewById(R.id.activity_intensity_dropdown);
         edit_repeats = (CheckBox) v.findViewById(R.id.repeats_checkbox);
+        edit_startDate = (EditText) v.findViewById(R.id.startDate);
         edit_endDate = (EditText) v.findViewById(R.id.endDate);
         edit_sunday = (CheckBox) v.findViewById(R.id.radio_sunday);
         edit_monday = (CheckBox) v.findViewById(R.id.radio_monday);
@@ -111,10 +115,16 @@ public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        edit_startDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePicker(true);
+            }
+        });
         edit_endDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDatePicker();
+                showDatePicker(false);
             }
         });
         color_button.setOnClickListener(new View.OnClickListener() {
@@ -157,6 +167,7 @@ public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
                         intensity = PhysicalActivityIntensity.HEAVY;
                         break;
                 }
+                startDate = temp_startDate;
                 if(isRepeating)
                 {
                     if(edit_sunday.isChecked())
@@ -178,7 +189,7 @@ public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
                 }
                 color = temp_color;
 
-                PhysicalActivity py = new PhysicalActivity(name, time, color, details, repeating, endDate, intensity);
+                PhysicalActivity py = new PhysicalActivity(name, time, color, details, repeating, startDate, endDate, intensity);
                 Activity_Main.physicalActivityList.add(py);
 
                 dismiss();
@@ -198,7 +209,7 @@ public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
         edit_saturday.setEnabled(isRepeating);
     }
 
-    private void showDatePicker() {
+    private void showDatePicker(boolean start_date) {
         Fragment_DatePicker date = new Fragment_DatePicker();
         /**
          * Set Up Current Date Into dialog
@@ -212,7 +223,10 @@ public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
         /**
          * Set Call back to capture selected date
          */
-        date.setCallBack(ondate);
+        if(start_date)
+            date.setCallBack(start_date_listener);
+        else
+            date.setCallBack(end_date_listener);
         date.show(getFragmentManager(), "Date Picker");
     }
 
@@ -239,7 +253,7 @@ public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
         time.show(getFragmentManager(), "Time Picker");
     }
 
-    DatePickerDialog.OnDateSetListener ondate = new DatePickerDialog.OnDateSetListener() {
+    DatePickerDialog.OnDateSetListener end_date_listener = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
         {
@@ -248,6 +262,18 @@ public class Fragment_AddPhysicalActivityToSchedule extends DialogFragment {
             temp_endDate = calendar.getTime();
 
             edit_endDate.setText(String.valueOf(monthOfYear+1) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
+        }
+    };
+
+    DatePickerDialog.OnDateSetListener start_date_listener = new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+        {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, monthOfYear, dayOfMonth);
+            temp_startDate = calendar.getTime();
+
+            edit_startDate.setText(String.valueOf(monthOfYear+1) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
         }
     };
 

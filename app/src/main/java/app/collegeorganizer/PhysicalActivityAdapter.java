@@ -58,6 +58,7 @@ public class PhysicalActivityAdapter extends BaseAdapter {
         DateFormat dateFormat = new SimpleDateFormat("HH:mm");
         holder.txtTime.setText(String.format(dateFormat.format(searchArrayList.get(position).getTime())));
         holder.txtDays.setText(String.format(searchArrayList.get(position).getRepeatingDays()));
+        convertView.setBackgroundColor(searchArrayList.get(position).getColor());
 
         return convertView;
     }
