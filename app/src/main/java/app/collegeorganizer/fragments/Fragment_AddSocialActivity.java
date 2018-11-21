@@ -60,9 +60,9 @@ public class Fragment_AddSocialActivity extends DialogFragment {
     private ImageButton save_button;
 
     private boolean isRepeating = false;
-    private Calendar temp_repeatUntilDate;
-    private Calendar temp_startTime;
-    private Calendar temp_endTime;
+    private Calendar temp_repeatUntilDate = Calendar.getInstance();
+    private Calendar temp_startTime = Calendar.getInstance();
+    private Calendar temp_endTime = Calendar.getInstance();
     private int temp_color = 0;
 
     public static Fragment_AddSocialActivity newInstance() {
