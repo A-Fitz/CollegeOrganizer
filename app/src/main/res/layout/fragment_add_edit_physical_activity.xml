@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,12 +25,21 @@
         </android.support.design.widget.TextInputLayout>
 
         <EditText
-            android:id="@+id/textinput_time"
+            android:id="@+id/textinput_starttime"
             android:layout_width="match_parent"
             android:layout_height="@dimen/add_physical_activity_textinput_height"
             android:clickable="true"
             android:editable="false"
-            android:hint="Time" />
+            android:focusableInTouchMode="false"
+            android:hint="Start Time" />
+
+        <EditText
+            android:id="@+id/textinput_endtime"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/add_physical_activity_textinput_height"
+            android:clickable="true"
+            android:editable="false"
+            android:hint="End Time" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -51,13 +59,50 @@
             android:layout_height="@dimen/add_physical_activity_textinput_height" />
 
         <EditText
-            android:id="@+id/startDate"
+            android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="@dimen/add_physical_activity_textinput_height"
             android:clickable="true"
             android:editable="false"
             android:enabled="true"
             android:hint="Start Date" />
+
+        <Button
+            android:id="@+id/color_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Color"
+            android:textAllCaps="false" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_delete"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/cancel_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_close" />
+
+            <ImageButton
+                android:id="@+id/save_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_check" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,7 +117,7 @@
                 android:text="Repeats?" />
 
             <EditText
-                android:id="@+id/endDate"
+                android:id="@+id/repeatUntilDate"
                 android:layout_width="200dp"
                 android:layout_height="@dimen/add_physical_activity_textinput_height"
                 android:clickable="true"
@@ -152,42 +197,6 @@
                 android:text="S" />
         </RadioGroup>
 
-        <Button
-            android:id="@+id/color_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Color"
-            android:textAllCaps="false" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="bottom"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/delete_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/ic_delete"
-                android:visibility="gone" />
-
-            <ImageButton
-                android:id="@+id/cancel_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/ic_close" />
-
-            <ImageButton
-                android:id="@+id/save_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/ic_check" />
-        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

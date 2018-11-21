@@ -19,10 +19,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import app.collegeorganizer.OnColorChosenListener;
 import app.collegeorganizer.R;
@@ -37,8 +34,7 @@ public class Fragment_EditDietRecord extends DialogFragment {
 
     private String foodName;
     private String amount;
-    private Date time;
-    private Date date;
+    private Calendar time = Calendar.getInstance();
     private MealCategory mealCategory;
     private int color;
 
@@ -94,8 +90,7 @@ public class Fragment_EditDietRecord extends DialogFragment {
     private ImageButton cancel_button;
     private ImageButton save_button;
 
-    private Date temp_date;
-    private Date temp_time;
+    private Calendar temp_time = Calendar.getInstance();
     private int temp_color = 0;
 
     String[] dropdown_intensity_items = {"Breakfast", "Lunch", "Dinner", "Snack", "Brunch"};
@@ -108,7 +103,6 @@ public class Fragment_EditDietRecord extends DialogFragment {
         foodName = item.getFoodName();
         amount = item.getAmount();
         time = item.getTime();
-        date = item.getDate();
         mealCategory = item.getMealCategory();
         color = item.getColor();
 
@@ -136,12 +130,9 @@ public class Fragment_EditDietRecord extends DialogFragment {
     private void setInitialValues() {
         edit_foodName.setText(foodName);
         edit_amount.setText(amount);
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        edit_time.setText(String.format(dateFormat.format(time)));
+        edit_time.setText(String.format("%02d:%02d", time.get(Calendar.HOUR), time.get(Calendar.MINUTE)));
         temp_time = time;
-        dateFormat = new SimpleDateFormat("MM/dd/yyy");
-        edit_date.setText(String.format(dateFormat.format(date)));
-        temp_date = date;
+        edit_date.setText(String.format(String.valueOf(time.get(Calendar.MONTH) + 1) + "/" + String.valueOf(time.get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(time.get(Calendar.YEAR))));
         edit_mealCategory.setSelection(getMealCategoryPosition());
         color_button.setBackgroundColor(color);
         temp_color = color;
@@ -305,7 +296,6 @@ public class Fragment_EditDietRecord extends DialogFragment {
                 if (checkInput()) {
                     foodName = edit_foodName.getText().toString();
                     amount = edit_amount.getText().toString();
-                    date = temp_date;
                     time = temp_time;
                     switch (edit_mealCategory.getSelectedItem().toString()) {
                         case "Breakfast":
@@ -325,7 +315,7 @@ public class Fragment_EditDietRecord extends DialogFragment {
                             break;
                     }
                     color = temp_color;
-                    DietItem di = new DietItem(foodName, mealCategory, time, date, amount, color);
+                    DietItem di = new DietItem(foodName, mealCategory, time, amount, color);
 
                     if (!edit_calories.getText().toString().matches("")) {
                         calories = Integer.parseInt(edit_calories.getText().toString());
@@ -470,9 +460,9 @@ public class Fragment_EditDietRecord extends DialogFragment {
     DatePickerDialog.OnDateSetListener date_listener = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(year, monthOfYear, dayOfMonth);
-            temp_date = calendar.getTime();
+            temp_time.set(Calendar.YEAR, year);
+            temp_time.set(Calendar.MONTH, monthOfYear);
+            temp_time.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
             edit_date.setText(String.valueOf(monthOfYear + 1) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
         }
@@ -490,9 +480,8 @@ public class Fragment_EditDietRecord extends DialogFragment {
     TimePickerDialog.OnTimeSetListener ontime = new TimePickerDialog.OnTimeSetListener() {
 
         public void onTimeSet(TimePicker view, int hour, int minute) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(0, 0, 0, hour, minute);
-            temp_time = calendar.getTime();
+            temp_time.set(Calendar.HOUR, hour);
+            temp_time.set(Calendar.MINUTE, minute);
 
             edit_time.setText(String.format("%02d:%02d", hour, minute));
         }

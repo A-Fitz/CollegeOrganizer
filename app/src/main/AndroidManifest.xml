@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="app.collegeorganizer">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -29,7 +33,7 @@
         <activity
             android:name=".activities.Activity_AcademicSchedulerRecorder"
             android:label="@string/title_activity_academic"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.Activity_SocialScheduler"
             android:label="@string/title_activity_social_scheduler"
@@ -38,6 +42,16 @@
             android:name=".activities.Activity_DietRecorder"
             android:label="@string/title_activity_diet_recorder"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".activities.Activity_Calendar"
+            android:label="@string/title_activity__calendar"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activities.Activity_BaseCalendar" />
     </application>
 
 </manifest>

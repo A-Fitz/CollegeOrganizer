@@ -1,16 +1,17 @@
 package app.collegeorganizer.data;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.Objects;
 
 public class DietItem {
-    //temporary units TODO
+
     private MealCategory mealCategory;
     private String foodName;
     private String amount;
-    private Date time;
-    private Date date;
+    private Calendar time;
     private int color;
 
+    //temporary units TODO
     private int calories;
     private int total_fat; //g
     private int saturated_fat; //g
@@ -32,11 +33,10 @@ public class DietItem {
     private int vitamin_e; //mcg
     private int vitamin_k; //mcg
 
-    public DietItem(String foodName, MealCategory mealCategory, Date time, Date date, String amount, int color) {
+    public DietItem(String foodName, MealCategory mealCategory, Calendar time, String amount, int color) {
         this.foodName = foodName;
         this.mealCategory = mealCategory;
         this.time = time;
-        this.date = date;
         this.amount = amount;
         this.color = color;
     }
@@ -65,20 +65,12 @@ public class DietItem {
         this.amount = amount;
     }
 
-    public Date getTime() {
+    public Calendar getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Calendar time) {
         this.time = time;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public int getCalories() {
@@ -239,5 +231,63 @@ public class DietItem {
 
     public void setColor(int color) {
         this.color = color;
+    }
+
+
+    public int getMinute() {
+        return time.get(Calendar.MINUTE);
+    }
+
+    public int getHour() {
+        return time.get(Calendar.HOUR);
+    }
+
+    public int getDay() {
+        return time.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public int getMonth() {
+        return time.get(Calendar.MONTH);
+    }
+
+    public int getYear() {
+        return time.get(Calendar.YEAR);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DietItem dietItem = (DietItem) o;
+        return color == dietItem.color &&
+                calories == dietItem.calories &&
+                total_fat == dietItem.total_fat &&
+                saturated_fat == dietItem.saturated_fat &&
+                trans_fat == dietItem.trans_fat &&
+                cholesterol == dietItem.cholesterol &&
+                sodium == dietItem.sodium &&
+                total_carbohydrate == dietItem.total_carbohydrate &&
+                dietary_fiber == dietItem.dietary_fiber &&
+                total_sugars == dietItem.total_sugars &&
+                protein == dietItem.protein &&
+                calcium == dietItem.calcium &&
+                iron == dietItem.iron &&
+                potassium == dietItem.potassium &&
+                vitamin_a == dietItem.vitamin_a &&
+                vitamin_b12 == dietItem.vitamin_b12 &&
+                vitamin_c == dietItem.vitamin_c &&
+                vitamin_d == dietItem.vitamin_d &&
+                vitamin_e == dietItem.vitamin_e &&
+                vitamin_k == dietItem.vitamin_k &&
+                mealCategory == dietItem.mealCategory &&
+                Objects.equals(foodName, dietItem.foodName) &&
+                Objects.equals(amount, dietItem.amount) &&
+                Objects.equals(time, dietItem.time);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(mealCategory, foodName, amount, time, color, calories, total_fat, saturated_fat, trans_fat, cholesterol, sodium, total_carbohydrate, dietary_fiber, total_sugars, protein, calcium, iron, potassium, vitamin_a, vitamin_b12, vitamin_c, vitamin_d, vitamin_e, vitamin_k);
     }
 }

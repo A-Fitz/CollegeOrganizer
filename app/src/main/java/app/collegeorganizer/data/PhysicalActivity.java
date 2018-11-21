@@ -1,47 +1,42 @@
 package app.collegeorganizer.data;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
+@SuppressWarnings("deprecation")
 public class PhysicalActivity {
     private String name;
-    private Date time;
+    private Calendar startTime;
+    private Calendar endTime;
     private int color;
     private String details;
     private List<String> repeating;
-    private Date startDate;
-    private Date endDate;
+    private Calendar repeatUntilDate;
     private PhysicalActivityIntensity intensity;
 
     //with repetition
-    public PhysicalActivity(String name, Date time, int color, String details, List<String> repeating, Date startDate, Date endDate, PhysicalActivityIntensity intensity) {
+    public PhysicalActivity(String name, Calendar startTime, Calendar endTime, int color, String details, List<String> repeating, Calendar repeatUntilDate, PhysicalActivityIntensity intensity) {
         this.name = name;
-        this.time = time;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.color = color;
         this.details = details;
         this.repeating = repeating;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.repeatUntilDate = repeatUntilDate;
         this.intensity = intensity;
     }
 
     //without repetition
-    public PhysicalActivity(String name, Date time, int color, String details, Date startDate, PhysicalActivityIntensity intensity) {
+    public PhysicalActivity(String name, Calendar startTime, Calendar endTime, int color, String details, PhysicalActivityIntensity intensity) {
         this.name = name;
-        this.time = time;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.color = color;
         this.details = details;
-        this.startDate = startDate;
         this.intensity = intensity;
     }
 
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
 
     public String getName() {
         return name;
@@ -51,12 +46,20 @@ public class PhysicalActivity {
         this.name = name;
     }
 
-    public Date getTime() {
-        return time;
+    public Calendar getStartTime() {
+        return startTime;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setStartTime(Calendar startTime) {
+        this.startTime = startTime;
+    }
+
+    public Calendar getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Calendar endTime) {
+        this.endTime = endTime;
     }
 
     public int getColor() {
@@ -86,12 +89,12 @@ public class PhysicalActivity {
         this.repeating = repeating;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public Calendar getRepeatUntilDate() {
+        return repeatUntilDate;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setRepeatUntilDate(Calendar repeatUntilDate) {
+        this.repeatUntilDate = repeatUntilDate;
     }
 
     public PhysicalActivityIntensity getIntensity() {
@@ -102,15 +105,12 @@ public class PhysicalActivity {
         this.intensity = intensity;
     }
 
-    public String getRepeatingDays()
-    {
+    public String getRepeatingDays() {
         if(repeating == null || repeating.size() == 0)
             return "";
-        else
-        {
+        else {
             String toRtr = "";
-            for(String s : repeating)
-            {
+            for(String s : repeating) {
                 toRtr += s + "-";
             }
 
@@ -118,4 +118,68 @@ public class PhysicalActivity {
         }
     }
 
+    public int getStartMinute() {
+        return startTime.get(Calendar.MINUTE);
+    }
+
+    public int getStartHour() {
+        return startTime.get(Calendar.HOUR);
+    }
+
+    public int getDay() {
+        return startTime.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public int getMonth() {
+        return startTime.get(Calendar.MONTH);
+    }
+
+    public int getYear() {
+        return startTime.get(Calendar.YEAR);
+    }
+
+    public int getEndMinute() {
+        return endTime.get(Calendar.MINUTE);
+    }
+
+    public int getEndHour() {
+        return endTime.get(Calendar.HOUR);
+    }
+
+    public int getRepeatEndDay() {
+        return repeatUntilDate.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public int getRepeatEndMonth() {
+        return repeatUntilDate.get(Calendar.MONTH);
+    }
+
+    public int getRepeatEndYear() {
+        return repeatUntilDate.get(Calendar.YEAR);
+    }
+
+    public String getTitle() {
+        return "Physical Activity : " + this.name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PhysicalActivity that = (PhysicalActivity) o;
+        return color == that.color &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(startTime, that.startTime) &&
+                Objects.equals(endTime, that.endTime) &&
+                Objects.equals(details, that.details) &&
+                Objects.equals(repeating, that.repeating) &&
+                Objects.equals(repeatUntilDate, that.repeatUntilDate) &&
+                intensity == that.intensity;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name, startTime, endTime, color, details, repeating, repeatUntilDate, intensity);
+    }
 }

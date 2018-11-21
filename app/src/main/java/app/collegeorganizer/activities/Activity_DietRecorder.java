@@ -14,11 +14,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import app.collegeorganizer.DietRecorderAdapter;
@@ -34,8 +31,8 @@ public class Activity_DietRecorder extends AppCompatActivity implements DialogIn
     private ListView list;
     private ImageButton calendar_button;
     private TextView date_text;
-    private Date chosenDate = Calendar.getInstance().getTime();
-    private DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+    private Calendar time = Calendar.getInstance();
+    private Calendar chosenDate = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +75,7 @@ public class Activity_DietRecorder extends AppCompatActivity implements DialogIn
             }
         });
 
-        date_text.setText(String.format(dateFormat.format(chosenDate)));
+        date_text.setText(String.format(String.valueOf(time.get(Calendar.MONTH)) + "/" + String.valueOf(time.get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(time.get(Calendar.YEAR))));
         refreshList();
     }
 
@@ -87,13 +84,13 @@ public class Activity_DietRecorder extends AppCompatActivity implements DialogIn
         refreshList();
     }
 
-    private List<DietItem> getListForDate(Date d) {
+    private List<DietItem> getListForDate(Calendar d) {
         List<DietItem> temp = new ArrayList<DietItem>();
 
         for (DietItem dietItem : Activity_Main.dietItemList) {
-            Date posDate = dietItem.getDate();
-            String posDateString = String.format(dateFormat.format(posDate));
-            String chosenDateString = String.format(dateFormat.format(d));
+            Calendar posDate = dietItem.getTime();
+            String posDateString = String.format(String.valueOf(posDate.get(Calendar.MONTH)) + "/" + String.valueOf(posDate.get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(posDate.get(Calendar.YEAR)));
+            String chosenDateString = String.format(String.valueOf(d.get(Calendar.MONTH)) + "/" + String.valueOf(d.get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(d.get(Calendar.YEAR)));
 
             if (posDateString.matches(chosenDateString))
                 temp.add(dietItem);
@@ -130,7 +127,7 @@ public class Activity_DietRecorder extends AppCompatActivity implements DialogIn
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             Calendar calendar = Calendar.getInstance();
             calendar.set(year, monthOfYear, dayOfMonth);
-            chosenDate = calendar.getTime();
+            chosenDate = calendar;
 
             date_text.setText(String.valueOf(monthOfYear + 1) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
 

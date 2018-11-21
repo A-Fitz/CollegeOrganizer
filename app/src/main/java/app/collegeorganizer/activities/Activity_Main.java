@@ -31,7 +31,7 @@ public class Activity_Main extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("College Organizer");
 
@@ -39,7 +39,7 @@ public class Activity_Main extends AppCompatActivity {
         final Button button_data_academic = findViewById(R.id.button_data_academic);
         button_data_academic.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Code here executes on main thread after user presses button
+
             }
         });
 
@@ -79,6 +79,14 @@ public class Activity_Main extends AppCompatActivity {
         });
 
         /* applet buttons */
+        final Button button_applet_calendar = findViewById(R.id.button_applet_calendar);
+        button_applet_calendar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(Activity_Main.this, Activity_Calendar.class);
+                startActivity(intent);
+            }
+        });
+
         final Button button_applet_academic = findViewById(R.id.button_applet_academic);
         button_applet_academic.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -158,16 +166,32 @@ public class Activity_Main extends AppCompatActivity {
 
     private void addTestObjects()
     {
-        Calendar calender = Calendar.getInstance();
+        Calendar startCalendar = Calendar.getInstance();
+        Calendar endCalendar = (Calendar) startCalendar.clone();
         GoogleCalendarColors googleCalendarColors = new GoogleCalendarColors();
-        physicalActivityList.add(new PhysicalActivity("test1", calender.getTime(), googleCalendarColors.tomato, "test1 details", calender.getTime(), PhysicalActivityIntensity.LIGHT));
-        physicalActivityList.add(new PhysicalActivity("test2", calender.getTime(), googleCalendarColors.grape, "test2 details", calender.getTime(), PhysicalActivityIntensity.LIGHT));
-        socialEventList.add(new SocialEvent("test1", "test1 details", "test1 location", calender.getTime(), calender.getTime(), googleCalendarColors.banana));
-        socialEventList.add(new SocialEvent("test2", "test2 details", "test2 location", calender.getTime(), calender.getTime(), googleCalendarColors.lavender));
-        dietItemList.add(new DietItem("test1 food", MealCategory.BREAKFAST, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), "test1 amount", googleCalendarColors.blueberry));
-        dietItemList.add(new DietItem("test2 food", MealCategory.LUNCH, calender.getTime(), calender.getTime(), "test2 amount", googleCalendarColors.peacock));
 
-        List<String> repeating = new ArrayList<String>();
+        endCalendar.add(Calendar.HOUR, 1);
+        physicalActivityList.add(new PhysicalActivity("test1", startCalendar, endCalendar, googleCalendarColors.tomato, "test1 details", PhysicalActivityIntensity.LIGHT));
+
+        Calendar startCalendar1 = (Calendar) startCalendar.clone();
+        startCalendar1.add(Calendar.HOUR, 3);
+        Calendar endCalendar1 = (Calendar) startCalendar1.clone();
+        endCalendar1.add(Calendar.HOUR, 1);
+        physicalActivityList.add(new PhysicalActivity("test2", startCalendar1, endCalendar1, googleCalendarColors.grape, "test2 details", PhysicalActivityIntensity.HEAVY));
+
+
+        Calendar startCalendar2 = (Calendar) startCalendar1.clone();
+        startCalendar2.add(Calendar.HOUR, 2);
+        Calendar endCalendar2 = (Calendar) startCalendar2.clone();
+        endCalendar2.add(Calendar.HOUR, 1);
+        socialEventList.add(new SocialEvent("test1", "test1 details", "test1 location", startCalendar2, endCalendar2, googleCalendarColors.banana));
+
+
+        //socialEventList.add(new SocialEvent("test2", "test2 details", "test2 location", calender.getTime(), calender.getTime(), googleCalendarColors.lavender));
+        dietItemList.add(new DietItem("test1 food", MealCategory.BREAKFAST, Calendar.getInstance(), "test1 amount", googleCalendarColors.blueberry));
+        dietItemList.add(new DietItem("test2 food", MealCategory.LUNCH, startCalendar, "test2 amount", googleCalendarColors.peacock));
+
+        /*List<String> repeating = new ArrayList<String>();
         Calendar calender2 = calender;
         calender2.set(2009, 5, 19, 20, 14, 00);
         repeating.add("M");
@@ -175,7 +199,7 @@ public class Activity_Main extends AppCompatActivity {
         repeating.add("F");
         physicalActivityList.add(new PhysicalActivity( "test3", calender.getTime(), googleCalendarColors.blueberry, "test details3" , repeating, calender.getTime(), calender2.getTime(), PhysicalActivityIntensity.LIGHT));
         socialEventList.add(new SocialEvent("test2", "test2 details", "test2 location", calender.getTime(), calender.getTime(), calender.getTime(), repeating, googleCalendarColors.lavender));
-        dietItemList.add(new DietItem("test3 food", MealCategory.LUNCH, calender2.getTime(), calender2.getTime(), "test3 amount", googleCalendarColors.basil));
+        dietItemList.add(new DietItem("test3 food", MealCategory.LUNCH, calender2.getTime(), calender2.getTime(), "test3 amount", googleCalendarColors.basil));*/
     }
 
 }

@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import app.collegeorganizer.data.SocialEvent;
@@ -53,11 +51,9 @@ public class SocialActivityAdapter extends BaseAdapter {
 
         holder.txtName.setText(searchArrayList.get(position).getName());
 
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        holder.txtDate.setText(String.format(dateFormat.format(searchArrayList.get(position).getStartDate())));
+        holder.txtDate.setText(searchArrayList.get(position).getMonth() + "/" + searchArrayList.get(position).getDay() + "/" + searchArrayList.get(position).getYear());
 
-        dateFormat = new SimpleDateFormat("HH:mm");
-        holder.txtTime.setText(String.format(dateFormat.format(searchArrayList.get(position).getTime())));
+        holder.txtTime.setText(String.format(String.format("%02d:%02d", searchArrayList.get(position).getStartHour(), searchArrayList.get(position).getStartMinute())));
 
         holder.txtDays.setText(String.format(searchArrayList.get(position).getRepeatingDays()));
         convertView.setBackgroundColor(searchArrayList.get(position).getColor());

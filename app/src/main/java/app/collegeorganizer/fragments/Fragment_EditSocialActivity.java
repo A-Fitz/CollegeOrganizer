@@ -18,11 +18,8 @@ import android.widget.ImageButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import app.collegeorganizer.OnColorChosenListener;
@@ -36,21 +33,22 @@ public class Fragment_EditSocialActivity extends DialogFragment {
     private SocialEvent item;
 
     private String name;
-    private Date time;
+    private Calendar startTime = Calendar.getInstance();
+    private Calendar endTime = Calendar.getInstance();
     private int color;
     private String details;
     private String location;
     private List<String> repeating = new ArrayList<String>();
-    private Date startDate;
-    private Date endDate;
+    private Calendar repeatUntilDate = Calendar.getInstance();
 
     private EditText edit_name;
-    private EditText edit_time;
+    private EditText edit_startTime;
+    private EditText edit_endTime;
     private EditText edit_details;
     private EditText edit_location;
     private CheckBox edit_repeats;
-    private EditText edit_startDate;
-    private EditText edit_endDate;
+    private EditText edit_date;
+    private EditText edit_repeatUntilDate;
     private CheckBox edit_sunday;
     private CheckBox edit_monday;
     private CheckBox edit_tuesday;
@@ -65,10 +63,10 @@ public class Fragment_EditSocialActivity extends DialogFragment {
     private ImageButton save_button;
 
     private boolean isRepeating = false;
-    private Date temp_endDate;
-    private Date temp_startDate;
-    private Date temp_time;
-    private int temp_color;
+    private Calendar temp_repeatUntilDate;
+    private Calendar temp_startTime;
+    private Calendar temp_endTime;
+    private int temp_color = 0;
 
 
     public static Fragment_EditSocialActivity newInstance() {
@@ -77,17 +75,17 @@ public class Fragment_EditSocialActivity extends DialogFragment {
 
     private void getItemParts() {
         name = item.getName();
-        time = item.getTime();
+        startTime = item.getStartTime();
+        endTime = item.getEndTime();
         color = item.getColor();
         details = item.getDetails();
-        startDate = item.getStartDate();
         location = item.getLocation();
         if (item.getRepeatingDays().length() != 0)
             isRepeating = true;
 
         if (isRepeating) {
             repeating = item.getRepeating();
-            endDate = item.getEndDate();
+            repeatUntilDate = item.getRepeatUntilDate();
         }
     }
 
@@ -97,20 +95,18 @@ public class Fragment_EditSocialActivity extends DialogFragment {
 
     private void setInitialValues() {
         edit_name.setText(name);
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        edit_time.setText(String.format(dateFormat.format(item.getTime())));
-        temp_time = item.getTime();
+        edit_startTime.setText(String.format("%02d:%02d", item.getStartHour(), item.getStartMinute()));
+        temp_startTime = item.getStartTime();
+        edit_endTime.setText(String.format("%02d:%02d", item.getEndHour(), item.getEndMinute()));
+        temp_endTime = item.getEndTime();
         edit_details.setText(details);
-        dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        edit_startDate.setText(String.format(dateFormat.format(item.getStartDate())));
-        temp_startDate = item.getStartDate();
+        edit_date.setText(String.valueOf(item.getMonth() + 1) + "/" + String.valueOf(item.getDay()) + "/" + String.valueOf(item.getYear()));
         edit_location.setText(item.getLocation());
         edit_repeats.setChecked(isRepeating);
         if (isRepeating) {
             changeRepeatBoxes();
-            dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-            edit_endDate.setText(String.format(dateFormat.format(item.getEndDate())));
-            temp_endDate = item.getEndDate();
+            edit_repeatUntilDate.setText(String.valueOf(item.getRepeatEndMonth() + 1) + "/" + String.valueOf(item.getRepeatEndDay()) + "/" + String.valueOf(item.getRepeatEndYear()));
+            temp_repeatUntilDate = item.getRepeatUntilDate();
             for (String s : item.getRepeating()) {
                 switch (s) {
                     case "SU":
@@ -156,12 +152,13 @@ public class Fragment_EditSocialActivity extends DialogFragment {
         View v = inflater.inflate(R.layout.fragment_add_edit_social_activity, container, false);
 
         edit_name = v.findViewById(R.id.textinput_name);
-        edit_time = v.findViewById(R.id.textinput_time);
+        edit_startTime = v.findViewById(R.id.textinput_starttime);
+        edit_endTime = v.findViewById(R.id.textinput_endtime);
         edit_details = v.findViewById(R.id.textinput_details);
         edit_location = v.findViewById(R.id.textinput_location);
         edit_repeats = v.findViewById(R.id.repeats_checkbox);
-        edit_endDate = v.findViewById(R.id.endDate);
-        edit_startDate = v.findViewById(R.id.startDate);
+        edit_date = v.findViewById(R.id.date);
+        edit_repeatUntilDate = v.findViewById(R.id.repeatUntilDate);
         edit_sunday = v.findViewById(R.id.radio_sunday);
         edit_monday = v.findViewById(R.id.radio_monday);
         edit_tuesday = v.findViewById(R.id.radio_tuesday);
@@ -185,16 +182,16 @@ public class Fragment_EditSocialActivity extends DialogFragment {
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        edit_endDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePicker(false);
-            }
-        });
-        edit_startDate.setOnClickListener(new View.OnClickListener() {
+        edit_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePicker(true);
+            }
+        });
+        edit_repeatUntilDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePicker(false);
             }
         });
         color_button.setOnClickListener(new View.OnClickListener() {
@@ -203,10 +200,16 @@ public class Fragment_EditSocialActivity extends DialogFragment {
                 showColorPicker();
             }
         });
-        edit_time.setOnClickListener(new View.OnClickListener() {
+        edit_startTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePicker();
+                showTimePicker(true);
+            }
+        });
+        edit_endTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePicker(false);
             }
         });
         edit_repeats.setOnClickListener(new View.OnClickListener() {
@@ -236,10 +239,10 @@ public class Fragment_EditSocialActivity extends DialogFragment {
             public void onClick(View v) {
                 if (checkInput()) {
                     name = edit_name.getText().toString();
-                    time = temp_time;
+                    startTime = temp_endTime;
+                    endTime = temp_startTime;
                     details = edit_details.getText().toString();
                     location = edit_location.getText().toString();
-                    startDate = temp_startDate;
                     color = temp_color;
                     SocialEvent se;
                     if (isRepeating) {
@@ -261,10 +264,10 @@ public class Fragment_EditSocialActivity extends DialogFragment {
                         if (edit_saturday.isChecked())
                             repeating.add("S");
 
-                        endDate = temp_endDate;
-                        se = new SocialEvent(name, details, location, time, startDate, endDate, repeating, color);
+                        repeatUntilDate = temp_repeatUntilDate;
+                        se = new SocialEvent(name, details, location, startTime, endTime, repeatUntilDate, repeating, color);
                     } else
-                        se = new SocialEvent(name, details, location, time, startDate, color);
+                        se = new SocialEvent(name, details, location, startTime, endTime, color);
 
                     int index = Activity_Main.socialEventList.indexOf(item);
 
@@ -272,15 +275,15 @@ public class Fragment_EditSocialActivity extends DialogFragment {
 
                     dismiss();
                 } else {
-                    Toast.makeText(getContext(), "Please make sure all fields are filled. Repeating and details are optional.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please make sure all fields above the save button are filled.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     private boolean checkInput() {
-        boolean mainFields = (!isEditTextEmpty(edit_name) && !isEditTextEmpty(edit_location) && !isEditTextEmpty(edit_time) && !isEditTextEmpty(edit_startDate) && temp_color != 0);
-        boolean repeatingFields = isOneRepeatCheckBokChecked() && !isEditTextEmpty(edit_endDate);
+        boolean mainFields = (!isEditTextEmpty(edit_name) && !isEditTextEmpty(edit_location) && !isEditTextEmpty(edit_startTime) && !isEditTextEmpty(edit_endTime) && !isEditTextEmpty(edit_date) && temp_color != 0);
+        boolean repeatingFields = isOneRepeatCheckBokChecked() && !isEditTextEmpty(edit_repeatUntilDate);
         if (!isRepeating)
             return mainFields;
         else
@@ -297,7 +300,7 @@ public class Fragment_EditSocialActivity extends DialogFragment {
     }
 
     private void changeRepeatBoxes() {
-        edit_endDate.setEnabled(isRepeating);
+        edit_repeatUntilDate.setEnabled(isRepeating);
         edit_sunday.setEnabled(isRepeating);
         edit_monday.setEnabled(isRepeating);
         edit_tuesday.setEnabled(isRepeating);
@@ -328,13 +331,43 @@ public class Fragment_EditSocialActivity extends DialogFragment {
         date.show(getFragmentManager(), "Date Picker");
     }
 
+    DatePickerDialog.OnDateSetListener end_date_listener = new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, monthOfYear, dayOfMonth);
+            temp_repeatUntilDate = calendar;
+
+            edit_repeatUntilDate.setText(String.valueOf(monthOfYear + 1) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
+        }
+    };
+
+    DatePickerDialog.OnDateSetListener start_date_listener = new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            temp_startTime.set(Calendar.YEAR, year);
+            temp_startTime.set(Calendar.MONTH, dayOfMonth);
+            temp_startTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            edit_date.setText(String.valueOf(monthOfYear + 1) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
+        }
+    };
+
     private void showColorPicker() {
         Fragment_ColorPicker color_picker = new Fragment_ColorPicker();
         color_picker.show(getFragmentManager(), "Color Picker");
         color_picker.DismissListener(color_picker_closeListener);
     }
 
-    private void showTimePicker() {
+    OnColorChosenListener color_picker_closeListener = new OnColorChosenListener() {
+        @Override
+        public void handleDialogClose(int color) {
+            temp_color = color;
+            color_button.setBackgroundColor(color);
+        }
+    };
+
+    private void showTimePicker(boolean start_time) {
         Fragment_TimePicker time = new Fragment_TimePicker();
         /**
          * Set Up Current Date Into dialog
@@ -347,49 +380,31 @@ public class Fragment_EditSocialActivity extends DialogFragment {
         /**
          * Set Call back to capture selected date
          */
-        time.setCallBack(ontime);
+        if (start_time)
+            time.setCallBack(start_time_listener);
+        else
+            time.setCallBack(end_time_listener);
         time.show(getFragmentManager(), "Time Picker");
     }
 
-    DatePickerDialog.OnDateSetListener end_date_listener = new DatePickerDialog.OnDateSetListener() {
-
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(year, monthOfYear, dayOfMonth);
-            temp_endDate = calendar.getTime();
-
-            edit_endDate.setText(String.valueOf(monthOfYear + 1) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
-        }
-    };
-
-    DatePickerDialog.OnDateSetListener start_date_listener = new DatePickerDialog.OnDateSetListener() {
-
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(year, monthOfYear, dayOfMonth);
-            temp_startDate = calendar.getTime();
-
-            edit_startDate.setText(String.valueOf(monthOfYear + 1) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
-        }
-    };
-
-    OnColorChosenListener color_picker_closeListener = new OnColorChosenListener() {
-        @Override
-        public void handleDialogClose(int color) {
-            temp_color = color;
-            color_button.setBackgroundColor(color);
-        }
-    };
-
-
-    TimePickerDialog.OnTimeSetListener ontime = new TimePickerDialog.OnTimeSetListener() {
+    TimePickerDialog.OnTimeSetListener start_time_listener = new TimePickerDialog.OnTimeSetListener() {
 
         public void onTimeSet(TimePicker view, int hour, int minute) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(0, 0, 0, hour, minute);
-            temp_time = calendar.getTime();
+            temp_startTime.set(Calendar.HOUR, hour);
+            temp_startTime.set(Calendar.MINUTE, minute);
 
-            edit_time.setText(String.format("%02d:%02d", hour, minute));
+            edit_startTime.setText(String.format("%02d:%02d", hour, minute));
+        }
+    };
+
+    TimePickerDialog.OnTimeSetListener end_time_listener = new TimePickerDialog.OnTimeSetListener() {
+
+        public void onTimeSet(TimePicker view, int hour, int minute) {
+            temp_endTime = (Calendar) temp_startTime.clone();
+            temp_endTime.set(Calendar.HOUR, hour);
+            temp_endTime.set(Calendar.MINUTE, minute);
+
+            edit_endTime.setText(String.format("%02d:%02d", hour, minute));
         }
     };
 

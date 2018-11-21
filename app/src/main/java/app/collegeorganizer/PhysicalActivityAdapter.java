@@ -1,16 +1,13 @@
 package app.collegeorganizer;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import java.util.List;
 
 import app.collegeorganizer.data.PhysicalActivity;
 
@@ -41,11 +38,11 @@ public class PhysicalActivityAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.physical_activity_list_item, null);
             holder = new ViewHolder();
-            holder.txtName = (TextView) convertView.findViewById(R.id.list_item_name);
-            holder.txtIntensity = (TextView) convertView
+            holder.txtName = convertView.findViewById(R.id.list_item_name);
+            holder.txtIntensity = convertView
                     .findViewById(R.id.list_item_intensity);
-            holder.txtTime = (TextView) convertView.findViewById(R.id.list_item_time);
-            holder.txtDays = (TextView) convertView.findViewById(R.id.list_item_days);
+            holder.txtTime = convertView.findViewById(R.id.list_item_time);
+            holder.txtDays = convertView.findViewById(R.id.list_item_days);
 
             convertView.setTag(holder);
         } else {
@@ -57,8 +54,7 @@ public class PhysicalActivityAdapter extends BaseAdapter {
                 .getIntensity().toString().substring(0, 1).toUpperCase() + searchArrayList.get(position)
                 .getIntensity().toString().substring(1).toLowerCase());
 
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        holder.txtTime.setText(String.format(dateFormat.format(searchArrayList.get(position).getTime())));
+        holder.txtTime.setText(String.format(String.format("%02d:%02d", searchArrayList.get(position).getStartHour(), searchArrayList.get(position).getStartMinute())));
         holder.txtDays.setText(String.format(searchArrayList.get(position).getRepeatingDays()));
         convertView.setBackgroundColor(searchArrayList.get(position).getColor());
 
