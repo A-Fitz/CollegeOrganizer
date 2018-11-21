@@ -24,21 +24,17 @@
                 android:hint="Name" />
         </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/textinput_starttime"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/add_physical_activity_textinput_height"
-            android:clickable="true"
-            android:editable="false"
-            android:hint="Start Time" />
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/textinput_endtime"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/add_physical_activity_textinput_height"
-            android:clickable="true"
-            android:editable="false"
-            android:hint="End Time" />
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/textinput_location"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/add_physical_activity_textinput_height"
+                android:hint="Location" />
+
+        </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -52,26 +48,81 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/textinput_location"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/add_physical_activity_textinput_height"
-                android:hint="Location" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <EditText
-            android:id="@+id/date"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/add_physical_activity_textinput_height"
-            android:clickable="true"
-            android:editable="false"
-            android:enabled="true"
-            android:hint="Start Date" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:text="Start Time"
+                android:textAlignment="textStart"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/textinput_starttime"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".7"
+                android:clickable="true"
+                android:editable="false"
+                android:focusableInTouchMode="false" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/add_physical_activity_textinput_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:text="End Time"
+                android:textAlignment="textStart"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/textinput_endtime"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".7"
+                android:clickable="true"
+                android:editable="false"
+                android:focusableInTouchMode="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/add_physical_activity_textinput_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:text="Date"
+                android:textAlignment="textStart"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/date"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".7"
+                android:clickable="true"
+                android:editable="false"
+                android:focusableInTouchMode="false" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/color_button"
@@ -112,20 +163,21 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/add_physical_activity_textinput_height"
             android:orientation="horizontal">
 
             <CheckBox
                 android:id="@+id/repeats_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/add_physical_activity_textinput_height"
-                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
                 android:text="Repeats?" />
 
             <EditText
                 android:id="@+id/repeatUntilDate"
-                android:layout_width="200dp"
-                android:layout_height="@dimen/add_physical_activity_textinput_height"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".6"
                 android:clickable="true"
                 android:editable="false"
                 android:enabled="false"

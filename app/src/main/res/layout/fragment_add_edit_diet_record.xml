@@ -14,7 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -39,25 +40,59 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/textinput_time"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/add_physical_activity_textinput_height"
-                android:clickable="true"
-                android:editable="false"
-                android:hint="Time" />
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/textinput_date"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".2"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:text="Time"
+                    android:textAlignment="textStart"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/textinput_time"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".8"
+                    android:clickable="true"
+                    android:editable="false" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/add_physical_activity_textinput_height"
-                android:clickable="true"
-                android:editable="false"
-                android:enabled="true"
-                android:hint="Date" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".2"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:text="Date"
+                    android:textAlignment="textStart"
+                    android:textSize="18sp"
+                    android:typeface="normal" />
+
+                <EditText
+                    android:id="@+id/textinput_date"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".8"
+                    android:clickable="true"
+                    android:editable="false"
+                    android:enabled="true" />
+            </LinearLayout>
 
             <Spinner
                 android:id="@+id/meal_category_dropdown"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/add_physical_activity_textinput_height" />
 

@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -68,6 +69,9 @@ public class Fragment_EditSocialActivity extends DialogFragment {
     private Calendar temp_endTime = Calendar.getInstance();
     private int temp_color = 0;
 
+    private SimpleDateFormat format_time = new SimpleDateFormat("hh:mm a");
+    private SimpleDateFormat format_date = new SimpleDateFormat("MM/dd/yyy");
+
 
     public static Fragment_EditSocialActivity newInstance() {
         return new Fragment_EditSocialActivity();
@@ -95,17 +99,17 @@ public class Fragment_EditSocialActivity extends DialogFragment {
 
     private void setInitialValues() {
         edit_name.setText(name);
-        edit_startTime.setText(String.format("%02d:%02d", item.getStartHour(), item.getStartMinute()));
+        edit_startTime.setText(String.valueOf(format_time.format(item.getStartTime().getTime())));
         temp_startTime = item.getStartTime();
-        edit_endTime.setText(String.format("%02d:%02d", item.getEndHour(), item.getEndMinute()));
+        edit_endTime.setText(String.valueOf(format_time.format(item.getEndTime().getTime())));
         temp_endTime = item.getEndTime();
         edit_details.setText(details);
-        edit_date.setText(String.valueOf(item.getMonth() + 1) + "/" + String.valueOf(item.getDay()) + "/" + String.valueOf(item.getYear()));
+        edit_date.setText(format_date.format(item.getStartTime().getTime()));
         edit_location.setText(item.getLocation());
         edit_repeats.setChecked(isRepeating);
         if (isRepeating) {
             changeRepeatBoxes();
-            edit_repeatUntilDate.setText(String.valueOf(item.getRepeatEndMonth() + 1) + "/" + String.valueOf(item.getRepeatEndDay()) + "/" + String.valueOf(item.getRepeatEndYear()));
+            edit_repeatUntilDate.setText(format_date.format(item.getRepeatUntilDate().getTime()));
             temp_repeatUntilDate = item.getRepeatUntilDate();
             for (String s : item.getRepeating()) {
                 switch (s) {
@@ -239,8 +243,8 @@ public class Fragment_EditSocialActivity extends DialogFragment {
             public void onClick(View v) {
                 if (checkInput()) {
                     name = edit_name.getText().toString();
-                    startTime = temp_endTime;
-                    endTime = temp_startTime;
+                    endTime = temp_endTime;
+                    startTime = temp_startTime;
                     details = edit_details.getText().toString();
                     location = edit_location.getText().toString();
                     color = temp_color;
@@ -338,7 +342,7 @@ public class Fragment_EditSocialActivity extends DialogFragment {
             calendar.set(year, monthOfYear, dayOfMonth);
             temp_repeatUntilDate = calendar;
 
-            edit_repeatUntilDate.setText(String.valueOf(monthOfYear + 1) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
+            edit_repeatUntilDate.setText(format_date.format(temp_repeatUntilDate.getTime()));
         }
     };
 
@@ -349,7 +353,7 @@ public class Fragment_EditSocialActivity extends DialogFragment {
             temp_startTime.set(Calendar.MONTH, dayOfMonth);
             temp_startTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            edit_date.setText(String.valueOf(monthOfYear + 1) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
+            edit_date.setText(format_date.format(temp_startTime.getTime()));
         }
     };
 
@@ -393,7 +397,7 @@ public class Fragment_EditSocialActivity extends DialogFragment {
             temp_startTime.set(Calendar.HOUR, hour);
             temp_startTime.set(Calendar.MINUTE, minute);
 
-            edit_startTime.setText(String.format("%02d:%02d", hour, minute));
+            edit_startTime.setText(String.valueOf(format_time.format(temp_startTime.getTime())));
         }
     };
 
@@ -404,7 +408,7 @@ public class Fragment_EditSocialActivity extends DialogFragment {
             temp_endTime.set(Calendar.HOUR, hour);
             temp_endTime.set(Calendar.MINUTE, minute);
 
-            edit_endTime.setText(String.format("%02d:%02d", hour, minute));
+            edit_endTime.setText(String.valueOf(format_time.format(temp_endTime.getTime())));
         }
     };
 

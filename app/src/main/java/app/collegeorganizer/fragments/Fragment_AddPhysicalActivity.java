@@ -20,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -68,6 +69,9 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
     private Calendar temp_endTime = Calendar.getInstance();
     private int temp_color = 0;
 
+    private SimpleDateFormat format_time = new SimpleDateFormat("hh:mm a");
+    private SimpleDateFormat format_date = new SimpleDateFormat("MM/dd/yyy");
+
     String[] dropdown_intensity_items = { "Light", "Heavy" };
 
     public static Fragment_AddPhysicalActivity newInstance() {
@@ -107,6 +111,9 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
 
         cancel_button = v.findViewById(R.id.cancel_button);
         save_button = v.findViewById(R.id.save_button);
+
+        edit_startTime.setText(String.valueOf(format_time.format(startTime.getTime())));
+        edit_date.setText(String.valueOf(format_date.format(startTime.getTime())));
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, dropdown_intensity_items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -261,7 +268,7 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
         /**
          * Set Call back to capture selected date
          */
-        if(start_date)
+        if (start_date)
             date.setCallBack(start_date_listener);
         else
             date.setCallBack(end_date_listener);
@@ -275,7 +282,7 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
             calendar.set(year, monthOfYear, dayOfMonth);
             temp_repeatUntilDate = calendar;
 
-            edit_repeatUntilDate.setText(String.valueOf(monthOfYear + 1) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
+            edit_repeatUntilDate.setText(format_date.format(temp_repeatUntilDate.getTime()));
         }
     };
 
@@ -286,7 +293,7 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
             temp_startTime.set(Calendar.MONTH, dayOfMonth);
             temp_startTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            edit_date.setText(String.valueOf(monthOfYear + 1) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
+            edit_date.setText(format_date.format(temp_startTime.getTime()));
         }
     };
 
@@ -326,24 +333,22 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
 
     TimePickerDialog.OnTimeSetListener start_time_listener = new TimePickerDialog.OnTimeSetListener() {
 
-        public void onTimeSet(TimePicker view, int hour, int minute)
-        {
+        public void onTimeSet(TimePicker view, int hour, int minute) {
             temp_startTime.set(Calendar.HOUR, hour);
             temp_startTime.set(Calendar.MINUTE, minute);
 
-            edit_startTime.setText(String.format("%02d:%02d", hour, minute));
+            edit_startTime.setText(String.valueOf(format_time.format(temp_startTime.getTime())));
         }
     };
 
     TimePickerDialog.OnTimeSetListener end_time_listener = new TimePickerDialog.OnTimeSetListener() {
 
-        public void onTimeSet(TimePicker view, int hour, int minute)
-        {
+        public void onTimeSet(TimePicker view, int hour, int minute) {
             temp_endTime = (Calendar) temp_startTime.clone();
             temp_endTime.set(Calendar.HOUR, hour);
             temp_endTime.set(Calendar.MINUTE, minute);
 
-            edit_endTime.setText(String.format("%02d:%02d", hour, minute));
+            edit_endTime.setText(String.valueOf(format_time.format(temp_endTime.getTime())));
         }
     };
 

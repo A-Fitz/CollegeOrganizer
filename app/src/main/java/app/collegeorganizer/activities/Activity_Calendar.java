@@ -19,7 +19,7 @@ public class Activity_Calendar extends Activity_BaseCalendar {
             //TODO if stuff starts being weird it's because of here, maybe an if statement is needed
             Calendar startTime = Calendar.getInstance();
             startTime.set(Calendar.DAY_OF_MONTH, py.getDay());
-            startTime.set(Calendar.HOUR_OF_DAY, py.getStartHour());
+            startTime.set(Calendar.HOUR, py.getStartHour());
             startTime.set(Calendar.MINUTE, py.getStartMinute());
             startTime.set(Calendar.MONTH, newMonth - 1);
             startTime.set(Calendar.YEAR, newYear);
@@ -39,7 +39,7 @@ public class Activity_Calendar extends Activity_BaseCalendar {
             //TODO if stuff starts being weird it's because of here, maybe an if statement is needed
             Calendar startTime = Calendar.getInstance();
             startTime.set(Calendar.DAY_OF_MONTH, se.getDay());
-            startTime.set(Calendar.HOUR_OF_DAY, se.getStartHour());
+            startTime.set(Calendar.HOUR, se.getStartHour());
             startTime.set(Calendar.MINUTE, se.getStartMinute());
             startTime.set(Calendar.MONTH, newMonth - 1);
             startTime.set(Calendar.YEAR, newYear);

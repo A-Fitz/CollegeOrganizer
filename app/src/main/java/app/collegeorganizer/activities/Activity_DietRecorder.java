@@ -109,11 +109,10 @@ public class Activity_DietRecorder extends AppCompatActivity implements DialogIn
         /**
          * Set Up Current Date Into dialog
          */
-        Calendar calender = Calendar.getInstance();
         Bundle args = new Bundle();
-        args.putInt("year", calender.get(Calendar.YEAR));
-        args.putInt("month", calender.get(Calendar.MONTH));
-        args.putInt("day", calender.get(Calendar.DAY_OF_MONTH));
+        args.putInt("year", chosenDate.get(Calendar.YEAR));
+        args.putInt("month", chosenDate.get(Calendar.MONTH));
+        args.putInt("day", chosenDate.get(Calendar.DAY_OF_MONTH));
         date.setArguments(args);
         /**
          * Set Call back to capture selected date

@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import app.collegeorganizer.OnColorChosenListener;
@@ -90,6 +91,9 @@ public class Fragment_AddDietRecord extends DialogFragment {
     private Calendar temp_time = Calendar.getInstance();
     private int temp_color = 0;
 
+    private SimpleDateFormat format_time = new SimpleDateFormat("hh:mm a");
+    private SimpleDateFormat format_date = new SimpleDateFormat("MM/dd/yyy");
+
     String[] dropdown_intensity_items = {"Breakfast", "Lunch", "Dinner", "Snack", "Brunch"};
 
     public static Fragment_AddDietRecord newInstance() {
@@ -139,6 +143,9 @@ public class Fragment_AddDietRecord extends DialogFragment {
 
         cancel_button = v.findViewById(R.id.cancel_button);
         save_button = v.findViewById(R.id.save_button);
+
+        edit_time.setText(String.valueOf(format_time.format(time.getTime())));
+        edit_date.setText(String.valueOf(format_date.format(time.getTime())));
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, dropdown_intensity_items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -346,7 +353,7 @@ public class Fragment_AddDietRecord extends DialogFragment {
             temp_time.set(Calendar.MONTH, monthOfYear);
             temp_time.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            edit_date.setText(String.valueOf(monthOfYear + 1) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
+            edit_date.setText(format_date.format(temp_time.getTime()));
         }
     };
 
@@ -365,7 +372,7 @@ public class Fragment_AddDietRecord extends DialogFragment {
             temp_time.set(Calendar.HOUR, hour);
             temp_time.set(Calendar.MINUTE, minute);
 
-            edit_time.setText(String.format("%02d:%02d", hour, minute));
+            edit_time.setText(String.valueOf(format_time.format(temp_time.getTime())));
         }
     };
 

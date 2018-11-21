@@ -7,17 +7,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import app.collegeorganizer.data.DietItem;
 
 public class DietRecorderAdapter extends BaseAdapter {
     private static List<DietItem> searchArrayList;
-    Date chosenDate = Calendar.getInstance().getTime();
+
+    private SimpleDateFormat format_time = new SimpleDateFormat("hh:mm a");
+    private SimpleDateFormat format_date = new SimpleDateFormat("MM/dd/yyy");
 
     private LayoutInflater mInflater;
 
@@ -59,8 +58,7 @@ public class DietRecorderAdapter extends BaseAdapter {
 
         holder.txtFoodname.setText(searchArrayList.get(position).getFoodName());
 
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        holder.txtTime.setText(String.format(dateFormat.format(searchArrayList.get(position).getTime())));
+        holder.txtTime.setText(String.valueOf(format_time.format(searchArrayList.get(position).getTime().getTime())));
 
         convertView.setBackgroundColor(searchArrayList.get(position).getColor());
 

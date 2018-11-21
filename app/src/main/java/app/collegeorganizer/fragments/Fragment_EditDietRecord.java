@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import app.collegeorganizer.OnColorChosenListener;
@@ -93,6 +94,9 @@ public class Fragment_EditDietRecord extends DialogFragment {
     private Calendar temp_time = Calendar.getInstance();
     private int temp_color = 0;
 
+    private SimpleDateFormat format_time = new SimpleDateFormat("hh:mm a");
+    private SimpleDateFormat format_date = new SimpleDateFormat("MM/dd/yyy");
+
     String[] dropdown_intensity_items = {"Breakfast", "Lunch", "Dinner", "Snack", "Brunch"};
 
     public static Fragment_EditDietRecord newInstance() {
@@ -130,9 +134,9 @@ public class Fragment_EditDietRecord extends DialogFragment {
     private void setInitialValues() {
         edit_foodName.setText(foodName);
         edit_amount.setText(amount);
-        edit_time.setText(String.format("%02d:%02d", time.get(Calendar.HOUR), time.get(Calendar.MINUTE)));
+        edit_time.setText(String.valueOf(format_time.format(time.getTime())));
         temp_time = time;
-        edit_date.setText(String.format(String.valueOf(time.get(Calendar.MONTH) + 1) + "/" + String.valueOf(time.get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(time.get(Calendar.YEAR))));
+        edit_date.setText(String.valueOf(format_date.format(time.getTime())));
         edit_mealCategory.setSelection(getMealCategoryPosition());
         color_button.setBackgroundColor(color);
         temp_color = color;
@@ -464,7 +468,7 @@ public class Fragment_EditDietRecord extends DialogFragment {
             temp_time.set(Calendar.MONTH, monthOfYear);
             temp_time.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            edit_date.setText(String.valueOf(monthOfYear + 1) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
+            edit_date.setText(format_date.format(temp_time.getTime()));
         }
     };
 
@@ -483,7 +487,7 @@ public class Fragment_EditDietRecord extends DialogFragment {
             temp_time.set(Calendar.HOUR, hour);
             temp_time.set(Calendar.MINUTE, minute);
 
-            edit_time.setText(String.format("%02d:%02d", hour, minute));
+            edit_time.setText(String.valueOf(format_time.format(temp_time.getTime())));
         }
     };
 

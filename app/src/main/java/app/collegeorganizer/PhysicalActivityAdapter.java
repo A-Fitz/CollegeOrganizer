@@ -7,12 +7,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import app.collegeorganizer.data.PhysicalActivity;
 
 public class PhysicalActivityAdapter extends BaseAdapter {
     private static List<PhysicalActivity> searchArrayList;
+
+    private SimpleDateFormat format_time = new SimpleDateFormat("hh:mm a");
+    private SimpleDateFormat format_date = new SimpleDateFormat("MM/dd/yyy");
 
     private LayoutInflater mInflater;
 
@@ -54,8 +58,8 @@ public class PhysicalActivityAdapter extends BaseAdapter {
                 .getIntensity().toString().substring(0, 1).toUpperCase() + searchArrayList.get(position)
                 .getIntensity().toString().substring(1).toLowerCase());
 
-        holder.txtTime.setText(String.format(String.format("%02d:%02d", searchArrayList.get(position).getStartHour(), searchArrayList.get(position).getStartMinute())));
-        holder.txtDays.setText(String.format(searchArrayList.get(position).getRepeatingDays()));
+        holder.txtTime.setText(String.valueOf(format_time.format(searchArrayList.get(position).getStartTime().getTime())));
+        holder.txtDays.setText(searchArrayList.get(position).getRepeatingDays());
         convertView.setBackgroundColor(searchArrayList.get(position).getColor());
 
         return convertView;
