@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import app.collegeorganizer.R;
 
-public class AcademicActivity extends AppCompatActivity {
+public class Activity_AcademicSchedulerRecorder extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
