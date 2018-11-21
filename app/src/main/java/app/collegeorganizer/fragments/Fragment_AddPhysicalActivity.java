@@ -88,24 +88,24 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_add_edit_physical_activity, container, false);
 
-        edit_name = (EditText) v.findViewById(R.id.textinput_name);
-        edit_time = (EditText) v.findViewById(R.id.textinput_time);
-        edit_details = (EditText) v.findViewById(R.id.textinput_details);
-        edit_intensity = (Spinner) v.findViewById(R.id.activity_intensity_dropdown);
-        edit_repeats = (CheckBox) v.findViewById(R.id.repeats_checkbox);
-        edit_startDate = (EditText) v.findViewById(R.id.startDate);
-        edit_endDate = (EditText) v.findViewById(R.id.endDate);
-        edit_sunday = (CheckBox) v.findViewById(R.id.radio_sunday);
-        edit_monday = (CheckBox) v.findViewById(R.id.radio_monday);
-        edit_tuesday = (CheckBox) v.findViewById(R.id.radio_tuesday);
-        edit_wednesday = (CheckBox) v.findViewById(R.id.radio_wednesday);
-        edit_thursday = (CheckBox) v.findViewById(R.id.radio_thursday);
-        edit_friday = (CheckBox) v.findViewById(R.id.radio_friday);
-        edit_saturday = (CheckBox) v.findViewById(R.id.radio_saturday);
-        color_button = (Button) v.findViewById(R.id.color_button);
+        edit_name = v.findViewById(R.id.textinput_name);
+        edit_time = v.findViewById(R.id.textinput_time);
+        edit_details = v.findViewById(R.id.textinput_details);
+        edit_intensity = v.findViewById(R.id.activity_intensity_dropdown);
+        edit_repeats = v.findViewById(R.id.repeats_checkbox);
+        edit_startDate = v.findViewById(R.id.startDate);
+        edit_endDate = v.findViewById(R.id.endDate);
+        edit_sunday = v.findViewById(R.id.radio_sunday);
+        edit_monday = v.findViewById(R.id.radio_monday);
+        edit_tuesday = v.findViewById(R.id.radio_tuesday);
+        edit_wednesday = v.findViewById(R.id.radio_wednesday);
+        edit_thursday = v.findViewById(R.id.radio_thursday);
+        edit_friday = v.findViewById(R.id.radio_friday);
+        edit_saturday = v.findViewById(R.id.radio_saturday);
+        color_button = v.findViewById(R.id.color_button);
 
-        cancel_button = (ImageButton) v.findViewById(R.id.cancel_button);
-        save_button = (ImageButton) v.findViewById(R.id.save_button);
+        cancel_button = v.findViewById(R.id.cancel_button);
+        save_button = v.findViewById(R.id.save_button);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, dropdown_intensity_items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -200,7 +200,7 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
                     dismiss();
                 } else
                 {
-                    Toast.makeText(getContext(), "Please make sure all fields are filled. Repeating is optional.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please make sure all fields are filled. Repeating and details are optional.", Toast.LENGTH_SHORT).show();
                 }
                 
             }
@@ -209,7 +209,7 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
 
     private boolean checkInput()
     {
-        boolean mainFields = (!isEditTextEmpty(edit_name) && !isEditTextEmpty(edit_details) && !isEditTextEmpty(edit_time) && !isEditTextEmpty(edit_startDate) && temp_color != 0);
+        boolean mainFields = (!isEditTextEmpty(edit_name) && !isEditTextEmpty(edit_time) && !isEditTextEmpty(edit_startDate) && temp_color != 0);
         boolean repeatingFields = isOneRepeatCheckBokChecked() && !isEditTextEmpty(edit_endDate);
         if(!isRepeating)
             return mainFields;

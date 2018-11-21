@@ -68,7 +68,10 @@ public class PhysicalActivity {
     }
 
     public String getDetails() {
-        return details;
+        if (details == null)
+            return "";
+        else
+            return details;
     }
 
     public void setDetails(String details) {

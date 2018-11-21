@@ -10,11 +10,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import app.collegeorganizer.fragments.Fragment_AddPhysicalActivity;
-import app.collegeorganizer.fragments.Fragment_EditPhysicalActivity;
 import app.collegeorganizer.PhysicalActivityAdapter;
 import app.collegeorganizer.R;
 import app.collegeorganizer.data.PhysicalActivity;
+import app.collegeorganizer.fragments.Fragment_AddPhysicalActivity;
+import app.collegeorganizer.fragments.Fragment_EditPhysicalActivity;
 
 
 public class Activity_PhysicalActivityScheduler extends AppCompatActivity implements DialogInterface.OnDismissListener {
@@ -26,12 +26,13 @@ public class Activity_PhysicalActivityScheduler extends AppCompatActivity implem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_physical_scheduler);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Physical Activity Scheduler");
 
-        list = (ListView) findViewById(R.id.physical_activity_schedule);
+        list = findViewById(R.id.physical_activity_schedule);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.add_physical_activity);
+        FloatingActionButton fab = findViewById(R.id.add_physical_activity);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,7 +63,7 @@ public class Activity_PhysicalActivityScheduler extends AppCompatActivity implem
     private void refreshList()
     {
         list.setAdapter(null);
-        final ListView lv = (ListView) findViewById(R.id.physical_activity_schedule);
+        final ListView lv = findViewById(R.id.physical_activity_schedule);
         lv.setAdapter(new PhysicalActivityAdapter(this, Activity_Main.physicalActivityList));
     }
 
