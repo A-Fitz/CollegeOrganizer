@@ -63,8 +63,7 @@ public class Activity_PhysicalActivityScheduler extends AppCompatActivity implem
     private void refreshList()
     {
         list.setAdapter(null);
-        final ListView lv = findViewById(R.id.physical_activity_schedule);
-        lv.setAdapter(new PhysicalActivityAdapter(this, Activity_Main.physicalActivityList));
+        list.setAdapter(new PhysicalActivityAdapter(this, Activity_Main.physicalActivityList));
     }
 
 }
