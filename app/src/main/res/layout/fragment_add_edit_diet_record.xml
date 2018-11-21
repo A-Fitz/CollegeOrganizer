@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.Fragment_AddDietRecord">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/textinput_food_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/add_physical_activity_textinput_height"
+                    android:hint="Food Name" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/textinput_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/add_physical_activity_textinput_height"
+                    android:hint="Amount" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <EditText
+                android:id="@+id/textinput_time"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/add_physical_activity_textinput_height"
+                android:clickable="true"
+                android:editable="false"
+                android:hint="Time" />
+
+            <EditText
+                android:id="@+id/textinput_date"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/add_physical_activity_textinput_height"
+                android:clickable="true"
+                android:editable="false"
+                android:enabled="true"
+                android:hint="Date" />
+
+            <Spinner
+                android:id="@+id/meal_category_dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/add_physical_activity_textinput_height" />
+
+            <Button
+                android:id="@+id/color_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Color"
+                android:textAllCaps="false" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:visibility="visible">
+
+                <ImageButton
+                    android:id="@+id/delete_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_delete"
+                    android:visibility="gone" />
+
+                <ImageButton
+                    android:id="@+id/cancel_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_close" />
+
+                <ImageButton
+                    android:id="@+id/save_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_check" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/calories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Calories"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/total_fat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Total Fat"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/saturated_fat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Saturated Fat"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/trans_fat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Trans Fat"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/cholesterol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Cholesterol"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/sodium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Sodium"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/total_carbohydrate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Carbohydrates"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/dietary_fiber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Dietary Fiber"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/total_sugars"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Total Sugars"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/protein"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Protein"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/calcium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Calcium"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/iron"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Iron"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/potassium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Potassium"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/vitamin_a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Vitamin A"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/vitamin_b12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Vitamin B12"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/vitamin_c"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Vitamin C"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/vitamin_d"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Vitamin D"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/vitamin_e"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Vitamin E"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/vitamin_k"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Vitamin K"
+                android:inputType="number" />
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

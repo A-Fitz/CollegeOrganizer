@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#00574b</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="bg_transparent">#00000000</color>
+
     <color name="tomato">#d73f24</color>
     <color name="flamingo">#e67c73</color>
     <color name="tangerine">#ec4f29</color>

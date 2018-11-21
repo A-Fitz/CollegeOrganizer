@@ -27,13 +27,17 @@
             android:label="@string/title_activity_physical_scheduler"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".activities.Activity_AcademicSchedulerRecorder"
+            android:label="@string/title_activity_academic"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".activities.Activity_SocialScheduler"
             android:label="@string/title_activity_social_scheduler"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.Activity_AcademicSchedulerRecorder"
-            android:label="@string/title_activity_academic"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".activities.Activity_DietRecorder"
+            android:label="@string/title_activity_diet_recorder"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
