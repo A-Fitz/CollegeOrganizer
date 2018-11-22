@@ -1,18 +1,15 @@
 package app.collegeorganizer.activities;
 
-import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
-import com.alamkanak.weekview.WeekViewEvent;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -52,12 +49,15 @@ public abstract class Activity_BaseCalendar extends AppCompatActivity implements
         mWeekView.setMonthChangeListener(this);
 
         // Set long press listener for events.
-        mWeekView.setEventLongPressListener(this);
+        //mWeekView.setEventLongPressListener(this);
 
         // Set long press listener for empty view
-        mWeekView.setEmptyViewLongPressListener(this);
+        //mWeekView.setEmptyViewLongPressListener(this);
 
         mWeekView.setShowNowLine(true);
+        mWeekView.setNowLineColor(getResources().getColor(android.R.color.holo_blue_bright));
+
+        mWeekViewType = TYPE_DAY_VIEW;
 
         // Set up a date time interpreter to interpret how the date and time will be formatted in
         // the week view. This is optional.
@@ -151,21 +151,6 @@ public abstract class Activity_BaseCalendar extends AppCompatActivity implements
 
     protected String getEventTitle(Calendar time) {
         return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH) + 1, time.get(Calendar.DAY_OF_MONTH));
-    }
-
-    @Override
-    public void onEventClick(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onEmptyViewLongPress(Calendar time) {
-        Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
     }
 
     public WeekView getWeekView() {

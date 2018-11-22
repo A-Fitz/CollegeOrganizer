@@ -26,12 +26,12 @@ import java.util.List;
 import app.collegeorganizer.OnColorChosenListener;
 import app.collegeorganizer.R;
 import app.collegeorganizer.activities.Activity_Main;
-import app.collegeorganizer.data.SocialEvent;
+import app.collegeorganizer.data.SocialActivity;
 
 @SuppressLint("NewApi")
 public class Fragment_EditSocialActivity extends DialogFragment {
 
-    private SocialEvent item;
+    private SocialActivity item;
 
     private String name;
     private Calendar startTime = Calendar.getInstance();
@@ -84,7 +84,7 @@ public class Fragment_EditSocialActivity extends DialogFragment {
         color = item.getColor();
         details = item.getDetails();
         location = item.getLocation();
-        if (item.getRepeatingDays().length() != 0)
+        if (item.doesRepeat())
             isRepeating = true;
 
         if (isRepeating) {
@@ -93,7 +93,7 @@ public class Fragment_EditSocialActivity extends DialogFragment {
         }
     }
 
-    public void setItem(SocialEvent item) {
+    public void setItem(SocialActivity item) {
         this.item = item;
     }
 
@@ -227,7 +227,7 @@ public class Fragment_EditSocialActivity extends DialogFragment {
             @Override
             public void onClick(View v) {
                 //ask if sure TODO
-                Activity_Main.socialEventList.remove(item);
+                Activity_Main.socialActivityList.remove(item);
                 dismiss();
             }
         });
@@ -248,7 +248,7 @@ public class Fragment_EditSocialActivity extends DialogFragment {
                     details = edit_details.getText().toString();
                     location = edit_location.getText().toString();
                     color = temp_color;
-                    SocialEvent se;
+                    SocialActivity se;
                     if (isRepeating) {
                         changeRepeatBoxes();
                         if (repeating != null)
@@ -269,13 +269,13 @@ public class Fragment_EditSocialActivity extends DialogFragment {
                             repeating.add("S");
 
                         repeatUntilDate = temp_repeatUntilDate;
-                        se = new SocialEvent(name, details, location, startTime, endTime, repeatUntilDate, repeating, color);
+                        se = new SocialActivity(name, details, location, startTime, endTime, repeatUntilDate, repeating, color);
                     } else
-                        se = new SocialEvent(name, details, location, startTime, endTime, color);
+                        se = new SocialActivity(name, details, location, startTime, endTime, color);
 
-                    int index = Activity_Main.socialEventList.indexOf(item);
+                    int index = Activity_Main.socialActivityList.indexOf(item);
 
-                    Activity_Main.socialEventList.set(index, se);
+                    Activity_Main.socialActivityList.set(index, se);
 
                     dismiss();
                 } else {

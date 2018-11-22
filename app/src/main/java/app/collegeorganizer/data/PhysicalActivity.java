@@ -1,5 +1,6 @@
 package app.collegeorganizer.data;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
@@ -37,6 +38,19 @@ public class PhysicalActivity {
         this.intensity = intensity;
     }
 
+    public PhysicalActivity(PhysicalActivity copy) {
+        this.name = copy.getName();
+        this.startTime = (Calendar) copy.getStartTime().clone();
+        this.endTime = (Calendar) copy.getEndTime().clone();
+        this.color = copy.color;
+        this.details = copy.getDetails();
+        this.repeating = new ArrayList<String>();
+        for (String str : copy.repeating) {
+            this.repeating.add(str);
+        }
+        this.repeatUntilDate = (Calendar) copy.getRepeatUntilDate().clone();
+        this.intensity = copy.getIntensity();
+    }
 
     public String getName() {
         return name;
@@ -70,13 +84,6 @@ public class PhysicalActivity {
         this.color = color;
     }
 
-    public String getDetails() {
-        if (details == null)
-            return "";
-        else
-            return details;
-    }
-
     public void setDetails(String details) {
         this.details = details;
     }
@@ -105,6 +112,13 @@ public class PhysicalActivity {
         this.intensity = intensity;
     }
 
+    public String getDetails() {
+        if (details == null)
+            return "";
+        else
+            return details;
+    }
+
     public String getRepeatingDays() {
         if(repeating == null || repeating.size() == 0)
             return "";
@@ -116,6 +130,10 @@ public class PhysicalActivity {
 
             return toRtr.substring(0, toRtr.length()-1);
         }
+    }
+
+    public boolean doesRepeat() {
+        return getRepeatingDays().length() != 0;
     }
 
     public int getStartMinute() {

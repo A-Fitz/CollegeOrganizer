@@ -10,17 +10,17 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import app.collegeorganizer.data.SocialEvent;
+import app.collegeorganizer.data.SocialActivity;
 
 public class SocialActivityAdapter extends BaseAdapter {
-    private static List<SocialEvent> searchArrayList;
+    private static List<SocialActivity> searchArrayList;
 
     private SimpleDateFormat format_time = new SimpleDateFormat("hh:mm a");
     private SimpleDateFormat format_date = new SimpleDateFormat("MM/dd/yyy");
 
     private LayoutInflater mInflater;
 
-    public SocialActivityAdapter(Context context, List<SocialEvent> results) {
+    public SocialActivityAdapter(Context context, List<SocialActivity> results) {
         searchArrayList = results;
         mInflater = LayoutInflater.from(context);
     }

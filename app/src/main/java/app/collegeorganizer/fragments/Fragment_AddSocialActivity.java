@@ -26,7 +26,7 @@ import java.util.List;
 import app.collegeorganizer.OnColorChosenListener;
 import app.collegeorganizer.R;
 import app.collegeorganizer.activities.Activity_Main;
-import app.collegeorganizer.data.SocialEvent;
+import app.collegeorganizer.data.SocialActivity;
 
 @SuppressLint("NewApi")
 public class Fragment_AddSocialActivity extends DialogFragment {
@@ -169,7 +169,7 @@ public class Fragment_AddSocialActivity extends DialogFragment {
                     details = edit_details.getText().toString();
                     location = edit_location.getText().toString();
                     color = temp_color;
-                    SocialEvent se;
+                    SocialActivity se;
                     if (isRepeating) {
                         if (edit_sunday.isChecked())
                             repeating.add("SU");
@@ -187,11 +187,11 @@ public class Fragment_AddSocialActivity extends DialogFragment {
                             repeating.add("S");
 
                         repeatUntilDate = temp_repeatUntilDate;
-                        se = new SocialEvent(name, details, location, startTime, endTime, repeatUntilDate, repeating, color);
+                        se = new SocialActivity(name, details, location, startTime, endTime, repeatUntilDate, repeating, color);
                     } else
-                        se = new SocialEvent(name, details, location, startTime, endTime, color);
+                        se = new SocialActivity(name, details, location, startTime, endTime, color);
 
-                    Activity_Main.socialEventList.add(se);
+                    Activity_Main.socialActivityList.add(se);
 
                     dismiss();
                 } else {

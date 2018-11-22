@@ -1,10 +1,11 @@
 package app.collegeorganizer.data;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
-public class SocialEvent {
+public class SocialActivity {
     private String name;
     private String details;
     private String location;
@@ -17,7 +18,7 @@ public class SocialEvent {
 
     private int color;
 
-    public SocialEvent(String name, String details, String location, Calendar startTime, Calendar endTime, Calendar repeatUntilDate, List<String> repeating, int color) {
+    public SocialActivity(String name, String details, String location, Calendar startTime, Calendar endTime, Calendar repeatUntilDate, List<String> repeating, int color) {
         this.name = name;
         this.details = details;
         this.location = location;
@@ -28,13 +29,27 @@ public class SocialEvent {
         this.color = color;
     }
 
-    public SocialEvent(String name, String details, String location, Calendar startTime, Calendar endTime, int color) {
+    public SocialActivity(String name, String details, String location, Calendar startTime, Calendar endTime, int color) {
         this.name = name;
         this.details = details;
         this.location = location;
         this.startTime = startTime;
         this.endTime = endTime;
         this.color = color;
+    }
+
+    public SocialActivity(SocialActivity copy) {
+        this.name = copy.getName();
+        this.startTime = (Calendar) copy.getStartTime().clone();
+        this.endTime = (Calendar) copy.getEndTime().clone();
+        this.color = copy.color;
+        this.details = copy.getDetails();
+        this.repeating = new ArrayList<String>();
+        for (String str : copy.repeating) {
+            this.repeating.add(str);
+        }
+        this.repeatUntilDate = (Calendar) copy.getRepeatUntilDate().clone();
+        this.location = copy.getLocation();
     }
 
     public String getName() {
@@ -117,6 +132,10 @@ public class SocialEvent {
         }
     }
 
+    public boolean doesRepeat() {
+        return getRepeatingDays().length() != 0;
+    }
+
     public int getStartMinute() {
         return startTime.get(Calendar.MINUTE);
     }
@@ -165,7 +184,7 @@ public class SocialEvent {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SocialEvent that = (SocialEvent) o;
+        SocialActivity that = (SocialActivity) o;
         return color == that.color &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(details, that.details) &&

@@ -89,7 +89,7 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
         color = item.getColor();
         details = item.getDetails();
         intensity = item.getIntensity();
-        if(item.getRepeatingDays().length() != 0)
+        if (item.doesRepeat())
             isRepeating = true;
 
         if(isRepeating) {

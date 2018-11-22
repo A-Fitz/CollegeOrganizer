@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 import app.collegeorganizer.R;
 import app.collegeorganizer.SocialActivityAdapter;
-import app.collegeorganizer.data.SocialEvent;
+import app.collegeorganizer.data.SocialActivity;
 import app.collegeorganizer.fragments.Fragment_AddSocialActivity;
 import app.collegeorganizer.fragments.Fragment_EditSocialActivity;
 
@@ -45,7 +45,7 @@ public class Activity_SocialScheduler extends AppCompatActivity implements Dialo
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                SocialEvent item = (SocialEvent) parent.getItemAtPosition(position);
+                SocialActivity item = (SocialActivity) parent.getItemAtPosition(position);
                 DialogFragment newFragment = Fragment_EditSocialActivity.newInstance();
                 newFragment.show(getSupportFragmentManager(), "Edit Social Activity");
                 ((Fragment_EditSocialActivity) newFragment).setItem(item);
@@ -62,7 +62,7 @@ public class Activity_SocialScheduler extends AppCompatActivity implements Dialo
 
     private void refreshList() {
         list.setAdapter(null);
-        list.setAdapter(new SocialActivityAdapter(this, Activity_Main.socialEventList));
+        list.setAdapter(new SocialActivityAdapter(this, Activity_Main.socialActivityList));
     }
 
 }
