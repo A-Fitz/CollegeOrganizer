@@ -1,7 +1,8 @@
 package app.collegeorganizer.activities;
 
 import android.graphics.RectF;
-import android.widget.Toast;
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 
 import com.alamkanak.weekview.WeekViewEvent;
 
@@ -11,6 +12,8 @@ import java.util.List;
 
 import app.collegeorganizer.data.PhysicalActivity;
 import app.collegeorganizer.data.SocialActivity;
+import app.collegeorganizer.fragments.Fragment_ViewPhysicalActivityEvent;
+import app.collegeorganizer.fragments.Fragment_ViewSocialActivityEvent;
 
 public class Activity_Calendar extends Activity_BaseCalendar {
     private static List<PhysicalActivity> repeating_physicalActivityList = Activity_Main.repeating_physicalActivityList;
@@ -34,21 +37,27 @@ public class Activity_Calendar extends Activity_BaseCalendar {
         return events;
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRepeating();
+    }
+
     private List<WeekViewEvent> getEvents(int newYear, int newMonth) {
         List<WeekViewEvent> tempEvents = new ArrayList<>();
-        setRepeating();
+
 
         for (PhysicalActivity py : Activity_Main.repeating_physicalActivityList) {
             if (py.getMonth() == newMonth - 1 && py.getYear() == newYear) {
                 Calendar startTime = Calendar.getInstance();
                 startTime.set(Calendar.DAY_OF_MONTH, py.getDay());
-                startTime.set(Calendar.HOUR, py.getStartHour());
+                startTime.set(Calendar.HOUR_OF_DAY, py.getStartHour());
                 startTime.set(Calendar.MINUTE, py.getStartMinute());
                 startTime.set(Calendar.MONTH, newMonth - 1);
                 startTime.set(Calendar.YEAR, newYear);
 
                 Calendar endTime = (Calendar) startTime.clone();
-                endTime.set(Calendar.HOUR, py.getEndHour());
+                endTime.set(Calendar.HOUR_OF_DAY, py.getEndHour());
                 endTime.set(Calendar.MINUTE, py.getEndMinute());
                 endTime.set(Calendar.MONTH, newMonth - 1);
 
@@ -85,7 +94,19 @@ public class Activity_Calendar extends Activity_BaseCalendar {
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
+        Object eventByID = findActivityByID(event.getId());
+
+        if (eventByID instanceof PhysicalActivity) {
+            PhysicalActivity item = (PhysicalActivity) eventByID;
+            DialogFragment newFragment = Fragment_ViewPhysicalActivityEvent.newInstance();
+            newFragment.show(getSupportFragmentManager(), "View Event");
+            ((Fragment_ViewPhysicalActivityEvent) newFragment).setEvent(item);
+        } else if (eventByID instanceof SocialActivity) {
+            SocialActivity item = (SocialActivity) eventByID;
+            DialogFragment newFragment = Fragment_ViewSocialActivityEvent.newInstance();
+            newFragment.show(getSupportFragmentManager(), "View Event");
+            ((Fragment_ViewSocialActivityEvent) newFragment).setEvent(item);
+        }
     }
 
     @Override
@@ -98,13 +119,26 @@ public class Activity_Calendar extends Activity_BaseCalendar {
 
     }
 
+    private Object findActivityByID(long id) {
+        for (PhysicalActivity py : repeating_physicalActivityList) {
+            if (py.hashCode() == id)
+                return py;
+        }
+        for (SocialActivity se : repeating_socialActivityList) {
+            if (se.hashCode() == id)
+                return se;
+        }
+
+        return null;
+    }
+
     private void setRepeating() {
         if (repeating_physicalActivityList.size() != 0)
             repeating_physicalActivityList.clear();
 
         for (PhysicalActivity py : physicalActivityList) {
             if (py.doesRepeat())
-                addTorepeating_physicalActivityList(py);
+                addTo_repeating_physicalActivityList(py);
             else {
                 repeating_physicalActivityList.add(py);
             }
@@ -115,14 +149,14 @@ public class Activity_Calendar extends Activity_BaseCalendar {
 
         for (SocialActivity se : socialActivityList) {
             if (se.doesRepeat())
-                addTorepeating_socialActivityList(se);
+                addTo_repeating_socialActivityList(se);
             else {
                 repeating_socialActivityList.add(se);
             }
         }
     }
 
-    private void addTorepeating_physicalActivityList(PhysicalActivity py) {
+    private void addTo_repeating_physicalActivityList(PhysicalActivity py) {
         List<String> repeatingDaysTemp = py.getRepeating();
         List<Integer> repeatingDays = getRepeatingDays(repeatingDaysTemp);
 
@@ -154,7 +188,7 @@ public class Activity_Calendar extends Activity_BaseCalendar {
         }
     }
 
-    private void addTorepeating_socialActivityList(SocialActivity se) {
+    private void addTo_repeating_socialActivityList(SocialActivity se) {
         List<String> repeatingDaysTemp = se.getRepeating();
         List<Integer> repeatingDays = getRepeatingDays(repeatingDaysTemp);
 

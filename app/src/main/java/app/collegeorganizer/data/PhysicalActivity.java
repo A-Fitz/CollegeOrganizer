@@ -141,7 +141,7 @@ public class PhysicalActivity {
     }
 
     public int getStartHour() {
-        return startTime.get(Calendar.HOUR);
+        return startTime.get(Calendar.HOUR_OF_DAY);
     }
 
     public int getDay() {
@@ -161,7 +161,7 @@ public class PhysicalActivity {
     }
 
     public int getEndHour() {
-        return endTime.get(Calendar.HOUR);
+        return endTime.get(Calendar.HOUR_OF_DAY);
     }
 
     public int getRepeatEndDay() {

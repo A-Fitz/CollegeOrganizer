@@ -62,6 +62,8 @@ public abstract class Activity_BaseCalendar extends AppCompatActivity implements
         // Set up a date time interpreter to interpret how the date and time will be formatted in
         // the week view. This is optional.
         setupDateTimeInterpreter(false);
+
+
     }
 
 
