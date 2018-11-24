@@ -142,43 +142,43 @@ public class Fragment_EditDietRecord extends DialogFragment {
         temp_color = color;
 
         if (calories != 0)
-            edit_calories.setText(calories);
+            edit_calories.setText(String.valueOf(calories));
         if (total_fat != 0)
-            edit_total_fat.setText(total_fat);
+            edit_total_fat.setText(String.valueOf(total_fat));
         if (saturated_fat != 0)
-            edit_saturated_fat.setText(saturated_fat);
+            edit_saturated_fat.setText(String.valueOf(saturated_fat));
         if (trans_fat != 0)
-            edit_trans_fat.setText(trans_fat);
+            edit_trans_fat.setText(String.valueOf(trans_fat));
         if (cholesterol != 0)
-            edit_cholesterol.setText(cholesterol);
+            edit_cholesterol.setText(String.valueOf(cholesterol));
         if (sodium != 0)
-            edit_sodium.setText(sodium);
+            edit_sodium.setText(String.valueOf(sodium));
         if (total_carbohydrate != 0)
-            edit_total_carbohydrate.setText(total_carbohydrate);
+            edit_total_carbohydrate.setText(String.valueOf(total_carbohydrate));
         if (dietary_fiber != 0)
-            edit_dietary_fiber.setText(dietary_fiber);
+            edit_dietary_fiber.setText(String.valueOf(dietary_fiber));
         if (total_sugars != 0)
-            edit_total_sugars.setText(total_sugars);
+            edit_total_sugars.setText(String.valueOf(total_sugars));
         if (protein != 0)
-            edit_protein.setText(protein);
+            edit_protein.setText(String.valueOf(protein));
         if (calcium != 0)
-            edit_calcium.setText(calcium);
+            edit_calcium.setText(String.valueOf(calcium));
         if (iron != 0)
-            edit_iron.setText(iron);
+            edit_iron.setText(String.valueOf(iron));
         if (potassium != 0)
-            edit_potassium.setText(potassium);
+            edit_potassium.setText(String.valueOf(potassium));
         if (vitamin_a != 0)
-            edit_vitamin_a.setText(vitamin_a);
+            edit_vitamin_a.setText(String.valueOf(vitamin_a));
         if (vitamin_b12 != 0)
-            edit_vitamin_a.setText(vitamin_b12);
+            edit_vitamin_a.setText(String.valueOf(vitamin_b12));
         if (vitamin_c != 0)
-            edit_vitamin_a.setText(vitamin_c);
+            edit_vitamin_a.setText(String.valueOf(vitamin_c));
         if (vitamin_d != 0)
-            edit_vitamin_a.setText(vitamin_d);
+            edit_vitamin_a.setText(String.valueOf(vitamin_d));
         if (vitamin_e != 0)
-            edit_vitamin_a.setText(vitamin_e);
+            edit_vitamin_a.setText(String.valueOf(vitamin_e));
         if (vitamin_k != 0)
-            edit_vitamin_a.setText(vitamin_k);
+            edit_vitamin_a.setText(String.valueOf(vitamin_k));
     }
 
     public void setItem(DietItem item) {

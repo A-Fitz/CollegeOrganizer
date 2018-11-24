@@ -1,5 +1,7 @@
 package app.collegeorganizer.data;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -176,6 +178,50 @@ public class PhysicalActivity {
         return repeatUntilDate.get(Calendar.YEAR);
     }
 
+    public void setStartMinute(int startMinute) {
+        this.startTime.set(Calendar.MINUTE, startMinute);
+    }
+
+    public void setStartHour(int startHour) {
+        Log.d("TESTF", "curr:" + getStartHour() + ", new:" + startHour);
+        this.startTime.set(Calendar.HOUR_OF_DAY, startHour);
+    }
+
+    public void setDay(int day) {
+        this.startTime.set(Calendar.DAY_OF_MONTH, day);
+        this.endTime.set(Calendar.DAY_OF_MONTH, day);
+    }
+
+    public void setMonth(int month) {
+        this.startTime.set(Calendar.MONTH, month);
+        this.endTime.set(Calendar.MONTH, month);
+    }
+
+    public void setYear(int year) {
+        this.startTime.set(Calendar.YEAR, year);
+        this.endTime.set(Calendar.YEAR, year);
+    }
+
+    public void setEndMinute(int endMinute) {
+        this.endTime.set(Calendar.MINUTE, endMinute);
+    }
+
+    public void setEndHour(int endHour) {
+        this.endTime.set(Calendar.HOUR_OF_DAY, endHour);
+    }
+
+    public void setRepeatEndDay(int endDay) {
+        this.repeatUntilDate.set(Calendar.DAY_OF_MONTH, endDay);
+    }
+
+    public void setRepeatEndMonth(int endMonth) {
+        this.repeatUntilDate.set(Calendar.MONTH, endMonth);
+    }
+
+    public void setRepeatEndYear(int endYear) {
+        this.repeatUntilDate.set(Calendar.YEAR, endYear);
+    }
+
     public String getTitle() {
         return "Physical Activity : " + this.name;
     }
@@ -187,8 +233,6 @@ public class PhysicalActivity {
         PhysicalActivity that = (PhysicalActivity) o;
         return color == that.color &&
                 Objects.equals(name, that.name) &&
-                Objects.equals(startTime, that.startTime) &&
-                Objects.equals(endTime, that.endTime) &&
                 Objects.equals(details, that.details) &&
                 Objects.equals(repeating, that.repeating) &&
                 Objects.equals(repeatUntilDate, that.repeatUntilDate) &&

@@ -141,7 +141,7 @@ public class SocialActivity {
     }
 
     public int getStartHour() {
-        return startTime.get(Calendar.HOUR);
+        return startTime.get(Calendar.HOUR_OF_DAY);
     }
 
     public int getDay() {
@@ -161,7 +161,7 @@ public class SocialActivity {
     }
 
     public int getEndHour() {
-        return endTime.get(Calendar.HOUR);
+        return endTime.get(Calendar.HOUR_OF_DAY);
     }
 
     public int getRepeatEndDay() {
@@ -176,8 +176,52 @@ public class SocialActivity {
         return repeatUntilDate.get(Calendar.YEAR);
     }
 
+
+    public void setStartMinute(int startMinute) {
+        this.startTime.set(Calendar.MINUTE, startMinute);
+    }
+
+    public void setStartHour(int startHour) {
+        this.startTime.set(Calendar.HOUR_OF_DAY, startHour);
+    }
+
+    public void setDay(int day) {
+        this.startTime.set(Calendar.DAY_OF_MONTH, day);
+        this.endTime.set(Calendar.DAY_OF_MONTH, day);
+    }
+
+    public void setMonth(int month) {
+        this.startTime.set(Calendar.MONTH, month);
+        this.endTime.set(Calendar.MONTH, month);
+    }
+
+    public void setYear(int year) {
+        this.startTime.set(Calendar.YEAR, year);
+        this.endTime.set(Calendar.YEAR, year);
+    }
+
+    public void setEndMinute(int endMinute) {
+        this.endTime.set(Calendar.MINUTE, endMinute);
+    }
+
+    public void setEndHour(int endHour) {
+        this.endTime.set(Calendar.HOUR_OF_DAY, endHour);
+    }
+
+    public void setRepeatEndDay(int endDay) {
+        this.repeatUntilDate.set(Calendar.DAY_OF_MONTH, endDay);
+    }
+
+    public void setRepeatEndMonth(int endMonth) {
+        this.repeatUntilDate.set(Calendar.MONTH, endMonth);
+    }
+
+    public void setRepeatEndYear(int endYear) {
+        this.repeatUntilDate.set(Calendar.YEAR, endYear);
+    }
+
     public String getTitle() {
-        return "Social Event : " + this.name;
+        return "Social Activity : " + this.name;
     }
 
     @Override
@@ -189,8 +233,6 @@ public class SocialActivity {
                 Objects.equals(name, that.name) &&
                 Objects.equals(details, that.details) &&
                 Objects.equals(location, that.location) &&
-                Objects.equals(startTime, that.startTime) &&
-                Objects.equals(endTime, that.endTime) &&
                 Objects.equals(repeatUntilDate, that.repeatUntilDate) &&
                 Objects.equals(repeating, that.repeating);
     }

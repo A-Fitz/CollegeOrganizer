@@ -191,7 +191,10 @@ public class Fragment_AddSocialActivity extends DialogFragment {
                     } else
                         se = new SocialActivity(name, details, location, startTime, endTime, color);
 
-                    Activity_Main.socialActivityList.add(se);
+                    Activity_Main.socialScheduleList.add(se);
+
+                    if (se.doesRepeat())
+                        addRepeating(se);
 
                     dismiss();
                 } else {
@@ -200,6 +203,88 @@ public class Fragment_AddSocialActivity extends DialogFragment {
 
             }
         });
+    }
+
+    private void addRepeating(SocialActivity se) {
+        List<String> repeatingDaysTemp = se.getRepeating();
+        List<Integer> repeatingDays = getRepeatingDays(repeatingDaysTemp);
+
+        Activity_Main._socialActivityList.add(se);
+
+        SocialActivity temp = new SocialActivity(se);
+
+
+        while (true) {
+            temp = new SocialActivity(temp);
+            for (int i : repeatingDays) {
+                SocialActivity temp2 = incrementSocialActivityDate(temp, i);
+
+                if (temp2.getDay() > temp2.getRepeatEndDay() && temp2.getMonth() >= temp2.getRepeatEndMonth())
+                    return;
+
+                if (temp2.getMonth() > temp2.getRepeatEndMonth() && temp2.getYear() == temp2.getRepeatEndYear())
+                    return;
+
+                Activity_Main._socialActivityList.add(temp2);
+
+            }
+        }
+    }
+
+    private SocialActivity incrementSocialActivityDate(SocialActivity se, int nextDay) {
+        Calendar currDay = se.getStartTime();
+
+        Calendar nextStartTime = getNextDay(currDay, nextDay);
+        Calendar nextEndTime = (Calendar) nextStartTime.clone();
+        nextEndTime.set(Calendar.HOUR, se.getEndHour());
+        nextEndTime.set(Calendar.MINUTE, se.getEndMinute());
+
+        SocialActivity toReturn = new SocialActivity(se);
+
+        return toReturn;
+    }
+
+    private Calendar getNextDay(Calendar date, int dayOfWeek) {
+
+        int diff = dayOfWeek - date.get(Calendar.DAY_OF_WEEK);
+        if (diff <= 0) {
+            diff += 7;
+        }
+        date.add(Calendar.DAY_OF_MONTH, diff);
+        //Log.d("TESTF", String.valueOf("********** nextDay: dayOfWeek(" + dayOfWeek + "), diff(" + diff + "), newDate day(" + date.get(Calendar.DAY_OF_MONTH) + "), newDate month(" + date.get(Calendar.MONTH) + ")"));
+        return date;
+    }
+
+    private List<Integer> getRepeatingDays(List<String> repeatingDaysTemp) {
+        List<Integer> repeatingDays = new ArrayList<Integer>();
+
+        for (String str : repeatingDaysTemp) {
+            switch (str) {
+                case "SU":
+                    repeatingDays.add(Calendar.SUNDAY);
+                    break;
+                case "M":
+                    repeatingDays.add(Calendar.MONDAY);
+                    break;
+                case "T":
+                    repeatingDays.add(Calendar.TUESDAY);
+                    break;
+                case "W":
+                    repeatingDays.add(Calendar.WEDNESDAY);
+                    break;
+                case "TH":
+                    repeatingDays.add(Calendar.THURSDAY);
+                    break;
+                case "F":
+                    repeatingDays.add(Calendar.FRIDAY);
+                    break;
+                case "S":
+                    repeatingDays.add(Calendar.SATURDAY);
+                    break;
+            }
+        }
+
+        return repeatingDays;
     }
 
     private boolean checkInput() {

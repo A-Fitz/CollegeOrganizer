@@ -75,7 +75,7 @@ public class Activity_DietRecorder extends AppCompatActivity implements DialogIn
             }
         });
 
-        date_text.setText(String.format(String.valueOf(time.get(Calendar.MONTH)) + "/" + String.valueOf(time.get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(time.get(Calendar.YEAR))));
+        date_text.setText(String.format(String.valueOf(time.get(Calendar.MONTH) + 1) + "/" + String.valueOf(time.get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(time.get(Calendar.YEAR))));
         refreshList();
     }
 

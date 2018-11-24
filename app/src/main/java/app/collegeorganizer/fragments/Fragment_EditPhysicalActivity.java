@@ -67,9 +67,6 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
     private ImageButton save_button;
 
     private boolean isRepeating = false;
-    private Calendar temp_repeatUntilDate = Calendar.getInstance();
-    private Calendar temp_startTime = Calendar.getInstance();
-    private Calendar temp_endTime = Calendar.getInstance();
     private int temp_color = 0;
 
     private SimpleDateFormat format_time = new SimpleDateFormat("hh:mm a");
@@ -107,9 +104,9 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
     {
         edit_name.setText(name);
         edit_startTime.setText(String.valueOf(format_time.format(item.getStartTime().getTime())));
-        temp_startTime = item.getStartTime();
+        startTime = item.getStartTime();
         edit_endTime.setText(String.valueOf(format_time.format(item.getEndTime().getTime())));
-        temp_endTime = item.getEndTime();
+        endTime = item.getEndTime();
         edit_details.setText(details);
         edit_date.setText(format_date.format(item.getStartTime().getTime()));
         switch(intensity)
@@ -125,7 +122,7 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
         {
             changeRepeatBoxes();
             edit_repeatUntilDate.setText(format_date.format(item.getRepeatUntilDate().getTime()));
-            temp_repeatUntilDate = item.getRepeatUntilDate();
+            repeatUntilDate = item.getRepeatUntilDate();
             for(String s : item.getRepeating())
             {
                 switch(s)
@@ -248,7 +245,8 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
             @Override
             public void onClick(View v) {
                 //ask if sure TODO
-                Activity_Main.physicalActivityList.remove(item);
+                Activity_Main.physicalScheduleList.remove(item);
+                deleteAll(item);
                 dismiss();
             }
         });
@@ -265,8 +263,6 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
                 if(checkInput())
                 {
                     name = edit_name.getText().toString();
-                    startTime = temp_startTime;
-                    endTime = temp_endTime;
                     details = edit_details.getText().toString();
                     switch(edit_intensity.getSelectedItem().toString()) {
                         case "Light":
@@ -297,15 +293,26 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
                             repeating.add("F");
                         if(edit_saturday.isChecked())
                             repeating.add("S");
-
-                        repeatUntilDate = temp_repeatUntilDate;
                         py = new PhysicalActivity(name, startTime, endTime, color, details, repeating, repeatUntilDate, intensity);
                     } else
                         py = new PhysicalActivity(name, startTime, endTime, color, details, intensity);
 
-                    int index = Activity_Main.physicalActivityList.indexOf(item);
 
-                    Activity_Main.physicalActivityList.set(index, py);
+                    if (!item.doesRepeat() && py.doesRepeat()) {
+                        addRepeating(py);
+                    }
+
+                    if (item.doesRepeat() && !py.doesRepeat()) {
+                        deleteAll(item);
+                        Activity_Main._physicalActivityList.add(py);
+                    }
+
+
+                    int index = Activity_Main.physicalScheduleList.indexOf(item);
+
+                    Activity_Main.physicalScheduleList.set(index, py);
+
+                    setAllActivities(py);
 
                     dismiss();
                 } else
@@ -314,6 +321,123 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
                 }
             }
         });
+    }
+
+    private void setAllActivities(PhysicalActivity py) {
+        for (int i = 0; i < Activity_Main._physicalActivityList.size(); i++) {
+            if (Activity_Main._physicalActivityList.get(i).equals(item)) {
+                PhysicalActivity that = Activity_Main._physicalActivityList.get(i);
+                that.setName(py.getName());
+                that.setDetails(py.getDetails());
+                that.setIntensity(py.getIntensity());
+                that.setRepeating(py.getRepeating());
+                that.setRepeatUntilDate(py.getRepeatUntilDate());
+                that.setColor(py.getColor());
+
+                that.setStartMinute(py.getStartMinute());
+                that.setStartHour(py.getStartHour());
+
+                that.setEndMinute(py.getEndMinute());
+                that.setEndHour(py.getEndHour());
+
+                Activity_Main._physicalActivityList.set(i, that);
+            }
+        }
+    }
+
+    private void deleteAll(PhysicalActivity py) {
+        for (int i = 0; i < Activity_Main._physicalActivityList.size(); i++) {
+            if (Activity_Main._physicalActivityList.get(i).equals(py)) {
+                Activity_Main._physicalActivityList.remove(Activity_Main._physicalActivityList.get(i));
+            }
+        }
+    }
+
+    private void addRepeating(PhysicalActivity py) {
+        List<String> repeatingDaysTemp = py.getRepeating();
+        List<Integer> repeatingDays = getRepeatingDays(repeatingDaysTemp);
+
+        PhysicalActivity temp = new PhysicalActivity(py);
+
+        //Log.d("TESTF", String.valueOf("start: day(" + temp.getDay() + "), month(" + temp.getMonth() + "), year(" + temp.getYear() + ")"));
+        //Log.d("TESTF", String.valueOf("repeatUntil: day(" + temp.getRepeatEndDay() + "), month(" + temp.getRepeatEndMonth() + "), year(" + temp.getRepeatEndYear() + ")"));
+        //Log.d("TESTF", "-----------------------------------------------------");
+
+        while (true) {
+            temp = new PhysicalActivity(temp);
+            for (int i : repeatingDays) {
+                //Log.d("TESTF", "i:" + String.valueOf(i) );
+                PhysicalActivity temp2 = incrementPhysicalActivityDate(temp, i);
+
+                if (temp2.getDay() > temp2.getRepeatEndDay() && temp2.getMonth() >= temp2.getRepeatEndMonth())
+                    return;
+
+                if (temp2.getMonth() > temp2.getRepeatEndMonth() && temp2.getYear() == temp2.getRepeatEndYear())
+                    return;
+
+                Activity_Main._physicalActivityList.add(temp2);
+
+                //Log.d("TESTF", String.valueOf("****** Added start: day(" + temp2.getDay() + "), month(" + temp2.getMonth() + "), year(" + temp2.getYear() + ")"));
+                //Log.d("TESTF", String.valueOf("****** Added repeatUntil: day(" + temp2.getRepeatEndDay() + "), month(" + temp2.getRepeatEndMonth() + "), year(" + temp2.getRepeatEndYear() + ")"));
+            }
+        }
+    }
+
+    private PhysicalActivity incrementPhysicalActivityDate(PhysicalActivity py, int nextDay) {
+        Calendar currDay = py.getStartTime();
+
+        Calendar nextStartTime = getNextDay(currDay, nextDay);
+        Calendar nextEndTime = (Calendar) nextStartTime.clone();
+        nextEndTime.set(Calendar.HOUR_OF_DAY, py.getEndHour());
+        nextEndTime.set(Calendar.MINUTE, py.getEndMinute());
+
+        PhysicalActivity toReturn = new PhysicalActivity(py);
+
+        return toReturn;
+    }
+
+
+    private Calendar getNextDay(Calendar date, int dayOfWeek) {
+
+        int diff = dayOfWeek - date.get(Calendar.DAY_OF_WEEK);
+        if (diff <= 0) {
+            diff += 7;
+        }
+        date.add(Calendar.DAY_OF_MONTH, diff);
+        //Log.d("TESTF", String.valueOf("********** nextDay: dayOfWeek(" + dayOfWeek + "), diff(" + diff + "), newDate day(" + date.get(Calendar.DAY_OF_MONTH) + "), newDate month(" + date.get(Calendar.MONTH) + ")"));
+        return date;
+    }
+
+    private List<Integer> getRepeatingDays(List<String> repeatingDaysTemp) {
+        List<Integer> repeatingDays = new ArrayList<Integer>();
+
+        for (String str : repeatingDaysTemp) {
+            switch (str) {
+                case "SU":
+                    repeatingDays.add(Calendar.SUNDAY);
+                    break;
+                case "M":
+                    repeatingDays.add(Calendar.MONDAY);
+                    break;
+                case "T":
+                    repeatingDays.add(Calendar.TUESDAY);
+                    break;
+                case "W":
+                    repeatingDays.add(Calendar.WEDNESDAY);
+                    break;
+                case "TH":
+                    repeatingDays.add(Calendar.THURSDAY);
+                    break;
+                case "F":
+                    repeatingDays.add(Calendar.FRIDAY);
+                    break;
+                case "S":
+                    repeatingDays.add(Calendar.SATURDAY);
+                    break;
+            }
+        }
+
+        return repeatingDays;
     }
 
     private boolean checkInput()
@@ -375,20 +499,20 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             Calendar calendar = Calendar.getInstance();
             calendar.set(year, monthOfYear, dayOfMonth);
-            temp_repeatUntilDate = calendar;
+            repeatUntilDate = calendar;
 
-            edit_repeatUntilDate.setText(format_date.format(temp_repeatUntilDate.getTime()));
+            edit_repeatUntilDate.setText(format_date.format(repeatUntilDate.getTime()));
         }
     };
 
     DatePickerDialog.OnDateSetListener start_date_listener = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            temp_startTime.set(Calendar.YEAR, year);
-            temp_startTime.set(Calendar.MONTH, dayOfMonth);
-            temp_startTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            startTime.set(Calendar.YEAR, year);
+            startTime.set(Calendar.MONTH, monthOfYear);
+            startTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            edit_date.setText(format_date.format(temp_startTime.getTime()));
+            edit_date.setText(format_date.format(startTime.getTime()));
         }
     };
 
@@ -429,21 +553,21 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
     TimePickerDialog.OnTimeSetListener start_time_listener = new TimePickerDialog.OnTimeSetListener() {
 
         public void onTimeSet(TimePicker view, int hour, int minute) {
-            temp_startTime.set(Calendar.HOUR, hour);
-            temp_startTime.set(Calendar.MINUTE, minute);
+            startTime.set(Calendar.HOUR, hour);
+            startTime.set(Calendar.MINUTE, minute);
 
-            edit_startTime.setText(String.valueOf(format_time.format(temp_startTime.getTime())));
+            edit_startTime.setText(String.valueOf(format_time.format(startTime.getTime())));
         }
     };
 
     TimePickerDialog.OnTimeSetListener end_time_listener = new TimePickerDialog.OnTimeSetListener() {
 
         public void onTimeSet(TimePicker view, int hour, int minute) {
-            temp_endTime = (Calendar) temp_startTime.clone();
-            temp_endTime.set(Calendar.HOUR, hour);
-            temp_endTime.set(Calendar.MINUTE, minute);
+            endTime = (Calendar) startTime.clone();
+            endTime.set(Calendar.HOUR_OF_DAY, hour);
+            endTime.set(Calendar.MINUTE, minute);
 
-            edit_endTime.setText(String.valueOf(format_time.format(temp_endTime.getTime())));
+            edit_endTime.setText(String.valueOf(format_time.format(endTime.getTime())));
         }
     };
 

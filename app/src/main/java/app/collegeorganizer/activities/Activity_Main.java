@@ -19,17 +19,16 @@ import app.collegeorganizer.data.DietItem;
 import app.collegeorganizer.data.GoogleCalendarColors;
 import app.collegeorganizer.data.MealCategory;
 import app.collegeorganizer.data.PhysicalActivity;
-import app.collegeorganizer.data.PhysicalActivityIntensity;
 import app.collegeorganizer.data.SocialActivity;
 
 public class Activity_Main extends AppCompatActivity {
-    public static List<PhysicalActivity> physicalActivityList = new ArrayList<PhysicalActivity>();
-    public static List<SocialActivity> socialActivityList = new ArrayList<SocialActivity>();
+    public static List<PhysicalActivity> physicalScheduleList = new ArrayList<PhysicalActivity>();
+    public static List<SocialActivity> socialScheduleList = new ArrayList<SocialActivity>();
 
     public static List<DietItem> dietItemList = new ArrayList<DietItem>();
 
-    public static List<PhysicalActivity> repeating_physicalActivityList = new ArrayList<PhysicalActivity>();
-    public static List<SocialActivity> repeating_socialActivityList = new ArrayList<SocialActivity>();
+    public static List<PhysicalActivity> _physicalActivityList = new ArrayList<PhysicalActivity>();
+    public static List<SocialActivity> _socialActivityList = new ArrayList<SocialActivity>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +78,7 @@ public class Activity_Main extends AppCompatActivity {
         Calendar startCalendar = Calendar.getInstance();
         Calendar endCalendar = (Calendar) startCalendar.clone();
         GoogleCalendarColors googleCalendarColors = new GoogleCalendarColors();
-
+        /*
         endCalendar.add(Calendar.HOUR, 1);
         physicalActivityList.add(new PhysicalActivity("test1", startCalendar, endCalendar, googleCalendarColors.tomato, "test1 details", PhysicalActivityIntensity.LIGHT));
 
@@ -108,7 +107,7 @@ public class Activity_Main extends AppCompatActivity {
         repeating3.add("F");
         physicalActivityList.add(new PhysicalActivity("test4", startCalendar3, endCalendar3, googleCalendarColors.grape, "test4 details", repeating3, endDate3, PhysicalActivityIntensity.HEAVY));
 
-
+        */
         //socialActivityList.add(new SocialActivity("test2", "test2 details", "test2 location", calender.getTime(), calender.getTime(), googleCalendarColors.lavender));
         dietItemList.add(new DietItem("test5 food", MealCategory.BREAKFAST, Calendar.getInstance(), "test5 amount", googleCalendarColors.blueberry));
         dietItemList.add(new DietItem("test6 food", MealCategory.LUNCH, startCalendar, "test6 amount", googleCalendarColors.peacock));

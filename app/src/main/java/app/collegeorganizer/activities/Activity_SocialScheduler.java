@@ -62,7 +62,7 @@ public class Activity_SocialScheduler extends AppCompatActivity implements Dialo
 
     private void refreshList() {
         list.setAdapter(null);
-        list.setAdapter(new SocialActivityAdapter(this, Activity_Main.socialActivityList));
+        list.setAdapter(new SocialActivityAdapter(this, Activity_Main.socialScheduleList));
     }
 
 }
