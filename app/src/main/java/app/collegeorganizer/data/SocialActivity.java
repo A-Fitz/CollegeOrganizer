@@ -18,6 +18,8 @@ public class SocialActivity {
 
     private int color;
 
+    private long scheduleId; //schedule item sets this as its hashcode, same for all repeating types of it
+
     public SocialActivity(String name, String details, String location, Calendar startTime, Calendar endTime, Calendar repeatUntilDate, List<String> repeating, int color) {
         this.name = name;
         this.details = details;
@@ -45,9 +47,7 @@ public class SocialActivity {
         this.color = copy.color;
         this.details = copy.getDetails();
         this.repeating = new ArrayList<String>();
-        for (String str : copy.repeating) {
-            this.repeating.add(str);
-        }
+        this.repeating.addAll(copy.repeating);
         this.repeatUntilDate = (Calendar) copy.getRepeatUntilDate().clone();
         this.location = copy.getLocation();
     }
@@ -65,6 +65,14 @@ public class SocialActivity {
             return "";
         else
             return details;
+    }
+
+    public long getScheduleId() {
+        return scheduleId;
+    }
+
+    public void setScheduleId(long scheduleId) {
+        this.scheduleId = scheduleId;
     }
 
     public void setDetails(String details) {
@@ -123,9 +131,9 @@ public class SocialActivity {
         if (repeating == null || repeating.size() == 0)
             return "";
         else {
-            String toRtr = "";
+            StringBuilder toRtr = new StringBuilder();
             for (String s : repeating) {
-                toRtr += s + "-";
+                toRtr.append(s).append("-");
             }
 
             return toRtr.substring(0, toRtr.length() - 1);

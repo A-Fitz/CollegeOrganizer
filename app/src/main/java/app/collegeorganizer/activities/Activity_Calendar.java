@@ -123,7 +123,7 @@ public class Activity_Calendar extends Activity_BaseCalendar {
             _physicalActivityList.remove(item);
         } else if (activity instanceof SocialActivity) {
             SocialActivity item = (SocialActivity) activity;
-            _socialActivityList.remove(activity);
+            _socialActivityList.remove(item);
         }
         //refresh?
     }

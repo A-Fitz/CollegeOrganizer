@@ -225,7 +225,7 @@ public class Fragment_EditSocialActivity extends DialogFragment {
             public void onClick(View v) {
                 //ask if sure TODO
                 Activity_Main.socialScheduleList.remove(item);
-                deleteRepeating(item);
+                deleteAll();
                 dismiss();
             }
         });
@@ -268,11 +268,35 @@ public class Fragment_EditSocialActivity extends DialogFragment {
                     } else
                         se = new SocialActivity(name, details, location, startTime, endTime, color);
 
-                    int index = Activity_Main.socialScheduleList.indexOf(item);
+                    se.setScheduleId(se.hashCode());
 
+                    int index = Activity_Main.socialScheduleList.indexOf(item);
                     Activity_Main.socialScheduleList.set(index, se);
 
-                    setRepeating(item);
+                    //if original didn't repeat but edited does
+                    if (!item.doesRepeat() && se.doesRepeat()) {
+                        setAllActivities(se);
+                        addRepeating(se);
+                    }
+                    //if original repeats but edited does not
+                    else if (item.doesRepeat() && !se.doesRepeat()) {
+                        deleteAll();
+                        Activity_Main._socialActivityList.add(se);
+                    }
+                    //if we need to remove extraneous activities because the new repeat-until-date is before the original
+                    else if (se.getRepeatUntilDate().getTime().before(item.getRepeatUntilDate().getTime())) {
+                        deleteExtraActivities(se.getRepeatUntilDate());
+                        setAllActivities(se);
+                    }
+                    //if we need to add extra activities because the new repeat-until-date is later than the original
+                    else if (se.getRepeatUntilDate().getTime().after(item.getRepeatUntilDate().getTime())) {
+                        setAllActivities(se);
+                        addExtraActivities(se);
+                    } else
+                    //just edited regular fields
+                    {
+                        setAllActivities(se);
+                    }
 
                     dismiss();
                 } else {
@@ -282,32 +306,146 @@ public class Fragment_EditSocialActivity extends DialogFragment {
         });
     }
 
-    private void setRepeating(SocialActivity se) {
+    private void deleteExtraActivities(Calendar repeatUntilDate) {
+        List<SocialActivity> _socialActivityList = new ArrayList<SocialActivity>(Activity_Main._socialActivityList);
+
+        for (SocialActivity temp : Activity_Main._socialActivityList) {
+            if (temp.getRepeatUntilDate().getTime().before(repeatUntilDate.getTime())) {
+                _socialActivityList.remove(temp);
+            }
+        }
+
+        Activity_Main._socialActivityList = new ArrayList<SocialActivity>(_socialActivityList);
+    }
+
+    private void addExtraActivities(SocialActivity se) {
+        SocialActivity temp = se;
+
+        // gets the last spot of the activity and adds repeating on top of it
+        for (SocialActivity s : Activity_Main._socialActivityList) {
+            if (s.getScheduleId() == se.getScheduleId()) {
+                temp = s;
+            }
+        }
+
+        addRepeating(temp);
+    }
+
+    private void setAllActivities(SocialActivity se) {
+        long tempScheduleId = item.getScheduleId();
         for (SocialActivity that : Activity_Main._socialActivityList) {
-            int index = Activity_Main._socialActivityList.indexOf(that);
-            if (se.equals(that)) {
+            if (that.getScheduleId() == tempScheduleId) {
+                int index = Activity_Main._socialActivityList.indexOf(that);
                 that.setName(se.getName());
                 that.setDetails(se.getDetails());
                 that.setLocation(se.getLocation());
                 that.setRepeating(se.getRepeating());
                 that.setRepeatUntilDate(se.getRepeatUntilDate());
                 that.setColor(se.getColor());
+
                 that.setStartMinute(se.getStartMinute());
                 that.setStartHour(se.getStartHour());
+
                 that.setEndMinute(se.getEndMinute());
                 that.setEndHour(se.getEndHour());
+                that.setScheduleId(se.getScheduleId());
 
                 Activity_Main._socialActivityList.set(index, that);
             }
         }
     }
 
-    private void deleteRepeating(SocialActivity se) {
-        for (SocialActivity that : Activity_Main._socialActivityList) {
-            if (se.equals(that)) {
-                Activity_Main._socialActivityList.remove(that);
+    private void deleteAll() {
+        long tempScheduleId = item.getScheduleId();
+        List<SocialActivity> _socialActivityList = new ArrayList<SocialActivity>(Activity_Main._socialActivityList);
+
+        for (SocialActivity temp : Activity_Main._socialActivityList) {
+            if (temp.getScheduleId() == tempScheduleId) {
+                _socialActivityList.remove(temp);
             }
         }
+
+        Activity_Main._socialActivityList = new ArrayList<SocialActivity>(_socialActivityList);
+    }
+
+    private void addRepeating(SocialActivity se) {
+        List<String> repeatingDaysTemp = se.getRepeating();
+        List<Integer> repeatingDays = getRepeatingDays(repeatingDaysTemp);
+
+        Activity_Main._socialActivityList.add(se);
+
+        SocialActivity temp = new SocialActivity(se);
+
+
+        while (true) {
+            temp = new SocialActivity(temp);
+            for (int i : repeatingDays) {
+                SocialActivity temp2 = incrementSocialActivityDate(temp, i);
+
+                if (temp2.getStartTime().getTime().after(temp2.getRepeatUntilDate().getTime()))
+                    return;
+
+                Activity_Main._socialActivityList.add(temp2);
+
+            }
+        }
+    }
+
+    private SocialActivity incrementSocialActivityDate(SocialActivity se, int nextDay) {
+        Calendar currDay = se.getStartTime();
+
+        Calendar nextStartTime = getNextDay(currDay, nextDay);
+        Calendar nextEndTime = (Calendar) nextStartTime.clone();
+        nextEndTime.set(Calendar.HOUR, se.getEndHour());
+        nextEndTime.set(Calendar.MINUTE, se.getEndMinute());
+
+        SocialActivity toReturn = new SocialActivity(se);
+
+        return toReturn;
+    }
+
+
+    private Calendar getNextDay(Calendar date, int dayOfWeek) {
+
+        int diff = dayOfWeek - date.get(Calendar.DAY_OF_WEEK);
+        if (diff <= 0) {
+            diff += 7;
+        }
+        date.add(Calendar.DAY_OF_MONTH, diff);
+        //Log.d("TESTF", String.valueOf("********** nextDay: dayOfWeek(" + dayOfWeek + "), diff(" + diff + "), newDate day(" + date.get(Calendar.DAY_OF_MONTH) + "), newDate month(" + date.get(Calendar.MONTH) + ")"));
+        return date;
+    }
+
+    private List<Integer> getRepeatingDays(List<String> repeatingDaysTemp) {
+        List<Integer> repeatingDays = new ArrayList<Integer>();
+
+        for (String str : repeatingDaysTemp) {
+            switch (str) {
+                case "SU":
+                    repeatingDays.add(Calendar.SUNDAY);
+                    break;
+                case "M":
+                    repeatingDays.add(Calendar.MONDAY);
+                    break;
+                case "T":
+                    repeatingDays.add(Calendar.TUESDAY);
+                    break;
+                case "W":
+                    repeatingDays.add(Calendar.WEDNESDAY);
+                    break;
+                case "TH":
+                    repeatingDays.add(Calendar.THURSDAY);
+                    break;
+                case "F":
+                    repeatingDays.add(Calendar.FRIDAY);
+                    break;
+                case "S":
+                    repeatingDays.add(Calendar.SATURDAY);
+                    break;
+            }
+        }
+
+        return repeatingDays;
     }
 
     private boolean checkInput() {

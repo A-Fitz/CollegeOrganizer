@@ -75,7 +75,7 @@ public class Activity_DietRecorder extends AppCompatActivity implements DialogIn
             }
         });
 
-        date_text.setText(String.format(String.valueOf(time.get(Calendar.MONTH) + 1) + "/" + String.valueOf(time.get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(time.get(Calendar.YEAR))));
+        date_text.setText(String.valueOf(time.get(Calendar.MONTH) + 1) + "/" + String.valueOf(time.get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(time.get(Calendar.YEAR)));
         refreshList();
     }
 
@@ -89,8 +89,8 @@ public class Activity_DietRecorder extends AppCompatActivity implements DialogIn
 
         for (DietItem dietItem : Activity_Main.dietItemList) {
             Calendar posDate = dietItem.getTime();
-            String posDateString = String.format(String.valueOf(posDate.get(Calendar.MONTH)) + "/" + String.valueOf(posDate.get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(posDate.get(Calendar.YEAR)));
-            String chosenDateString = String.format(String.valueOf(d.get(Calendar.MONTH)) + "/" + String.valueOf(d.get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(d.get(Calendar.YEAR)));
+            String posDateString = String.valueOf(posDate.get(Calendar.MONTH)) + "/" + String.valueOf(posDate.get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(posDate.get(Calendar.YEAR));
+            String chosenDateString = String.valueOf(d.get(Calendar.MONTH)) + "/" + String.valueOf(d.get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(d.get(Calendar.YEAR));
 
             if (posDateString.matches(chosenDateString))
                 temp.add(dietItem);

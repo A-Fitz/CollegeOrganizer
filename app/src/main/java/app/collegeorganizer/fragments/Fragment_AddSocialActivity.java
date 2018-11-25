@@ -191,7 +191,11 @@ public class Fragment_AddSocialActivity extends DialogFragment {
                     } else
                         se = new SocialActivity(name, details, location, startTime, endTime, color);
 
+                    se.setScheduleId(se.hashCode());
+
                     Activity_Main.socialScheduleList.add(se);
+
+                    Activity_Main._socialActivityList.add(se);
 
                     if (se.doesRepeat())
                         addRepeating(se);
@@ -219,10 +223,7 @@ public class Fragment_AddSocialActivity extends DialogFragment {
             for (int i : repeatingDays) {
                 SocialActivity temp2 = incrementSocialActivityDate(temp, i);
 
-                if (temp2.getDay() > temp2.getRepeatEndDay() && temp2.getMonth() >= temp2.getRepeatEndMonth())
-                    return;
-
-                if (temp2.getMonth() > temp2.getRepeatEndMonth() && temp2.getYear() == temp2.getRepeatEndYear())
+                if (temp2.getStartTime().getTime().after(temp2.getRepeatUntilDate().getTime()))
                     return;
 
                 Activity_Main._socialActivityList.add(temp2);

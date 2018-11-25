@@ -49,9 +49,7 @@ public class PhysicalActivity {
         this.color = copy.color;
         this.details = copy.getDetails();
         this.repeating = new ArrayList<String>();
-        for (String str : copy.repeating) {
-            this.repeating.add(str);
-        }
+        this.repeating.addAll(copy.repeating);
         this.repeatUntilDate = (Calendar) copy.getRepeatUntilDate().clone();
         this.intensity = copy.getIntensity();
         this.scheduleId = copy.getScheduleId();
@@ -136,9 +134,9 @@ public class PhysicalActivity {
         if(repeating == null || repeating.size() == 0)
             return "";
         else {
-            String toRtr = "";
+            StringBuilder toRtr = new StringBuilder();
             for(String s : repeating) {
-                toRtr += s + "-";
+                toRtr.append(s).append("-");
             }
 
             return toRtr.substring(0, toRtr.length()-1);
