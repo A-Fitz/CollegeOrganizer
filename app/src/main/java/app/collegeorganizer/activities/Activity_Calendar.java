@@ -3,7 +3,6 @@ package app.collegeorganizer.activities;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 
 import com.alamkanak.weekview.WeekViewEvent;
 
@@ -64,7 +63,7 @@ public class Activity_Calendar extends Activity_BaseCalendar {
 
                 event.setColor(py.getColor());
 
-                Log.d("TESTF", String.valueOf(py.getStartHour()));
+                //Log.d("TESTF", String.valueOf(py.getStartHour()));
                 tempEvents.add(event);
             }
         }

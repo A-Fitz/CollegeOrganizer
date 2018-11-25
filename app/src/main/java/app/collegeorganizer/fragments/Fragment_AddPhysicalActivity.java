@@ -209,6 +209,8 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
                     } else
                         py = new PhysicalActivity(name, startTime, endTime, color, details, intensity);
 
+                    py.setScheduleId(py.hashCode());
+
                     Activity_Main.physicalScheduleList.add(py);
 
                     Activity_Main._physicalActivityList.add(py);
@@ -243,10 +245,7 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
                 //Log.d("TESTF", "i:" + String.valueOf(i) );
                 PhysicalActivity temp2 = incrementPhysicalActivityDate(temp, i);
 
-                if (temp2.getDay() > temp2.getRepeatEndDay() && temp2.getMonth() >= temp2.getRepeatEndMonth())
-                    return;
-
-                if (temp2.getMonth() > temp2.getRepeatEndMonth() && temp2.getYear() == temp2.getRepeatEndYear())
+                if (temp2.getStartTime().getTime().after(temp2.getRepeatUntilDate().getTime()))
                     return;
 
                 Activity_Main._physicalActivityList.add(temp2);

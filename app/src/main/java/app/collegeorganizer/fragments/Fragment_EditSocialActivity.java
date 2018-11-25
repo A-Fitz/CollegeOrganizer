@@ -293,7 +293,7 @@ public class Fragment_EditSocialActivity extends DialogFragment {
                 that.setRepeatUntilDate(se.getRepeatUntilDate());
                 that.setColor(se.getColor());
                 that.setStartMinute(se.getStartMinute());
-                that.setStartHour(se.getStartMinute());
+                that.setStartHour(se.getStartHour());
                 that.setEndMinute(se.getEndMinute());
                 that.setEndHour(se.getEndHour());
 

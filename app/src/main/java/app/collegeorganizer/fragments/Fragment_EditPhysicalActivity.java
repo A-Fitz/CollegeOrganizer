@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -297,22 +298,26 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
                     } else
                         py = new PhysicalActivity(name, startTime, endTime, color, details, intensity);
 
+                    py.setScheduleId(py.hashCode());
 
+                    int index = Activity_Main.physicalScheduleList.indexOf(item);
+                    Activity_Main.physicalScheduleList.set(index, py);
+
+                    //if original didn't repeat but edited does
                     if (!item.doesRepeat() && py.doesRepeat()) {
+                        setAllActivities(py);
                         addRepeating(py);
                     }
-
-                    if (item.doesRepeat() && !py.doesRepeat()) {
+                    //if original repeats but edited does not
+                    else if (item.doesRepeat() && !py.doesRepeat()) {
                         deleteAll(item);
                         Activity_Main._physicalActivityList.add(py);
                     }
+                    //if repeating doesn't change, just edited fields
+                    else
+                        setAllActivities(py);
 
-
-                    int index = Activity_Main.physicalScheduleList.indexOf(item);
-
-                    Activity_Main.physicalScheduleList.set(index, py);
-
-                    setAllActivities(py);
+                    //TODO need to add methods if repeatUntilDate is changed
 
                     dismiss();
                 } else
@@ -324,9 +329,10 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
     }
 
     private void setAllActivities(PhysicalActivity py) {
-        for (int i = 0; i < Activity_Main._physicalActivityList.size(); i++) {
-            if (Activity_Main._physicalActivityList.get(i).equals(item)) {
-                PhysicalActivity that = Activity_Main._physicalActivityList.get(i);
+        long tempScheduleId = item.getScheduleId();
+        for (PhysicalActivity that : Activity_Main._physicalActivityList) {
+            if (that.getScheduleId() == tempScheduleId) {
+                int index = Activity_Main._physicalActivityList.indexOf(that);
                 that.setName(py.getName());
                 that.setDetails(py.getDetails());
                 that.setIntensity(py.getIntensity());
@@ -339,18 +345,25 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
 
                 that.setEndMinute(py.getEndMinute());
                 that.setEndHour(py.getEndHour());
+                that.setScheduleId(py.getScheduleId());
 
-                Activity_Main._physicalActivityList.set(i, that);
+                Activity_Main._physicalActivityList.set(index, that);
             }
         }
     }
 
     private void deleteAll(PhysicalActivity py) {
-        for (int i = 0; i < Activity_Main._physicalActivityList.size(); i++) {
-            if (Activity_Main._physicalActivityList.get(i).equals(py)) {
-                Activity_Main._physicalActivityList.remove(Activity_Main._physicalActivityList.get(i));
+        long tempScheduleId = item.getScheduleId();
+        List<PhysicalActivity> _physicalActivityList = new ArrayList<PhysicalActivity>(Activity_Main._physicalActivityList);
+
+        for (PhysicalActivity temp : Activity_Main._physicalActivityList) {
+            if (temp.getScheduleId() == tempScheduleId) {
+                _physicalActivityList.remove(temp);
             }
         }
+
+        Activity_Main._physicalActivityList = new ArrayList<PhysicalActivity>(_physicalActivityList);
+        Log.d("TESTF", String.valueOf(Activity_Main._physicalActivityList.size()));
     }
 
     private void addRepeating(PhysicalActivity py) {
@@ -369,10 +382,7 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
                 //Log.d("TESTF", "i:" + String.valueOf(i) );
                 PhysicalActivity temp2 = incrementPhysicalActivityDate(temp, i);
 
-                if (temp2.getDay() > temp2.getRepeatEndDay() && temp2.getMonth() >= temp2.getRepeatEndMonth())
-                    return;
-
-                if (temp2.getMonth() > temp2.getRepeatEndMonth() && temp2.getYear() == temp2.getRepeatEndYear())
+                if (temp2.getStartTime().getTime().after(temp2.getRepeatUntilDate().getTime()))
                     return;
 
                 Activity_Main._physicalActivityList.add(temp2);

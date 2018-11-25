@@ -18,6 +18,8 @@ public class PhysicalActivity {
     private Calendar repeatUntilDate;
     private PhysicalActivityIntensity intensity;
 
+    private long scheduleId; //schedule item sets this as its hashcode, same for all repeating types of it
+
     //with repetition
     public PhysicalActivity(String name, Calendar startTime, Calendar endTime, int color, String details, List<String> repeating, Calendar repeatUntilDate, PhysicalActivityIntensity intensity) {
         this.name = name;
@@ -52,6 +54,15 @@ public class PhysicalActivity {
         }
         this.repeatUntilDate = (Calendar) copy.getRepeatUntilDate().clone();
         this.intensity = copy.getIntensity();
+        this.scheduleId = copy.getScheduleId();
+    }
+
+    public long getScheduleId() {
+        return scheduleId;
+    }
+
+    public void setScheduleId(long scheduleId) {
+        this.scheduleId = scheduleId;
     }
 
     public String getName() {
