@@ -7,7 +7,6 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -247,7 +246,7 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
             public void onClick(View v) {
                 //ask if sure TODO
                 Activity_Main.physicalScheduleList.remove(item);
-                deleteAll(item);
+                deleteAll();
                 dismiss();
             }
         });
@@ -310,14 +309,23 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
                     }
                     //if original repeats but edited does not
                     else if (item.doesRepeat() && !py.doesRepeat()) {
-                        deleteAll(item);
+                        deleteAll();
                         Activity_Main._physicalActivityList.add(py);
                     }
-                    //if repeating doesn't change, just edited fields
-                    else
+                    //if we need to remove extraneous activities because the new repeat-until-date is before the original
+                    else if (py.getRepeatUntilDate().getTime().before(item.getRepeatUntilDate().getTime())) {
+                        deleteExtraActivities(py.getRepeatUntilDate());
                         setAllActivities(py);
-
-                    //TODO need to add methods if repeatUntilDate is changed
+                    }
+                    //if we need to add extra activities because the new repeat-until-date is later than the original
+                    else if (py.getRepeatUntilDate().getTime().after(item.getRepeatUntilDate().getTime())) {
+                        setAllActivities(py);
+                        addExtraActivities(py);
+                    } else
+                    //just edited regular fields
+                    {
+                        setAllActivities(py);
+                    }
 
                     dismiss();
                 } else
@@ -326,6 +334,31 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
                 }
             }
         });
+    }
+
+    private void deleteExtraActivities(Calendar repeatUntilDate) {
+        List<PhysicalActivity> _physicalActivityList = new ArrayList<PhysicalActivity>(Activity_Main._physicalActivityList);
+
+        for (PhysicalActivity temp : Activity_Main._physicalActivityList) {
+            if (temp.getRepeatUntilDate().getTime().before(repeatUntilDate.getTime())) {
+                _physicalActivityList.remove(temp);
+            }
+        }
+
+        Activity_Main._physicalActivityList = new ArrayList<PhysicalActivity>(_physicalActivityList);
+    }
+
+    private void addExtraActivities(PhysicalActivity py) {
+        PhysicalActivity temp = py;
+
+        // gets the last spot of the activity and adds repeating on top of it
+        for (PhysicalActivity p : Activity_Main._physicalActivityList) {
+            if (p.getScheduleId() == py.getScheduleId()) {
+                temp = p;
+            }
+        }
+
+        addRepeating(temp);
     }
 
     private void setAllActivities(PhysicalActivity py) {
@@ -352,7 +385,7 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
         }
     }
 
-    private void deleteAll(PhysicalActivity py) {
+    private void deleteAll() {
         long tempScheduleId = item.getScheduleId();
         List<PhysicalActivity> _physicalActivityList = new ArrayList<PhysicalActivity>(Activity_Main._physicalActivityList);
 
@@ -363,7 +396,7 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
         }
 
         Activity_Main._physicalActivityList = new ArrayList<PhysicalActivity>(_physicalActivityList);
-        Log.d("TESTF", String.valueOf(Activity_Main._physicalActivityList.size()));
+        //Log.d("TESTF", String.valueOf(Activity_Main._physicalActivityList.size()));
     }
 
     private void addRepeating(PhysicalActivity py) {

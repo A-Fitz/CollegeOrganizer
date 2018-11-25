@@ -22,6 +22,9 @@ public class Activity_Calendar extends Activity_BaseCalendar {
 
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
+        if (this.events != null)
+            this.events.clear();
+
         this.events = getEvents(newYear, newMonth);
 
         /*for (WeekViewEvent event : events) {
