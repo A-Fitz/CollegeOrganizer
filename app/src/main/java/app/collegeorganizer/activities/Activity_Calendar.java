@@ -3,6 +3,7 @@ package app.collegeorganizer.activities;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 
 import com.alamkanak.weekview.WeekViewEvent;
 
@@ -22,18 +23,16 @@ public class Activity_Calendar extends Activity_BaseCalendar {
 
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-        if (this.events != null)
-            this.events.clear();
 
         this.events = getEvents(newYear, newMonth);
 
-        /*for (WeekViewEvent event : events) {
+        for (WeekViewEvent event : events) {
             Log.d("TESTF", "Event Month: " + String.valueOf(event.getStartTime().get(Calendar.MONTH)));
             Log.d("TESTF", "New Month: " + String.valueOf(newMonth-1));
             Log.d("TESTF", "eventmonth == newmonth: " + String.valueOf(event.getStartTime().get(Calendar.MONTH)== newMonth-1));
             Log.d("TESTF", "-----------------------------------------------------");
 
-        }*/
+        }
 
         return events;
     }

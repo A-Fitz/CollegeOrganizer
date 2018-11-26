@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -314,8 +315,8 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
                     }
                     //if we need to remove extraneous activities because the new repeat-until-date is before the original
                     else if (py.getRepeatUntilDate().getTime().before(item.getRepeatUntilDate().getTime())) {
-                        deleteExtraActivities(py.getRepeatUntilDate());
                         setAllActivities(py);
+                        deleteExtraActivities(py.getScheduleId());
                     }
                     //if we need to add extra activities because the new repeat-until-date is later than the original
                     else if (py.getRepeatUntilDate().getTime().after(item.getRepeatUntilDate().getTime())) {
@@ -336,12 +337,15 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
         });
     }
 
-    private void deleteExtraActivities(Calendar repeatUntilDate) {
+    private void deleteExtraActivities(long tempScheduleId) {
         List<PhysicalActivity> _physicalActivityList = new ArrayList<PhysicalActivity>(Activity_Main._physicalActivityList);
 
         for (PhysicalActivity temp : Activity_Main._physicalActivityList) {
-            if (temp.getRepeatUntilDate().getTime().before(repeatUntilDate.getTime())) {
-                _physicalActivityList.remove(temp);
+            if (temp.getScheduleId() == tempScheduleId) {
+                if (temp.getStartTime().getTime().after(temp.getRepeatUntilDate().getTime())) {
+                    _physicalActivityList.remove(temp);
+                    Log.d("TESTF", String.valueOf(_physicalActivityList.contains(temp)));
+                }
             }
         }
 
@@ -402,6 +406,9 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
     private void addRepeating(PhysicalActivity py) {
         List<String> repeatingDaysTemp = py.getRepeating();
         List<Integer> repeatingDays = getRepeatingDays(repeatingDaysTemp);
+        //Log.d("TESTF", "-----------------------------------------------------");
+        //Log.d("TESTF", "given date:" + py.getMonth() + "/" + py.getDay() + "/" + py.getYear());
+        //Log.d("TESTF", "-----------------------------------------------------");
 
         PhysicalActivity temp = new PhysicalActivity(py);
 
@@ -415,6 +422,10 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
                 //Log.d("TESTF", "i:" + String.valueOf(i) );
                 PhysicalActivity temp2 = incrementPhysicalActivityDate(temp, i);
 
+                //Log.d("TESTF", "-----------------------------------------------------");
+                //Log.d("TESTF", "end! ----- " + temp2.getRepeatEndMonth() + "/" + temp2.getRepeatEndDay() + "/" + temp2.getRepeatEndYear());
+                //Log.d("TESTF", "start! ----- " + temp2.getMonth() + "/" + temp2.getDay() + "/" + temp2.getYear());
+                //Log.d("TESTF", "-----------------------------------------------------");
                 if (temp2.getStartTime().getTime().after(temp2.getRepeatUntilDate().getTime()))
                     return;
 

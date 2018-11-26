@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -285,8 +286,8 @@ public class Fragment_EditSocialActivity extends DialogFragment {
                     }
                     //if we need to remove extraneous activities because the new repeat-until-date is before the original
                     else if (se.getRepeatUntilDate().getTime().before(item.getRepeatUntilDate().getTime())) {
-                        deleteExtraActivities(se.getRepeatUntilDate());
                         setAllActivities(se);
+                        deleteExtraActivities(se.getScheduleId());
                     }
                     //if we need to add extra activities because the new repeat-until-date is later than the original
                     else if (se.getRepeatUntilDate().getTime().after(item.getRepeatUntilDate().getTime())) {
@@ -306,12 +307,15 @@ public class Fragment_EditSocialActivity extends DialogFragment {
         });
     }
 
-    private void deleteExtraActivities(Calendar repeatUntilDate) {
+    private void deleteExtraActivities(long tempScheduleId) {
         List<SocialActivity> _socialActivityList = new ArrayList<SocialActivity>(Activity_Main._socialActivityList);
 
         for (SocialActivity temp : Activity_Main._socialActivityList) {
-            if (temp.getRepeatUntilDate().getTime().before(repeatUntilDate.getTime())) {
-                _socialActivityList.remove(temp);
+            if (temp.getScheduleId() == tempScheduleId) {
+                if (temp.getStartTime().getTime().after(temp.getRepeatUntilDate().getTime())) {
+                    _socialActivityList.remove(temp);
+                    Log.d("TESTF", String.valueOf(_socialActivityList.contains(temp)));
+                }
             }
         }
 
