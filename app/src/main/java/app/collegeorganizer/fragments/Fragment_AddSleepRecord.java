@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.text.emoji.EmojiCompat;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import java.util.List;
 import app.collegeorganizer.OnColorChosenListener;
 import app.collegeorganizer.R;
 import app.collegeorganizer.activities.Activity_Main;
+import app.collegeorganizer.data.Emojis;
 import app.collegeorganizer.data.SleepItem;
 import app.collegeorganizer.data.SleepQualityTypes;
 import app.collegeorganizer.data.SleepTimeType;
@@ -105,6 +107,8 @@ public class Fragment_AddSleepRecord extends DialogFragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, dropdown_sleep_time_type_items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         edit_sleepTimeType.setAdapter(adapter);
+
+        addEmojisToCheckboxes();
 
         return v;
     }
@@ -188,6 +192,20 @@ public class Fragment_AddSleepRecord extends DialogFragment {
 
             }
         });
+    }
+
+    private void addEmojisToCheckboxes() {
+        final EmojiCompat compat = EmojiCompat.get();
+
+        edit_NOT_WITHIN_30_MINUTES.setText(String.valueOf(edit_NOT_WITHIN_30_MINUTES.getText()) + compat.process(Emojis.NOT_WITHIN_30_MINUTES));
+        edit_WAKE_UP_IN_NIGHT.setText(String.valueOf(edit_WAKE_UP_IN_NIGHT.getText()) + compat.process(Emojis.WAKE_UP_IN_NIGHT));
+        edit_BATHROOM.setText(String.valueOf(edit_BATHROOM.getText()) + compat.process(Emojis.BATHROOM));
+        edit_BREATHING.setText(String.valueOf(edit_BREATHING.getText()) + compat.process(Emojis.BREATHING));
+        edit_COUGH_SNORE.setText(String.valueOf(edit_COUGH_SNORE.getText()) + compat.process(Emojis.COUGH_SNORE));
+        edit_COLD.setText(String.valueOf(edit_COLD.getText()) + compat.process(Emojis.COLD));
+        edit_HOT.setText(String.valueOf(edit_HOT.getText()) + compat.process(Emojis.HOT));
+        edit_BAD_DREAMS.setText(String.valueOf(edit_BAD_DREAMS.getText()) + compat.process(Emojis.BAD_DREAMS));
+        edit_PAIN.setText(String.valueOf(edit_PAIN.getText()) + compat.process(Emojis.PAIN));
     }
 
     private boolean checkInput() {
