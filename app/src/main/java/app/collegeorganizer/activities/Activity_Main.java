@@ -2,6 +2,10 @@ package app.collegeorganizer.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.text.emoji.EmojiCompat;
+import android.support.text.emoji.FontRequestEmojiCompatConfig;
+import android.support.text.emoji.bundled.BundledEmojiCompatConfig;
+import android.support.v4.provider.FontRequest;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -19,6 +23,9 @@ import app.collegeorganizer.data.DietItem;
 import app.collegeorganizer.data.GoogleCalendarColors;
 import app.collegeorganizer.data.MealCategory;
 import app.collegeorganizer.data.PhysicalActivity;
+import app.collegeorganizer.data.SleepItem;
+import app.collegeorganizer.data.SleepQualityTypes;
+import app.collegeorganizer.data.SleepTimeType;
 import app.collegeorganizer.data.SocialActivity;
 
 public class Activity_Main extends AppCompatActivity {
@@ -26,9 +33,19 @@ public class Activity_Main extends AppCompatActivity {
     public static List<SocialActivity> socialScheduleList = new ArrayList<SocialActivity>();
 
     public static List<DietItem> dietItemList = new ArrayList<DietItem>();
+    public static List<SleepItem> sleepItemList = new ArrayList<SleepItem>();
 
     public static List<PhysicalActivity> _physicalActivityList = new ArrayList<PhysicalActivity>();
     public static List<SocialActivity> _socialActivityList = new ArrayList<SocialActivity>();
+
+    private static final String TAG = "MainActivity";
+
+    /**
+     * Change this to {@code false} when you want to use the downloadable Emoji font.
+     */
+    private static final boolean USE_BUNDLED_EMOJI = true;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +54,8 @@ public class Activity_Main extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("College Organizer");
+
+        initEmojiCompat();
 
         addDataButtonListeners();
         addAppletButtonListeners();
@@ -71,6 +90,24 @@ public class Activity_Main extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initEmojiCompat() {
+        final EmojiCompat.Config config;
+        if (USE_BUNDLED_EMOJI) {
+            // Use the bundled font for EmojiCompat
+            config = new BundledEmojiCompatConfig(getApplicationContext());
+        } else {
+            // Use a downloadable font for EmojiCompat
+            final FontRequest fontRequest = new FontRequest(
+                    "com.google.android.gms.fonts",
+                    "com.google.android.gms",
+                    "Noto Color Emoji Compat",
+                    R.array.com_google_android_gms_fonts_certs);
+            config = new FontRequestEmojiCompatConfig(getApplicationContext(), fontRequest);
+        }
+
+        EmojiCompat.init(config);
     }
 
     private void addTestObjects()
@@ -111,6 +148,10 @@ public class Activity_Main extends AppCompatActivity {
         //socialActivityList.add(new SocialActivity("test2", "test2 details", "test2 location", calender.getTime(), calender.getTime(), googleCalendarColors.lavender));
         dietItemList.add(new DietItem("test5 food", MealCategory.BREAKFAST, Calendar.getInstance(), "test5 amount", googleCalendarColors.blueberry));
         dietItemList.add(new DietItem("test6 food", MealCategory.LUNCH, startCalendar, "test6 amount", googleCalendarColors.peacock));
+
+        List<SleepQualityTypes> sleepQualityTypesList = new ArrayList<SleepQualityTypes>();
+        sleepQualityTypesList.add(SleepQualityTypes.NOT_WITHIN_30_MINUTES);
+        sleepItemList.add(new SleepItem(SleepTimeType.NIGHT, sleepQualityTypesList, Calendar.getInstance(), Calendar.getInstance(), "", googleCalendarColors.peacock ));
     }
 
 
@@ -203,7 +244,8 @@ public class Activity_Main extends AppCompatActivity {
         final Button button_applet_sleep = findViewById(R.id.button_applet_sleep);
         button_applet_sleep.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                Intent myIntent = new Intent(Activity_Main.this, Activity_SleepRecorder.class);
+                Activity_Main.this.startActivity(myIntent);
             }
         });
         final Button button_applet_mood = findViewById(R.id.button_applet_mood);

@@ -336,7 +336,7 @@ public class Fragment_AddDietRecord extends DialogFragment {
          */
         Calendar calender = Calendar.getInstance();
         Bundle args = new Bundle();
-        args.putInt("hour", calender.get(Calendar.HOUR));
+        args.putInt("hour", calender.get(Calendar.HOUR_OF_DAY));
         args.putInt("minute", calender.get(Calendar.MINUTE));
         time.setArguments(args);
         /**
@@ -369,7 +369,7 @@ public class Fragment_AddDietRecord extends DialogFragment {
     TimePickerDialog.OnTimeSetListener ontime = new TimePickerDialog.OnTimeSetListener() {
 
         public void onTimeSet(TimePicker view, int hour, int minute) {
-            temp_time.set(Calendar.HOUR, hour);
+            temp_time.set(Calendar.HOUR_OF_DAY, hour);
             temp_time.set(Calendar.MINUTE, minute);
 
             edit_time.setText(String.valueOf(format_time.format(temp_time.getTime())));

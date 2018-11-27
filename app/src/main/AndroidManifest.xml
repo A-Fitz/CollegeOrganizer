@@ -50,8 +50,12 @@
         <activity
             android:name=".activities.Activity_Calendar"
             android:label="@string/title_activity__calendar"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.Activity_BaseCalendar" />
+        <activity
+            android:name=".activities.Activity_SleepRecorder"
+            android:label="@string/title_activity__sleep_recorder"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
