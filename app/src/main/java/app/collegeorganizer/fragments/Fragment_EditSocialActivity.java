@@ -285,12 +285,12 @@ public class Fragment_EditSocialActivity extends DialogFragment {
                         Activity_Main._socialActivityList.add(se);
                     }
                     //if we need to remove extraneous activities because the new repeat-until-date is before the original
-                    else if (se.getRepeatUntilDate().getTime().before(item.getRepeatUntilDate().getTime())) {
+                    else if (se.doesRepeat() && se.getRepeatUntilDate().before(item.getRepeatUntilDate())) {
                         setAllActivities(se);
                         deleteExtraActivities(se.getScheduleId());
                     }
                     //if we need to add extra activities because the new repeat-until-date is later than the original
-                    else if (se.getRepeatUntilDate().getTime().after(item.getRepeatUntilDate().getTime())) {
+                    else if (se.doesRepeat() && se.getRepeatUntilDate().after(item.getRepeatUntilDate())) {
                         setAllActivities(se);
                         addExtraActivities(se);
                     } else

@@ -314,12 +314,12 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
                         Activity_Main._physicalActivityList.add(py);
                     }
                     //if we need to remove extraneous activities because the new repeat-until-date is before the original
-                    else if (py.getRepeatUntilDate().getTime().before(item.getRepeatUntilDate().getTime())) {
+                    else if (py.doesRepeat() && py.getRepeatUntilDate().before(item.getRepeatUntilDate())) {
                         setAllActivities(py);
                         deleteExtraActivities(py.getScheduleId());
                     }
                     //if we need to add extra activities because the new repeat-until-date is later than the original
-                    else if (py.getRepeatUntilDate().getTime().after(item.getRepeatUntilDate().getTime())) {
+                    else if (py.doesRepeat() && py.getRepeatUntilDate().getTime().after(item.getRepeatUntilDate().getTime())) {
                         setAllActivities(py);
                         addExtraActivities(py);
                     } else
