@@ -239,19 +239,21 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
         //Log.d("TESTF", String.valueOf("repeatUntil: day(" + temp.getRepeatEndDay() + "), month(" + temp.getRepeatEndMonth() + "), year(" + temp.getRepeatEndYear() + ")"));
         //Log.d("TESTF", "-----------------------------------------------------");
 
+        int counter = 0;
+        int startWeekDay = py.getStartTime().get(Calendar.DAY_OF_WEEK);
         while (true) {
             temp = new PhysicalActivity(temp);
             for (int i : repeatingDays) {
-                //Log.d("TESTF", "i:" + String.valueOf(i) );
+                if (i <= startWeekDay && counter == 0) {
+                    continue;
+                }
                 PhysicalActivity temp2 = incrementPhysicalActivityDate(temp, i);
 
                 if (temp2.getStartTime().getTime().after(temp2.getRepeatUntilDate().getTime()))
                     return;
 
                 Activity_Main._physicalActivityList.add(temp2);
-
-                //Log.d("TESTF", String.valueOf("****** Added start: day(" + temp2.getDay() + "), month(" + temp2.getMonth() + "), year(" + temp2.getYear() + ")"));
-                //Log.d("TESTF", String.valueOf("****** Added repeatUntil: day(" + temp2.getRepeatEndDay() + "), month(" + temp2.getRepeatEndMonth() + "), year(" + temp2.getRepeatEndYear() + ")"));
+                counter++;
             }
         }
     }
@@ -264,9 +266,7 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
         nextEndTime.set(Calendar.HOUR_OF_DAY, py.getEndHour());
         nextEndTime.set(Calendar.MINUTE, py.getEndMinute());
 
-        PhysicalActivity toReturn = new PhysicalActivity(py);
-
-        return toReturn;
+        return new PhysicalActivity(py);
     }
 
 

@@ -7,7 +7,6 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 
 import app.collegeorganizer.OnColorChosenListener;
@@ -338,18 +338,16 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
     }
 
     private void deleteExtraActivities(long tempScheduleId) {
-        List<PhysicalActivity> _physicalActivityList = new ArrayList<PhysicalActivity>(Activity_Main._physicalActivityList);
+        Iterator<PhysicalActivity> itr = Activity_Main._physicalActivityList.iterator();
+        while (itr.hasNext()) {
+            PhysicalActivity py = itr.next();
 
-        for (PhysicalActivity temp : Activity_Main._physicalActivityList) {
-            if (temp.getScheduleId() == tempScheduleId) {
-                if (temp.getStartTime().getTime().after(temp.getRepeatUntilDate().getTime())) {
-                    _physicalActivityList.remove(temp);
-                    Log.d("TESTF", String.valueOf(_physicalActivityList.contains(temp)));
+            if (py.getScheduleId() == tempScheduleId) {
+                if (py.getStartTime().after(py.getRepeatUntilDate())) {
+                    itr.remove();
                 }
             }
         }
-
-        Activity_Main._physicalActivityList = new ArrayList<PhysicalActivity>(_physicalActivityList);
     }
 
     private void addExtraActivities(PhysicalActivity py) {
@@ -390,17 +388,14 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
     }
 
     private void deleteAll() {
-        long tempScheduleId = item.getScheduleId();
-        List<PhysicalActivity> _physicalActivityList = new ArrayList<PhysicalActivity>(Activity_Main._physicalActivityList);
+        Iterator<PhysicalActivity> itr = Activity_Main._physicalActivityList.iterator();
+        while (itr.hasNext()) {
+            PhysicalActivity py = itr.next();
 
-        for (PhysicalActivity temp : Activity_Main._physicalActivityList) {
-            if (temp.getScheduleId() == tempScheduleId) {
-                _physicalActivityList.remove(temp);
+            if (py.getScheduleId() == item.getScheduleId()) {
+                itr.remove();
             }
         }
-
-        Activity_Main._physicalActivityList = new ArrayList<PhysicalActivity>(_physicalActivityList);
-        //Log.d("TESTF", String.valueOf(Activity_Main._physicalActivityList.size()));
     }
 
     private void addRepeating(PhysicalActivity py) {
@@ -416,23 +411,21 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
         //Log.d("TESTF", String.valueOf("repeatUntil: day(" + temp.getRepeatEndDay() + "), month(" + temp.getRepeatEndMonth() + "), year(" + temp.getRepeatEndYear() + ")"));
         //Log.d("TESTF", "-----------------------------------------------------");
 
+        int counter = 0;
+        int startWeekDay = py.getStartTime().get(Calendar.DAY_OF_WEEK);
         while (true) {
             temp = new PhysicalActivity(temp);
             for (int i : repeatingDays) {
-                //Log.d("TESTF", "i:" + String.valueOf(i) );
+                if (i <= startWeekDay && counter == 0) {
+                    continue;
+                }
                 PhysicalActivity temp2 = incrementPhysicalActivityDate(temp, i);
 
-                //Log.d("TESTF", "-----------------------------------------------------");
-                //Log.d("TESTF", "end! ----- " + temp2.getRepeatEndMonth() + "/" + temp2.getRepeatEndDay() + "/" + temp2.getRepeatEndYear());
-                //Log.d("TESTF", "start! ----- " + temp2.getMonth() + "/" + temp2.getDay() + "/" + temp2.getYear());
-                //Log.d("TESTF", "-----------------------------------------------------");
                 if (temp2.getStartTime().getTime().after(temp2.getRepeatUntilDate().getTime()))
                     return;
 
                 Activity_Main._physicalActivityList.add(temp2);
-
-                //Log.d("TESTF", String.valueOf("****** Added start: day(" + temp2.getDay() + "), month(" + temp2.getMonth() + "), year(" + temp2.getYear() + ")"));
-                //Log.d("TESTF", String.valueOf("****** Added repeatUntil: day(" + temp2.getRepeatEndDay() + "), month(" + temp2.getRepeatEndMonth() + "), year(" + temp2.getRepeatEndYear() + ")"));
+                counter++;
             }
         }
     }
@@ -445,9 +438,7 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
         nextEndTime.set(Calendar.HOUR_OF_DAY, py.getEndHour());
         nextEndTime.set(Calendar.MINUTE, py.getEndMinute());
 
-        PhysicalActivity toReturn = new PhysicalActivity(py);
-
-        return toReturn;
+        return new PhysicalActivity(py);
     }
 
 

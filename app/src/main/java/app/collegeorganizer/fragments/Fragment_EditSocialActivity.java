@@ -7,7 +7,6 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 
 import app.collegeorganizer.OnColorChosenListener;
@@ -308,18 +308,16 @@ public class Fragment_EditSocialActivity extends DialogFragment {
     }
 
     private void deleteExtraActivities(long tempScheduleId) {
-        List<SocialActivity> _socialActivityList = new ArrayList<SocialActivity>(Activity_Main._socialActivityList);
+        Iterator<SocialActivity> itr = Activity_Main._socialActivityList.iterator();
+        while (itr.hasNext()) {
+            SocialActivity py = itr.next();
 
-        for (SocialActivity temp : Activity_Main._socialActivityList) {
-            if (temp.getScheduleId() == tempScheduleId) {
-                if (temp.getStartTime().getTime().after(temp.getRepeatUntilDate().getTime())) {
-                    _socialActivityList.remove(temp);
-                    Log.d("TESTF", String.valueOf(_socialActivityList.contains(temp)));
+            if (py.getScheduleId() == tempScheduleId) {
+                if (py.getStartTime().after(py.getRepeatUntilDate())) {
+                    itr.remove();
                 }
             }
         }
-
-        Activity_Main._socialActivityList = new ArrayList<SocialActivity>(_socialActivityList);
     }
 
     private void addExtraActivities(SocialActivity se) {
@@ -360,16 +358,14 @@ public class Fragment_EditSocialActivity extends DialogFragment {
     }
 
     private void deleteAll() {
-        long tempScheduleId = item.getScheduleId();
-        List<SocialActivity> _socialActivityList = new ArrayList<SocialActivity>(Activity_Main._socialActivityList);
+        Iterator<SocialActivity> itr = Activity_Main._socialActivityList.iterator();
+        while (itr.hasNext()) {
+            SocialActivity py = itr.next();
 
-        for (SocialActivity temp : Activity_Main._socialActivityList) {
-            if (temp.getScheduleId() == tempScheduleId) {
-                _socialActivityList.remove(temp);
+            if (py.getScheduleId() == item.getScheduleId()) {
+                itr.remove();
             }
         }
-
-        Activity_Main._socialActivityList = new ArrayList<SocialActivity>(_socialActivityList);
     }
 
     private void addRepeating(SocialActivity se) {
@@ -380,17 +376,21 @@ public class Fragment_EditSocialActivity extends DialogFragment {
 
         SocialActivity temp = new SocialActivity(se);
 
-
+        int counter = 0;
+        int startWeekDay = se.getStartTime().get(Calendar.DAY_OF_WEEK);
         while (true) {
             temp = new SocialActivity(temp);
             for (int i : repeatingDays) {
+                if (i <= startWeekDay && counter == 0) {
+                    continue;
+                }
                 SocialActivity temp2 = incrementSocialActivityDate(temp, i);
 
                 if (temp2.getStartTime().getTime().after(temp2.getRepeatUntilDate().getTime()))
                     return;
 
                 Activity_Main._socialActivityList.add(temp2);
-
+                counter++;
             }
         }
     }
@@ -403,9 +403,7 @@ public class Fragment_EditSocialActivity extends DialogFragment {
         nextEndTime.set(Calendar.HOUR, se.getEndHour());
         nextEndTime.set(Calendar.MINUTE, se.getEndMinute());
 
-        SocialActivity toReturn = new SocialActivity(se);
-
-        return toReturn;
+        return new SocialActivity(se);
     }
 
 

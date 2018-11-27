@@ -217,10 +217,14 @@ public class Fragment_AddSocialActivity extends DialogFragment {
 
         SocialActivity temp = new SocialActivity(se);
 
-
+        int counter = 0;
+        int startWeekDay = se.getStartTime().get(Calendar.DAY_OF_WEEK);
         while (true) {
             temp = new SocialActivity(temp);
             for (int i : repeatingDays) {
+                if (i <= startWeekDay && counter == 0) {
+                    continue;
+                }
                 SocialActivity temp2 = incrementSocialActivityDate(temp, i);
 
                 if (temp2.getStartTime().getTime().after(temp2.getRepeatUntilDate().getTime()))
@@ -240,9 +244,7 @@ public class Fragment_AddSocialActivity extends DialogFragment {
         nextEndTime.set(Calendar.HOUR, se.getEndHour());
         nextEndTime.set(Calendar.MINUTE, se.getEndMinute());
 
-        SocialActivity toReturn = new SocialActivity(se);
-
-        return toReturn;
+        return new SocialActivity(se);
     }
 
     private Calendar getNextDay(Calendar date, int dayOfWeek) {
