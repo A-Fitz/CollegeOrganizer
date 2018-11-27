@@ -13,9 +13,9 @@ public class Emojis {
 
     public static final String BAD_DREAMS = "\ud83d\ude28";
 
-    public static final String COLD = "\ud83e\udd76";
+    public static final String COLD = "\u2744\ufe0f";
 
-    public static final String HOT = "\ud83e\udd75";
+    public static final String HOT = "\ud83d\udd25";
 
     public static final String PAIN = "\ud83e\udd15";
 }
