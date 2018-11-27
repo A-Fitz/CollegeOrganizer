@@ -1,4 +1,4 @@
-package app.collegeorganizer;
+package app.collegeorganizer.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,17 +10,18 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import app.collegeorganizer.data.DietItem;
+import app.collegeorganizer.R;
+import app.collegeorganizer.data.SocialActivity;
 
-public class DietRecorderAdapter extends BaseAdapter {
-    private static List<DietItem> searchArrayList;
+public class SocialActivityAdapter extends BaseAdapter {
+    private static List<SocialActivity> searchArrayList;
 
     private SimpleDateFormat format_time = new SimpleDateFormat("hh:mm a");
     private SimpleDateFormat format_date = new SimpleDateFormat("MM/dd/yyy");
 
     private LayoutInflater mInflater;
 
-    public DietRecorderAdapter(Context context, List<DietItem> results) {
+    public SocialActivityAdapter(Context context, List<SocialActivity> results) {
         searchArrayList = results;
         mInflater = LayoutInflater.from(context);
     }
@@ -40,34 +41,35 @@ public class DietRecorderAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.diet_record_list_item, null);
+            convertView = mInflater.inflate(R.layout.social_activity_list_item, null);
             holder = new ViewHolder();
-            holder.txtMealcategory = convertView.findViewById(R.id.list_item_mealcategory);
-            holder.txtFoodname = convertView
-                    .findViewById(R.id.list_item_foodname);
+            holder.txtName = convertView.findViewById(R.id.list_item_name);
+            holder.txtDate = convertView
+                    .findViewById(R.id.list_item_date);
             holder.txtTime = convertView.findViewById(R.id.list_item_time);
+            holder.txtDays = convertView.findViewById(R.id.list_item_days);
 
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.txtMealcategory.setText(searchArrayList.get(position)
-                .getMealCategory().toString().substring(0, 1).toUpperCase() + searchArrayList.get(position)
-                .getMealCategory().toString().substring(1).toLowerCase());
+        holder.txtName.setText(searchArrayList.get(position).getName());
 
-        holder.txtFoodname.setText(searchArrayList.get(position).getFoodName());
+        holder.txtDate.setText(format_date.format(searchArrayList.get(position).getStartTime().getTime()));
 
-        holder.txtTime.setText(String.valueOf(format_time.format(searchArrayList.get(position).getTime().getTime())));
+        holder.txtTime.setText(String.valueOf(format_time.format(searchArrayList.get(position).getStartTime().getTime())));
 
+        holder.txtDays.setText(searchArrayList.get(position).getRepeatingDays());
         convertView.setBackgroundColor(searchArrayList.get(position).getColor());
 
         return convertView;
     }
 
     static class ViewHolder {
-        TextView txtMealcategory;
-        TextView txtFoodname;
+        TextView txtName;
+        TextView txtDate;
         TextView txtTime;
+        TextView txtDays;
     }
 }

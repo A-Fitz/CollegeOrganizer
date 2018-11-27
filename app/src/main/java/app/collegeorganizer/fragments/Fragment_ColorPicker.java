@@ -1,18 +1,12 @@
 package app.collegeorganizer.fragments;
 
-import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.support.v4.app.DialogFragment;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 
 import app.collegeorganizer.OnColorChosenListener;
 import app.collegeorganizer.R;
@@ -21,7 +15,6 @@ import app.collegeorganizer.data.GoogleCalendarColors;
 public class Fragment_ColorPicker extends DialogFragment {
     private OnColorChosenListener onColorChosenListener;
     private int color;
-    private GoogleCalendarColors goog_colors = new GoogleCalendarColors();
 
     Button tomato;
     Button flamingo;
@@ -44,23 +37,23 @@ public class Fragment_ColorPicker extends DialogFragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_fragment_color_picker, container, false);
 
-        tomato = (Button) v.findViewById(R.id.tomato);
-        flamingo = (Button) v.findViewById(R.id.flamingo);
-        tangerine = (Button) v.findViewById(R.id.tangerine);
-        banana = (Button) v.findViewById(R.id.banana);
-        sage = (Button) v.findViewById(R.id.sage);
-        basil = (Button) v.findViewById(R.id.basil);
-        peacock = (Button) v.findViewById(R.id.peacock);
-        blueberry = (Button) v.findViewById(R.id.blueberry);
-        lavender = (Button) v.findViewById(R.id.lavender);
-        grape = (Button) v.findViewById(R.id.grape);
-        graphite = (Button) v.findViewById(R.id.graphite);
+        tomato = v.findViewById(R.id.tomato);
+        flamingo = v.findViewById(R.id.flamingo);
+        tangerine = v.findViewById(R.id.tangerine);
+        banana = v.findViewById(R.id.banana);
+        sage = v.findViewById(R.id.sage);
+        basil = v.findViewById(R.id.basil);
+        peacock = v.findViewById(R.id.peacock);
+        blueberry = v.findViewById(R.id.blueberry);
+        lavender = v.findViewById(R.id.lavender);
+        grape = v.findViewById(R.id.grape);
+        graphite = v.findViewById(R.id.graphite);
 
         tomato.setOnClickListener( new Button.OnClickListener()
         {
             @Override
             public void onClick(View v) {
-                color = goog_colors.tomato;
+                color = GoogleCalendarColors.tomato;
                 dismiss();
             }
         });
@@ -69,7 +62,7 @@ public class Fragment_ColorPicker extends DialogFragment {
         {
             @Override
             public void onClick(View v) {
-                color = goog_colors.flamingo;
+                color = GoogleCalendarColors.flamingo;
                 dismiss();
             }
         });
@@ -78,7 +71,7 @@ public class Fragment_ColorPicker extends DialogFragment {
         {
             @Override
             public void onClick(View v) {
-                color = goog_colors.tangerine;
+                color = GoogleCalendarColors.tangerine;
                 dismiss();
             }
         });
@@ -87,7 +80,7 @@ public class Fragment_ColorPicker extends DialogFragment {
         {
             @Override
             public void onClick(View v) {
-                color = goog_colors.banana;
+                color = GoogleCalendarColors.banana;
                 dismiss();
             }
         });
@@ -96,7 +89,7 @@ public class Fragment_ColorPicker extends DialogFragment {
         {
             @Override
             public void onClick(View v) {
-                color = goog_colors.sage;
+                color = GoogleCalendarColors.sage;
                 dismiss();
             }
         });
@@ -105,7 +98,7 @@ public class Fragment_ColorPicker extends DialogFragment {
         {
             @Override
             public void onClick(View v) {
-                color = goog_colors.basil;
+                color = GoogleCalendarColors.basil;
                 dismiss();
             }
         });
@@ -114,7 +107,7 @@ public class Fragment_ColorPicker extends DialogFragment {
         {
             @Override
             public void onClick(View v) {
-                color = goog_colors.peacock;
+                color = GoogleCalendarColors.peacock;
                 dismiss();
             }
         });
@@ -123,7 +116,7 @@ public class Fragment_ColorPicker extends DialogFragment {
         {
             @Override
             public void onClick(View v) {
-                color = goog_colors.blueberry;
+                color = GoogleCalendarColors.blueberry;
                 dismiss();
             }
         });
@@ -132,7 +125,7 @@ public class Fragment_ColorPicker extends DialogFragment {
         {
             @Override
             public void onClick(View v) {
-                color = goog_colors.lavender;
+                color = GoogleCalendarColors.lavender;
                 dismiss();
             }
         });
@@ -141,7 +134,7 @@ public class Fragment_ColorPicker extends DialogFragment {
         {
             @Override
             public void onClick(View v) {
-                color = goog_colors.grape;
+                color = GoogleCalendarColors.grape;
                 dismiss();
             }
         });
@@ -150,7 +143,7 @@ public class Fragment_ColorPicker extends DialogFragment {
         {
             @Override
             public void onClick(View v) {
-                color = goog_colors.graphite;
+                color = GoogleCalendarColors.graphite;
                 dismiss();
             }
         });

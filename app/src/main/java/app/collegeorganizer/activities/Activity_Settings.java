@@ -12,16 +12,18 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.preference.SwitchPreference;
+import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 
 import java.util.List;
 
 import app.collegeorganizer.R;
+import app.collegeorganizer.TimePreference;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -35,6 +37,7 @@ import app.collegeorganizer.R;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class Activity_Settings extends Activity_AppCompatPreference {
+
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -122,6 +125,8 @@ public class Activity_Settings extends Activity_AppCompatPreference {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
+
+
     }
 
     /**
@@ -159,7 +164,6 @@ public class Activity_Settings extends Activity_AppCompatPreference {
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
-                || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName);
     }
 
@@ -200,17 +204,49 @@ public class Activity_Settings extends Activity_AppCompatPreference {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class NotificationPreferenceFragment extends PreferenceFragment {
+        private TimePreference preference_timepicker_sleep_notification;
+        private SwitchPreference preference_switch_sleep_notification;
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_notification);
             setHasOptionsMenu(true);
 
+            preference_switch_sleep_notification = (SwitchPreference) getPreferenceManager().findPreference("preference_switch_sleep_notification");
+            preference_timepicker_sleep_notification = (TimePreference) getPreferenceManager().findPreference("preference_timepicker_sleep_notification");
+
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+            //bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+
+            if (preference_switch_sleep_notification.isChecked())
+                getPreferenceManager().findPreference("preference_timepicker_sleep_notification").setEnabled(true);
+
+            preference_switch_sleep_notification.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    boolean checked = !((SwitchPreference) preference)
+                            .isChecked();
+                    if (checked) {
+                        getPreferenceManager().findPreference("preference_timepicker_sleep_notification").setEnabled(true);
+                    } else if (!checked) {
+                        getPreferenceManager().findPreference("preference_timepicker_sleep_notification").setEnabled(false);
+                    }
+                    return true;
+                }
+            });
+
+            preference_timepicker_sleep_notification.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    getPreferenceManager().findPreference("preference_timepicker_sleep_notification").setSummary(String.valueOf(newValue));
+                    return true;
+                }
+            });
         }
 
         @Override
@@ -224,33 +260,4 @@ public class Activity_Settings extends Activity_AppCompatPreference {
         }
     }
 
-    /**
-     * This fragment shows data and sync preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class DataSyncPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_data_sync);
-            setHasOptionsMenu(true);
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            bindPreferenceSummaryToValue(findPreference("sync_frequency"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), Activity_Settings.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-    }
 }

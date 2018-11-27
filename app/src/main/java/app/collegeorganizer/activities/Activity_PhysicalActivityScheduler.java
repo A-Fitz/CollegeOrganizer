@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import app.collegeorganizer.PhysicalActivityAdapter;
 import app.collegeorganizer.R;
+import app.collegeorganizer.adapters.PhysicalActivityAdapter;
 import app.collegeorganizer.data.PhysicalActivity;
 import app.collegeorganizer.fragments.Fragment_AddPhysicalActivity;
 import app.collegeorganizer.fragments.Fragment_EditPhysicalActivity;

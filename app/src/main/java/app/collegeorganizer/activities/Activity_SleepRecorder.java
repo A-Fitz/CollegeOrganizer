@@ -19,7 +19,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import app.collegeorganizer.R;
-import app.collegeorganizer.SleepRecorderAdapter;
+import app.collegeorganizer.adapters.SleepRecorderAdapter;
 import app.collegeorganizer.data.SleepItem;
 import app.collegeorganizer.fragments.Fragment_AddSleepRecord;
 import app.collegeorganizer.fragments.Fragment_DatePicker;
@@ -36,6 +36,9 @@ public class Activity_SleepRecorder extends AppCompatActivity implements DialogI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        String menuFragment = getIntent().getStringExtra("fragment");
+
         setContentView(R.layout.activity_sleep_recorder);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -77,6 +80,15 @@ public class Activity_SleepRecorder extends AppCompatActivity implements DialogI
 
         date_text.setText(String.valueOf(time.get(Calendar.MONTH) + 1) + "/" + String.valueOf(time.get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(time.get(Calendar.YEAR)));
         refreshList();
+
+        if (menuFragment != null) {
+            if (menuFragment.equals("add_sleep_record")) {
+                DialogFragment newFragment = Fragment_AddSleepRecord.newInstance();
+                newFragment.show(getSupportFragmentManager(), "Add Sleep Record");
+                ((Fragment_AddSleepRecord) newFragment).setDate(chosenDate);
+            }
+        }
+
     }
 
     @Override

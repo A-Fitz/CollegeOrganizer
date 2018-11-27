@@ -1,4 +1,4 @@
-package app.collegeorganizer;
+package app.collegeorganizer.adapters;
 
 import android.content.Context;
 import android.support.text.emoji.EmojiCompat;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import app.collegeorganizer.R;
 import app.collegeorganizer.data.Emojis;
 import app.collegeorganizer.data.SleepItem;
 import app.collegeorganizer.data.SleepQualityTypes;

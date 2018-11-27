@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import app.collegeorganizer.DietRecorderAdapter;
 import app.collegeorganizer.R;
+import app.collegeorganizer.adapters.DietRecorderAdapter;
 import app.collegeorganizer.data.DietItem;
 import app.collegeorganizer.fragments.Fragment_AddDietRecord;
 import app.collegeorganizer.fragments.Fragment_DatePicker;

@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import app.collegeorganizer.R;
-import app.collegeorganizer.SocialActivityAdapter;
+import app.collegeorganizer.adapters.SocialActivityAdapter;
 import app.collegeorganizer.data.SocialActivity;
 import app.collegeorganizer.fragments.Fragment_AddSocialActivity;
 import app.collegeorganizer.fragments.Fragment_EditSocialActivity;

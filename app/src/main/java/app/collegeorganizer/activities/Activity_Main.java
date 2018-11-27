@@ -1,7 +1,15 @@
 package app.collegeorganizer.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.text.emoji.EmojiCompat;
 import android.support.text.emoji.FontRequestEmojiCompatConfig;
 import android.support.text.emoji.bundled.BundledEmojiCompatConfig;
@@ -14,11 +22,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import app.collegeorganizer.AlarmReceiver;
+import app.collegeorganizer.DeviceBootReceiver;
 import app.collegeorganizer.R;
+import app.collegeorganizer.TimePreference;
 import app.collegeorganizer.data.DietItem;
 import app.collegeorganizer.data.GoogleCalendarColors;
 import app.collegeorganizer.data.MealCategory;
@@ -38,6 +50,8 @@ public class Activity_Main extends AppCompatActivity {
     public static List<PhysicalActivity> _physicalActivityList = new ArrayList<PhysicalActivity>();
     public static List<SocialActivity> _socialActivityList = new ArrayList<SocialActivity>();
 
+    public static final boolean TESTING = true;
+
     private static final String TAG = "MainActivity";
 
     /**
@@ -45,7 +59,7 @@ public class Activity_Main extends AppCompatActivity {
      */
     private static final boolean USE_BUNDLED_EMOJI = true;
 
-
+    private SimpleDateFormat format_time = new SimpleDateFormat("hh:mm aa");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +73,74 @@ public class Activity_Main extends AppCompatActivity {
 
         addDataButtonListeners();
         addAppletButtonListeners();
-        addTestObjects();
+        if (TESTING)
+            addTestObjects();
+
+        getSleepualityNotificationPrefs();
+    }
+
+    private void getSleepualityNotificationPrefs() {
+        PreferenceManager.setDefaultValues(this, R.xml.pref_notification, false);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Boolean dailyNotify = sharedPref.getBoolean("preference_switch_sleep_notification", false);
+
+        PackageManager pm = this.getPackageManager();
+        ComponentName receiver = new ComponentName(this, DeviceBootReceiver.class);
+        Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        // if user enabled daily notifications
+        if (dailyNotify) {
+            String timePreference = sharedPref.getString("preference_timepicker_sleep_notification", " ");
+
+            int chosenHour = TimePreference.getHour(timePreference);
+            int chosenMinute = TimePreference.getMinute(timePreference);
+
+            //Toast.makeText(this, "got time: " + chosenHour + ":" + chosenMinute, Toast.LENGTH_SHORT).show();
+
+            //region Enable Daily Notifications
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+
+            if (TESTING)
+                calendar.add(Calendar.SECOND, 2);
+            else {
+                calendar.set(Calendar.HOUR_OF_DAY, chosenHour);
+                calendar.set(Calendar.MINUTE, chosenMinute);
+            }
+
+            // if notification time is before selected time, send notification the next day
+            if (calendar.before(Calendar.getInstance())) {
+                calendar.add(Calendar.DATE, 1);
+                if (TESTING)
+                    Toast.makeText(this, "day added", Toast.LENGTH_SHORT).show();
+            }
+
+            if (manager != null) {
+                manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                        AlarmManager.INTERVAL_DAY, pendingIntent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                    if (TESTING)
+                        Toast.makeText(this, "alarm set for: " + String.valueOf(format_time.format(calendar.getTime())), Toast.LENGTH_SHORT).show();
+                }
+            }
+            //To enable Boot Receiver class
+            pm.setComponentEnabledSetting(receiver,
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP);
+            //endregion
+        } else { //Disable Daily Notifications
+            if (PendingIntent.getBroadcast(this, 0, alarmIntent, 0) != null && manager != null) {
+                manager.cancel(pendingIntent);
+                //Toast.makeText(this,"Notifications were disabled",Toast.LENGTH_SHORT).show();
+            }
+            pm.setComponentEnabledSetting(receiver,
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.DONT_KILL_APP);
+        }
     }
 
     @Override
@@ -68,7 +149,6 @@ public class Activity_Main extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -84,7 +164,8 @@ public class Activity_Main extends AppCompatActivity {
                 return true;
             }
             case R.id.action_moveicons: {
-                Toast.makeText(this, "move icons clicked", Toast.LENGTH_SHORT).show();
+                if (TESTING)
+                    Toast.makeText(this, "move icons clicked", Toast.LENGTH_SHORT).show();
                 return true;
             }
         }
@@ -112,46 +193,22 @@ public class Activity_Main extends AppCompatActivity {
 
     private void addTestObjects()
     {
+        final Button button_test_notification = findViewById(R.id.button_test_notification);
+        button_test_notification.setText("TEST NOTIFICATION");
+        button_test_notification.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                getSleepualityNotificationPrefs();
+            }
+        });
+
         Calendar startCalendar = Calendar.getInstance();
-        Calendar endCalendar = (Calendar) startCalendar.clone();
-        GoogleCalendarColors googleCalendarColors = new GoogleCalendarColors();
-        /*
-        endCalendar.add(Calendar.HOUR, 1);
-        physicalActivityList.add(new PhysicalActivity("test1", startCalendar, endCalendar, googleCalendarColors.tomato, "test1 details", PhysicalActivityIntensity.LIGHT));
 
-        Calendar startCalendar1 = (Calendar) startCalendar.clone();
-        startCalendar1.add(Calendar.HOUR, 3);
-        Calendar endCalendar1 = (Calendar) startCalendar1.clone();
-        endCalendar1.add(Calendar.HOUR, 1);
-        physicalActivityList.add(new PhysicalActivity("test2", startCalendar1, endCalendar1, googleCalendarColors.grape, "test2 details", PhysicalActivityIntensity.HEAVY));
-
-
-        Calendar startCalendar2 = (Calendar) startCalendar1.clone();
-        startCalendar2.add(Calendar.HOUR, 2);
-        Calendar endCalendar2 = (Calendar) startCalendar2.clone();
-        endCalendar2.add(Calendar.HOUR, 1);
-        socialActivityList.add(new SocialActivity("test3", "test3 details", "test3 location", startCalendar2, endCalendar2, googleCalendarColors.banana));
-
-        Calendar startCalendar3 = (Calendar) startCalendar2.clone();
-        startCalendar3.add(Calendar.HOUR, 3);
-        Calendar endCalendar3 = (Calendar) startCalendar3.clone();
-        endCalendar3.add(Calendar.HOUR, 1);
-        Calendar endDate3 = (Calendar) startCalendar3.clone();
-        endDate3.add(Calendar.DAY_OF_MONTH, 23);
-        List<String> repeating3 = new ArrayList<String>();
-        repeating3.add("SU");
-        repeating3.add("W");
-        repeating3.add("F");
-        physicalActivityList.add(new PhysicalActivity("test4", startCalendar3, endCalendar3, googleCalendarColors.grape, "test4 details", repeating3, endDate3, PhysicalActivityIntensity.HEAVY));
-
-        */
-        //socialActivityList.add(new SocialActivity("test2", "test2 details", "test2 location", calender.getTime(), calender.getTime(), googleCalendarColors.lavender));
-        dietItemList.add(new DietItem("test5 food", MealCategory.BREAKFAST, Calendar.getInstance(), "test5 amount", googleCalendarColors.blueberry));
-        dietItemList.add(new DietItem("test6 food", MealCategory.LUNCH, startCalendar, "test6 amount", googleCalendarColors.peacock));
+        dietItemList.add(new DietItem("test5 food", MealCategory.BREAKFAST, Calendar.getInstance(), "test5 amount", GoogleCalendarColors.blueberry));
+        dietItemList.add(new DietItem("test6 food", MealCategory.LUNCH, startCalendar, "test6 amount", GoogleCalendarColors.peacock));
 
         List<SleepQualityTypes> sleepQualityTypesList = new ArrayList<SleepQualityTypes>();
         sleepQualityTypesList.add(SleepQualityTypes.NOT_WITHIN_30_MINUTES);
-        sleepItemList.add(new SleepItem(SleepTimeType.NIGHT, sleepQualityTypesList, Calendar.getInstance(), Calendar.getInstance(), "", googleCalendarColors.peacock ));
+        sleepItemList.add(new SleepItem(SleepTimeType.NIGHT, sleepQualityTypesList, Calendar.getInstance(), Calendar.getInstance(), "", GoogleCalendarColors.peacock));
     }
 
 
@@ -160,7 +217,6 @@ public class Activity_Main extends AppCompatActivity {
         final Button button_data_academic = findViewById(R.id.button_data_academic);
         button_data_academic.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
             }
         });
 

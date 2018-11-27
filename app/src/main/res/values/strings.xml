@@ -97,4 +97,12 @@
     <string name="title_activity_test_calendar">testCalendar</string>
     <string name="title_activity__calendar">Calendar</string>
     <string name="title_activity__sleep_recorder">Activity_SleepRecorder</string>
+
+    <string name="__sleep_quality_notification_title_template">" Sleep quality": %1$s</string>
+
+    <!-- TODO: remove this placeholder text -->
+    <string name="__sleep_quality_notification_placeholder_text_template">How did you sleep?</string>
+
+    <string name="action_share">Share</string>
+    <string name="action_reply"></string>
 </resources>
