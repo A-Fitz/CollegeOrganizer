@@ -29,7 +29,7 @@ import app.collegeorganizer.DialogFragmentListener;
 import app.collegeorganizer.R;
 import app.collegeorganizer.activities.Activity_Main;
 import app.collegeorganizer.data.PhysicalActivity;
-import app.collegeorganizer.data.PhysicalActivityIntensity;
+import app.collegeorganizer.enums.PhysicalActivityIntensity;
 
 @SuppressLint("NewApi")
 public class Fragment_AddPhysicalActivity extends DialogFragment {

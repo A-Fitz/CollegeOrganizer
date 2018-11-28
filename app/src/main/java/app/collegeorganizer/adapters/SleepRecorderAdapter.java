@@ -14,7 +14,7 @@ import java.util.List;
 import app.collegeorganizer.R;
 import app.collegeorganizer.data.Emojis;
 import app.collegeorganizer.data.SleepItem;
-import app.collegeorganizer.data.SleepQualityTypes;
+import app.collegeorganizer.enums.SleepQualityTypes;
 
 public class SleepRecorderAdapter extends BaseAdapter {
     private static List<SleepItem> searchArrayList;

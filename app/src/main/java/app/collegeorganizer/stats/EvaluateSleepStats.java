@@ -1,9 +1,10 @@
-package app.collegeorganizer.stats_types;
+package app.collegeorganizer.stats;
 
 import java.util.Calendar;
 
 import app.collegeorganizer.activities.Activity_Main;
 import app.collegeorganizer.data.SleepItem;
+import app.collegeorganizer.enums.SleepStatTypes;
 
 public class EvaluateSleepStats {
 
@@ -240,26 +241,33 @@ public class EvaluateSleepStats {
 
             case PSQI_SCORE_ALL_TIME:
                 total = 0;
+                count = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     total += getPSQIScore(si);
+                    count++;
                 }
-                return total;
+                return total / count;
             case PSQI_SCORE_LAST_MONTH:
                 total = 0;
+                count = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().getTime().after(oneMonthAgo.getTime())) {
                         total += getPSQIScore(si);
+                        count++;
+
                     }
                 }
-                return total;
+                return total / count;
             case PSQI_SCORE_LAST_WEEK:
                 total = 0;
+                count = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().getTime().after(oneWeekAgo.getTime())) {
                         total += getPSQIScore(si);
+                        count++;
                     }
                 }
-                return total;
+                return total / count;
         }
         return 0;
     }

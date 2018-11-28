@@ -1,16 +1,16 @@
-package app.collegeorganizer.stats_types;
+package app.collegeorganizer.enums;
 
 public enum SleepStatTypes {
-    TOTAL_HOURS_PER_SLEEP("Total hours per sleep"),
-    TOTAL_HOURS_PER_SLEEP_LAST_MONTH("Total hours per sleep in the last month"),
-    TOTAL_HOURS_PER_SLEEP_LAST_WEEK("Total hours per sleep in the last week"),
-    TOTAL_HOURS_PER_SLEEP_ON_SUNDAYS("Total hours per sleep on Sundays"),
-    TOTAL_HOURS_PER_SLEEP_ON_MONDAYS("Total hours per sleep on Mondays"),
-    TOTAL_HOURS_PER_SLEEP_ON_TUESDAYS("Total hours per sleep on Tuesdays"),
-    TOTAL_HOURS_PER_SLEEP_ON_WEDNESDAYS("Total hours per sleep on Wednesdays"),
-    TOTAL_HOURS_PER_SLEEP_ON_THURSDAYS("Total hours per sleep on Thursdays"),
-    TOTAL_HOURS_PER_SLEEP_ON_FRIDAYS("Total hours per sleep on Fridays"),
-    TOTAL_HOURS_PER_SLEEP_ON_SATURDAYS("Total hours per sleep on Saturdays"),
+    TOTAL_HOURS_PER_SLEEP("Total hours sleeping"),
+    TOTAL_HOURS_PER_SLEEP_LAST_MONTH("Total hours sleeping in the last month"),
+    TOTAL_HOURS_PER_SLEEP_LAST_WEEK("Total hours sleeping in the last week"),
+    TOTAL_HOURS_PER_SLEEP_ON_SUNDAYS("Total hours sleeping on Sundays"),
+    TOTAL_HOURS_PER_SLEEP_ON_MONDAYS("Total hours sleeping on Mondays"),
+    TOTAL_HOURS_PER_SLEEP_ON_TUESDAYS("Total hours sleeping on Tuesdays"),
+    TOTAL_HOURS_PER_SLEEP_ON_WEDNESDAYS("Total hours sleeping on Wednesdays"),
+    TOTAL_HOURS_PER_SLEEP_ON_THURSDAYS("Total hours sleeping on Thursdays"),
+    TOTAL_HOURS_PER_SLEEP_ON_FRIDAYS("Total hours sleeping on Fridays"),
+    TOTAL_HOURS_PER_SLEEP_ON_SATURDAYS("Total hours sleeping on Saturdays"),
     AVERAGE_HOURS_PER_SLEEP("Average hours per sleep"),
     AVERAGE_HOURS_PER_SLEEP_LAST_MONTH("Average hours per sleep in the last month"),
     AVERAGE_HOURS_PER_SLEEP_LAST_WEEK("Average hours per sleep in the last week"),

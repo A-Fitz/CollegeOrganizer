@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class SleepDataCategory {
+public class DataComparerCategory {
     private String name;
     private List<Stat> statList = new ArrayList<Stat>();
     private int color;
 
-    public SleepDataCategory(String name, List<Stat> statList, int color) {
+    public DataComparerCategory(String name, List<Stat> statList, int color) {
         this.name = name;
         this.statList = statList;
         this.color = color;
     }
 
-    public SleepDataCategory(String name, int color) {
+    public DataComparerCategory(String name, int color) {
         this.name = name;
         this.color = color;
     }
@@ -48,7 +48,7 @@ public class SleepDataCategory {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SleepDataCategory that = (SleepDataCategory) o;
+        DataComparerCategory that = (DataComparerCategory) o;
         return Objects.equals(name, that.name) &&
                 Objects.equals(statList, that.statList);
     }

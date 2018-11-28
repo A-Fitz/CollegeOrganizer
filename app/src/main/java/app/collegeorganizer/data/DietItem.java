@@ -3,6 +3,8 @@ package app.collegeorganizer.data;
 import java.util.Calendar;
 import java.util.Objects;
 
+import app.collegeorganizer.enums.MealCategory;
+
 public class DietItem {
 
     private MealCategory mealCategory;

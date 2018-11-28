@@ -21,19 +21,19 @@ import java.util.List;
 import app.collegeorganizer.DialogFragmentListener;
 import app.collegeorganizer.R;
 import app.collegeorganizer.activities.Activity_Main;
-import app.collegeorganizer.data.ComparisonOperatorType;
-import app.collegeorganizer.data.SleepDataCategory;
+import app.collegeorganizer.data.DataComparerCategory;
 import app.collegeorganizer.data.Stat;
-import app.collegeorganizer.stats_types.EvaluateStats;
-import app.collegeorganizer.stats_types.PhysicalActivityStatTypes;
-import app.collegeorganizer.stats_types.SleepStatTypes;
-import app.collegeorganizer.stats_types.StatEnum;
+import app.collegeorganizer.enums.ComparisonOperatorType;
+import app.collegeorganizer.enums.PhysicalActivityStatTypes;
+import app.collegeorganizer.enums.SleepStatTypes;
+import app.collegeorganizer.enums.StatEnum;
+import app.collegeorganizer.stats.EvaluateStats;
 
 @SuppressLint("NewApi")
-public class Fragment_AddSleepDataStat extends DialogFragment {
+public class Fragment_AddDataComparerStat extends DialogFragment {
     private DialogFragmentListener dialogFragmentListener;
 
-    private SleepDataCategory sleepDataCategory;
+    private DataComparerCategory dataComparerCategory;
     private int indexOfCategory;
 
     private StatEnum data1enum;
@@ -65,8 +65,8 @@ public class Fragment_AddSleepDataStat extends DialogFragment {
     private ImageButton cancel_button;
     private ImageButton save_button;
 
-    public static Fragment_AddSleepDataStat newInstance() {
-        return new Fragment_AddSleepDataStat();
+    public static Fragment_AddDataComparerStat newInstance() {
+        return new Fragment_AddDataComparerStat();
     }
 
     @Override
@@ -82,15 +82,15 @@ public class Fragment_AddSleepDataStat extends DialogFragment {
         }
     }
 
-    public void setSleepDataCategory(SleepDataCategory sleepDataCategory, int index) {
-        this.sleepDataCategory = sleepDataCategory;
+    public void setSleepDataCategory(DataComparerCategory dataComparerCategory, int index) {
+        this.dataComparerCategory = dataComparerCategory;
         this.indexOfCategory = index;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_add_edit_sleepdata_stat, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_edit_data_comparer_stat, container, false);
 
         edit_dropdown_data1_enum = v.findViewById(R.id.dropdown_data1_enum);
         edit_data1type = v.findViewById(R.id.dropdown_data1type);
@@ -226,12 +226,12 @@ public class Fragment_AddSleepDataStat extends DialogFragment {
                     data1type = (SleepStatTypes) edit_data1type.getSelectedItem();
                     data1 = evaluateStatType.getData((StatEnum) edit_dropdown_data1_enum.getSelectedItem(), data1type);
 
-                    List<Stat> statList = sleepDataCategory.getStatList();
+                    List<Stat> statList = dataComparerCategory.getStatList();
 
                     statList.add(new Stat(data1type, data1));
 
-                    sleepDataCategory.setStatList(statList);
-                    Activity_Main.sleepDataCategoryList.set(indexOfCategory, sleepDataCategory);
+                    dataComparerCategory.setStatList(statList);
+                    Activity_Main.dataComparerCategoryList.set(indexOfCategory, dataComparerCategory);
                     dismiss();
                 } else {
                     data1enum = (StatEnum) edit_dropdown_data1_enum.getSelectedItem();
@@ -244,12 +244,12 @@ public class Fragment_AddSleepDataStat extends DialogFragment {
 
                     comparisonOperatorType = (ComparisonOperatorType) edit_comparison_type.getSelectedItem();
 
-                    List<Stat> statList = sleepDataCategory.getStatList();
+                    List<Stat> statList = dataComparerCategory.getStatList();
 
                     statList.add(new Stat(data1type, data1, data2type, data2, comparisonOperatorType));
 
-                    sleepDataCategory.setStatList(statList);
-                    Activity_Main.sleepDataCategoryList.set(indexOfCategory, sleepDataCategory);
+                    dataComparerCategory.setStatList(statList);
+                    Activity_Main.dataComparerCategoryList.set(indexOfCategory, dataComparerCategory);
                     dismiss();
                 }
             }

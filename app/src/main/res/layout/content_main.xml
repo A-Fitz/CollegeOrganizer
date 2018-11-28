@@ -100,8 +100,10 @@
                         android:textAllCaps="false" />
 
                     <Button
+                        android:id="@+id/button_data_comparer"
                         android:layout_width="@dimen/main_button_width"
                         android:layout_height="@dimen/main_button_height"
+                        android:text="Data Comparer"
                         android:textAllCaps="false" />
 
                 </LinearLayout>

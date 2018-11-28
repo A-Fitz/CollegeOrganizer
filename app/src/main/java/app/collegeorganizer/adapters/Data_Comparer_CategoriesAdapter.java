@@ -13,28 +13,28 @@ import java.util.List;
 import app.collegeorganizer.AddNewStatListener;
 import app.collegeorganizer.ExpandingListView;
 import app.collegeorganizer.R;
-import app.collegeorganizer.data.SleepDataCategory;
+import app.collegeorganizer.data.DataComparerCategory;
 
-public class SleepData_Stats_CategoriesAdapter extends BaseAdapter {
-    private static List<SleepDataCategory> sleepDataCategoryList;
+public class Data_Comparer_CategoriesAdapter extends BaseAdapter {
+    private static List<DataComparerCategory> dataComparerCategoryList;
 
     private LayoutInflater mInflater;
     private Context context;
     private AddNewStatListener addNewStatListener;
-    private SleepData_Stats_CategoryStatsAdapter items_adapter;
+    private Data_Comparer_StatsAdapter items_adapter;
 
-    public SleepData_Stats_CategoriesAdapter(Context context, List<SleepDataCategory> results) {
-        sleepDataCategoryList = results;
+    public Data_Comparer_CategoriesAdapter(Context context, List<DataComparerCategory> results) {
+        dataComparerCategoryList = results;
         mInflater = LayoutInflater.from(context);
         this.context = context;
     }
 
     public int getCount() {
-        return sleepDataCategoryList.size();
+        return dataComparerCategoryList.size();
     }
 
     public Object getItem(int position) {
-        return sleepDataCategoryList.get(position);
+        return dataComparerCategoryList.get(position);
     }
 
     public long getItemId(int position) {
@@ -44,7 +44,7 @@ public class SleepData_Stats_CategoriesAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.sleep_stats_category_item, null);
+            convertView = mInflater.inflate(R.layout.data_comparer_category_item, null);
             holder = new ViewHolder();
             holder.category_name = convertView.findViewById(R.id.category_name);
             holder.listview_category_items = convertView
@@ -56,8 +56,8 @@ public class SleepData_Stats_CategoriesAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.category_name.setText(sleepDataCategoryList.get(position).getName());
-        items_adapter = new SleepData_Stats_CategoryStatsAdapter(parent.getContext(), sleepDataCategoryList.get(position).getStatList());
+        holder.category_name.setText(dataComparerCategoryList.get(position).getName());
+        items_adapter = new Data_Comparer_StatsAdapter(parent.getContext(), dataComparerCategoryList.get(position).getStatList());
         holder.listview_category_items.setAdapter(items_adapter);
 
         holder.button_add_stat.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +70,7 @@ public class SleepData_Stats_CategoriesAdapter extends BaseAdapter {
             }
         });
 
-        convertView.setBackgroundColor(sleepDataCategoryList.get(position).getColor());
+        convertView.setBackgroundColor(dataComparerCategoryList.get(position).getColor());
 
         return convertView;
     }

@@ -1,6 +1,7 @@
 package app.collegeorganizer.data;
 
-import app.collegeorganizer.stats_types.SleepStatTypes;
+import app.collegeorganizer.enums.ComparisonOperatorType;
+import app.collegeorganizer.enums.SleepStatTypes;
 
 public class Stat {
     private SleepStatTypes data1Type;

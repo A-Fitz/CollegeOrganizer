@@ -16,10 +16,10 @@ import android.widget.Toast;
 import app.collegeorganizer.DialogFragmentListener;
 import app.collegeorganizer.R;
 import app.collegeorganizer.activities.Activity_Main;
-import app.collegeorganizer.data.SleepDataCategory;
+import app.collegeorganizer.data.DataComparerCategory;
 
 @SuppressLint("NewApi")
-public class Fragment_AddSleepDataCategory extends DialogFragment {
+public class Fragment_AddDataComparerCategory extends DialogFragment {
     private DialogFragmentListener dialogFragmentListener;
 
     private String name;
@@ -34,8 +34,8 @@ public class Fragment_AddSleepDataCategory extends DialogFragment {
 
     private int temp_color = 0;
 
-    public static Fragment_AddSleepDataCategory newInstance() {
-        return new Fragment_AddSleepDataCategory();
+    public static Fragment_AddDataComparerCategory newInstance() {
+        return new Fragment_AddDataComparerCategory();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class Fragment_AddSleepDataCategory extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_add_edit_sleepdata_category, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_edit_data_comparer_category, container, false);
 
         edit_name = v.findViewById(R.id.textinput_category_name);
 
@@ -88,9 +88,9 @@ public class Fragment_AddSleepDataCategory extends DialogFragment {
                     name = edit_name.getText().toString();
                     color = temp_color;
 
-                    SleepDataCategory s = new SleepDataCategory(name, color);
+                    DataComparerCategory s = new DataComparerCategory(name, color);
 
-                    Activity_Main.sleepDataCategoryList.add(s);
+                    Activity_Main.dataComparerCategoryList.add(s);
 
                     dismiss();
                 } else {

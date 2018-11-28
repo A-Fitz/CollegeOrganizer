@@ -103,7 +103,6 @@
     <!-- TODO: remove this placeholder text -->
     <string name="__sleep_quality_notification_placeholder_text_template">How did you sleep?</string>
 
-    <string name="action_share">Share</string>
-    <string name="action_reply"></string>
-    <string name="title_activity__sleep_data">Activity_SleepData</string>
+    <string name="title_activity__sleep_data">Sleep Data</string>
+    <string name="title_activity__data__comparer">Data Comparer</string>
 </resources>

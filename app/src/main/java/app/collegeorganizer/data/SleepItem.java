@@ -4,6 +4,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
+import app.collegeorganizer.enums.SleepQualityTypes;
+import app.collegeorganizer.enums.SleepTimeType;
+
 public class SleepItem {
     private SleepTimeType sleepTimeType;
     private List<SleepQualityTypes> sleepQualityTypesList;

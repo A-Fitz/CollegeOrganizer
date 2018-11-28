@@ -29,8 +29,8 @@ import app.collegeorganizer.R;
 import app.collegeorganizer.activities.Activity_Main;
 import app.collegeorganizer.data.Emojis;
 import app.collegeorganizer.data.SleepItem;
-import app.collegeorganizer.data.SleepQualityTypes;
-import app.collegeorganizer.data.SleepTimeType;
+import app.collegeorganizer.enums.SleepQualityTypes;
+import app.collegeorganizer.enums.SleepTimeType;
 
 @SuppressLint("NewApi")
 public class Fragment_EditSleepRecord extends DialogFragment {

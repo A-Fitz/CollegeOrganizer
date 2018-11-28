@@ -1,4 +1,4 @@
-package app.collegeorganizer.stats_types;
+package app.collegeorganizer.enums;
 
 public enum StatEnum {
     SLEEP("Sleep"),

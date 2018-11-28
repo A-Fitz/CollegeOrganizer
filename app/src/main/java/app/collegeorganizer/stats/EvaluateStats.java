@@ -1,4 +1,8 @@
-package app.collegeorganizer.stats_types;
+package app.collegeorganizer.stats;
+
+import app.collegeorganizer.enums.PhysicalActivityStatTypes;
+import app.collegeorganizer.enums.SleepStatTypes;
+import app.collegeorganizer.enums.StatEnum;
 
 public class EvaluateStats {
     public float getData(StatEnum e, Enum stat) {

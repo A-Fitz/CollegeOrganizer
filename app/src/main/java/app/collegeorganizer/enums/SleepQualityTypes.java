@@ -1,4 +1,4 @@
-package app.collegeorganizer.data;
+package app.collegeorganizer.enums;
 
 public enum SleepQualityTypes {
     NOT_WITHIN_30_MINUTES,

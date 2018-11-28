@@ -26,7 +26,7 @@ import app.collegeorganizer.DialogFragmentListener;
 import app.collegeorganizer.R;
 import app.collegeorganizer.activities.Activity_Main;
 import app.collegeorganizer.data.DietItem;
-import app.collegeorganizer.data.MealCategory;
+import app.collegeorganizer.enums.MealCategory;
 
 @SuppressLint("NewApi")
 public class Fragment_AddDietRecord extends DialogFragment {

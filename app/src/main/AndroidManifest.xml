@@ -69,8 +69,8 @@
         <receiver android:name=".AlarmReceiver" />
 
         <activity
-            android:name=".activities.Activity_SleepData"
-            android:label="@string/title_activity__sleep_data"
+            android:name=".activities.Activity_Data_Comparer"
+            android:label="@string/title_activity__data__comparer"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

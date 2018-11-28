@@ -31,17 +31,17 @@ import app.collegeorganizer.AlarmReceiver;
 import app.collegeorganizer.DeviceBootReceiver;
 import app.collegeorganizer.R;
 import app.collegeorganizer.TimePreference;
+import app.collegeorganizer.data.DataComparerCategory;
 import app.collegeorganizer.data.DietItem;
 import app.collegeorganizer.data.GoogleCalendarColors;
-import app.collegeorganizer.data.MealCategory;
 import app.collegeorganizer.data.PhysicalActivity;
-import app.collegeorganizer.data.SleepDataCategory;
 import app.collegeorganizer.data.SleepItem;
-import app.collegeorganizer.data.SleepQualityTypes;
-import app.collegeorganizer.data.SleepTimeType;
 import app.collegeorganizer.data.SocialActivity;
 import app.collegeorganizer.data.Stat;
-import app.collegeorganizer.stats_types.SleepStatTypes;
+import app.collegeorganizer.enums.MealCategory;
+import app.collegeorganizer.enums.SleepQualityTypes;
+import app.collegeorganizer.enums.SleepStatTypes;
+import app.collegeorganizer.enums.SleepTimeType;
 
 public class Activity_Main extends AppCompatActivity {
     public static List<PhysicalActivity> physicalScheduleList = new ArrayList<PhysicalActivity>();
@@ -53,7 +53,7 @@ public class Activity_Main extends AppCompatActivity {
     public static List<PhysicalActivity> _physicalActivityList = new ArrayList<PhysicalActivity>();
     public static List<SocialActivity> _socialActivityList = new ArrayList<SocialActivity>();
 
-    public static List<SleepDataCategory> sleepDataCategoryList = new ArrayList<SleepDataCategory>();
+    public static List<DataComparerCategory> dataComparerCategoryList = new ArrayList<DataComparerCategory>();
 
     public static boolean TESTING = true; //there is a setting preference for this
 
@@ -222,7 +222,7 @@ public class Activity_Main extends AppCompatActivity {
 
         List<Stat> statList = new ArrayList<Stat>();
         statList.add(new Stat(SleepStatTypes.PSQI_SCORE_ALL_TIME, 900));
-        sleepDataCategoryList.add(new SleepDataCategory("test category", statList, GoogleCalendarColors.basil));
+        dataComparerCategoryList.add(new DataComparerCategory("test category", statList, GoogleCalendarColors.basil));
     }
 
 
@@ -258,8 +258,6 @@ public class Activity_Main extends AppCompatActivity {
         final Button button_data_sleep = findViewById(R.id.button_data_sleep);
         button_data_sleep.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(Activity_Main.this, Activity_SleepData.class);
-                startActivity(intent);
             }
         });
 
@@ -267,6 +265,13 @@ public class Activity_Main extends AppCompatActivity {
         button_data_mood.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+            }
+        });
+        final Button button_data_comparer = findViewById(R.id.button_data_comparer);
+        button_data_comparer.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(Activity_Main.this, Activity_Data_Comparer.class);
+                startActivity(intent);
             }
         });
     }

@@ -13,13 +13,13 @@ import app.collegeorganizer.AddNewStatListener;
 import app.collegeorganizer.R;
 import app.collegeorganizer.data.Stat;
 
-public class SleepData_Stats_CategoryStatsAdapter extends BaseAdapter {
+public class Data_Comparer_StatsAdapter extends BaseAdapter {
     private static List<Stat> statList;
 
     private LayoutInflater mInflater;
     private AddNewStatListener addNewStatListener;
 
-    public SleepData_Stats_CategoryStatsAdapter(Context context, List<Stat> results) {
+    public Data_Comparer_StatsAdapter(Context context, List<Stat> results) {
         statList = results;
         mInflater = LayoutInflater.from(context);
     }
@@ -39,7 +39,7 @@ public class SleepData_Stats_CategoryStatsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.sleep_stats_list_item, null);
+            convertView = mInflater.inflate(R.layout.data_comparer_stat_item, null);
             holder = new ViewHolder();
             holder.list_item_stat1_name = convertView.findViewById(R.id.list_item_stat1_name);
             holder.list_item_comparison_operator = convertView.findViewById(R.id.list_item_comparison_operator);

@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
+import app.collegeorganizer.enums.PhysicalActivityIntensity;
+
 @SuppressWarnings("deprecation")
 public class PhysicalActivity {
     private String name;
