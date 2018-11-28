@@ -31,14 +31,17 @@ import app.collegeorganizer.AlarmReceiver;
 import app.collegeorganizer.DeviceBootReceiver;
 import app.collegeorganizer.R;
 import app.collegeorganizer.TimePreference;
+import app.collegeorganizer.data.ComparisonOperatorType;
 import app.collegeorganizer.data.DietItem;
 import app.collegeorganizer.data.GoogleCalendarColors;
 import app.collegeorganizer.data.MealCategory;
 import app.collegeorganizer.data.PhysicalActivity;
+import app.collegeorganizer.data.SleepDataCategory;
 import app.collegeorganizer.data.SleepItem;
 import app.collegeorganizer.data.SleepQualityTypes;
 import app.collegeorganizer.data.SleepTimeType;
 import app.collegeorganizer.data.SocialActivity;
+import app.collegeorganizer.data.Stat;
 
 public class Activity_Main extends AppCompatActivity {
     public static List<PhysicalActivity> physicalScheduleList = new ArrayList<PhysicalActivity>();
@@ -50,7 +53,9 @@ public class Activity_Main extends AppCompatActivity {
     public static List<PhysicalActivity> _physicalActivityList = new ArrayList<PhysicalActivity>();
     public static List<SocialActivity> _socialActivityList = new ArrayList<SocialActivity>();
 
-    public static final boolean TESTING = true;
+    public static List<SleepDataCategory> sleepDataCategoryList = new ArrayList<SleepDataCategory>();
+
+    public static boolean TESTING = true; //there is a setting preference for this
 
     private static final String TAG = "MainActivity";
 
@@ -88,7 +93,7 @@ public class Activity_Main extends AppCompatActivity {
         PackageManager pm = this.getPackageManager();
         ComponentName receiver = new ComponentName(this, DeviceBootReceiver.class);
         Intent alarmIntent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         // if user enabled daily notifications
@@ -209,6 +214,11 @@ public class Activity_Main extends AppCompatActivity {
         List<SleepQualityTypes> sleepQualityTypesList = new ArrayList<SleepQualityTypes>();
         sleepQualityTypesList.add(SleepQualityTypes.NOT_WITHIN_30_MINUTES);
         sleepItemList.add(new SleepItem(SleepTimeType.NIGHT, sleepQualityTypesList, Calendar.getInstance(), Calendar.getInstance(), "", GoogleCalendarColors.peacock));
+
+        List<Stat> statList = new ArrayList<Stat>();
+        statList.add(new Stat("total calories", 15, "sleep hours per night", 7, ComparisonOperatorType.VS));
+        statList.add(new Stat("killer", 900));
+        sleepDataCategoryList.add(new SleepDataCategory("test category", statList, GoogleCalendarColors.basil));
     }
 
 
@@ -244,7 +254,8 @@ public class Activity_Main extends AppCompatActivity {
         final Button button_data_sleep = findViewById(R.id.button_data_sleep);
         button_data_sleep.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                Intent intent = new Intent(Activity_Main.this, Activity_SleepData.class);
+                startActivity(intent);
             }
         });
 

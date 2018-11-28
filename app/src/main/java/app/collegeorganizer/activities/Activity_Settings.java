@@ -173,18 +173,31 @@ public class Activity_Settings extends Activity_AppCompatPreference {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment {
+        private SwitchPreference preference_switch_testing_mode;
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            bindPreferenceSummaryToValue(findPreference("example_text"));
-            bindPreferenceSummaryToValue(findPreference("example_list"));
+            preference_switch_testing_mode = (SwitchPreference) getPreferenceManager().findPreference("preference_switch_testing_mode");
+
+            Activity_Main.TESTING = preference_switch_testing_mode.isChecked();
+
+            preference_switch_testing_mode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    boolean checked = !((SwitchPreference) preference)
+                            .isChecked();
+                    if (checked) {
+                        Activity_Main.TESTING = true;
+                    } else if (!checked) {
+                        Activity_Main.TESTING = false;
+                    }
+                    return true;
+                }
+            });
         }
 
         @Override
