@@ -273,7 +273,44 @@ public class EvaluateSleepStats {
     }
 
     private float getPSQIScore(SleepItem si) {
-        //TODO ROSS
-        return 0;
+        List<SleepQualityTypes> sleepItems = si.getSleepQualityTypesList();
+
+        //get point value related to checked boxes
+        int sum = 0;
+        if (sleepItems.contains(SleepQualityTypes.NOT_WITHIN_30_MINUTES))
+            sum+=3;
+        if (sleepItems.contains(SleepQualityTypes.WAKE_UP_IN_NIGHT))
+            sum+=3;
+        if (sleepItems.contains(SleepQualityTypes.BATHROOM))
+            sum+=3;
+        if (sleepItems.contains(SleepQualityTypes.BREATHING))
+            sum+=3;
+        if (sleepItems.contains(SleepQualityTypes.COUGH_SNORE))
+            sum+=3;
+        if (sleepItems.contains(SleepQualityTypes.COLD))
+            sum+=3;
+        if (sleepItems.contains(SleepQualityTypes.HOT))
+            sum+=3;
+        if (sleepItems.contains(SleepQualityTypes.BAD_DREAMS))
+            sum+=3;
+        if (sleepItems.contains(SleepQualityTypes.PAIN))
+            sum+=3;
+
+        //get associated PSQI score from point value
+        if (sum == 0)
+            return 0;
+        else if (sum >= 1 && sum <= 5)
+            return 2.35f;
+        else if (sum >= 6 && sum <= 9)
+            return 4.7f;
+        else if (sum >= 10 && sum <= 14)
+            return 7.05f;
+        else if (sum >= 15 && sum <= 18)
+            return 9.4f;
+        else if (sum >= 19 && sum <= 23)
+            return 11.75f;
+        else
+            return 14.1f;
+
     }
 }
