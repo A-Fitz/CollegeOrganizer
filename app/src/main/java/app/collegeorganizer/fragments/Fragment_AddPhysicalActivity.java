@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import app.collegeorganizer.OnColorChosenListener;
+import app.collegeorganizer.DialogFragmentListener;
 import app.collegeorganizer.R;
 import app.collegeorganizer.activities.Activity_Main;
 import app.collegeorganizer.data.PhysicalActivity;
@@ -395,7 +395,7 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
         color_picker.DismissListener(color_picker_closeListener);
     }
 
-    OnColorChosenListener color_picker_closeListener = new OnColorChosenListener() {
+    DialogFragmentListener color_picker_closeListener = new DialogFragmentListener() {
         @Override
         public void handleDialogClose(int color) {
             temp_color = color;

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import app.collegeorganizer.AddNewStatListener;
 import app.collegeorganizer.R;
 import app.collegeorganizer.data.Stat;
 
@@ -16,6 +17,7 @@ public class SleepData_Stats_CategoryStatsAdapter extends BaseAdapter {
     private static List<Stat> statList;
 
     private LayoutInflater mInflater;
+    private AddNewStatListener addNewStatListener;
 
     public SleepData_Stats_CategoryStatsAdapter(Context context, List<Stat> results) {
         statList = results;
@@ -60,6 +62,10 @@ public class SleepData_Stats_CategoryStatsAdapter extends BaseAdapter {
         holder.list_item_value.setText(statList.get(position).toString());
 
         return convertView;
+    }
+
+    public void setAddNewStatListener(AddNewStatListener addNewStatListener) {
+        this.addNewStatListener = addNewStatListener;
     }
 
     static class ViewHolder {

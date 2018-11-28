@@ -31,7 +31,6 @@ import app.collegeorganizer.AlarmReceiver;
 import app.collegeorganizer.DeviceBootReceiver;
 import app.collegeorganizer.R;
 import app.collegeorganizer.TimePreference;
-import app.collegeorganizer.data.ComparisonOperatorType;
 import app.collegeorganizer.data.DietItem;
 import app.collegeorganizer.data.GoogleCalendarColors;
 import app.collegeorganizer.data.MealCategory;
@@ -42,6 +41,7 @@ import app.collegeorganizer.data.SleepQualityTypes;
 import app.collegeorganizer.data.SleepTimeType;
 import app.collegeorganizer.data.SocialActivity;
 import app.collegeorganizer.data.Stat;
+import app.collegeorganizer.stats_types.SleepStatTypes;
 
 public class Activity_Main extends AppCompatActivity {
     public static List<PhysicalActivity> physicalScheduleList = new ArrayList<PhysicalActivity>();
@@ -213,11 +213,15 @@ public class Activity_Main extends AppCompatActivity {
 
         List<SleepQualityTypes> sleepQualityTypesList = new ArrayList<SleepQualityTypes>();
         sleepQualityTypesList.add(SleepQualityTypes.NOT_WITHIN_30_MINUTES);
-        sleepItemList.add(new SleepItem(SleepTimeType.NIGHT, sleepQualityTypesList, Calendar.getInstance(), Calendar.getInstance(), "", GoogleCalendarColors.peacock));
+        Calendar sleepStart = Calendar.getInstance();
+        sleepStart.set(Calendar.HOUR_OF_DAY, 18);
+        Calendar sleepEnd = (Calendar) sleepStart.clone();
+        sleepEnd.set(Calendar.HOUR_OF_DAY, 8);
+        sleepEnd.add(Calendar.DAY_OF_MONTH, 1);
+        sleepItemList.add(new SleepItem(SleepTimeType.NIGHT, sleepQualityTypesList, sleepStart, sleepEnd, "", GoogleCalendarColors.peacock));
 
         List<Stat> statList = new ArrayList<Stat>();
-        statList.add(new Stat("total calories", 15, "sleep hours per night", 7, ComparisonOperatorType.VS));
-        statList.add(new Stat("killer", 900));
+        statList.add(new Stat(SleepStatTypes.PSQI_SCORE_ALL_TIME, 900));
         sleepDataCategoryList.add(new SleepDataCategory("test category", statList, GoogleCalendarColors.basil));
     }
 

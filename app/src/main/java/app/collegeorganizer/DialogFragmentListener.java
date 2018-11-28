@@ -1,6 +1,6 @@
 package app.collegeorganizer;
 
 
-public interface OnColorChosenListener {
+public interface DialogFragmentListener {
     void handleDialogClose(int color);
 }

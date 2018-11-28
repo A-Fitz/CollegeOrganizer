@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import app.collegeorganizer.OnColorChosenListener;
+import app.collegeorganizer.DialogFragmentListener;
 import app.collegeorganizer.R;
 import app.collegeorganizer.activities.Activity_Main;
 import app.collegeorganizer.data.Emojis;
@@ -243,6 +243,9 @@ public class Fragment_EditSleepRecord extends DialogFragment {
                     details = edit_details.getText().toString();
                     color = temp_color;
 
+                    if (end_time.getTime().before(start_time.getTime()))
+                        end_time.add(Calendar.DAY_OF_MONTH, 1);
+
                     SleepItem s = new SleepItem(sleepTimeType, sleepQualityTypesList, start_time, end_time, details, color);
 
                     int index = Activity_Main.sleepItemList.indexOf(item);
@@ -327,7 +330,7 @@ public class Fragment_EditSleepRecord extends DialogFragment {
         }
     };
 
-    OnColorChosenListener color_picker_closeListener = new OnColorChosenListener() {
+    DialogFragmentListener color_picker_closeListener = new DialogFragmentListener() {
         @Override
         public void handleDialogClose(int color) {
             temp_color = color;

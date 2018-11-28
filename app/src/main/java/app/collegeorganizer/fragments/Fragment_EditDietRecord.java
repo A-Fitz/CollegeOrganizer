@@ -22,7 +22,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import app.collegeorganizer.OnColorChosenListener;
+import app.collegeorganizer.DialogFragmentListener;
 import app.collegeorganizer.R;
 import app.collegeorganizer.activities.Activity_Main;
 import app.collegeorganizer.data.DietItem;
@@ -472,7 +472,7 @@ public class Fragment_EditDietRecord extends DialogFragment {
         }
     };
 
-    OnColorChosenListener color_picker_closeListener = new OnColorChosenListener() {
+    DialogFragmentListener color_picker_closeListener = new DialogFragmentListener() {
         @Override
         public void handleDialogClose(int color) {
             temp_color = color;
