@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -81,10 +80,9 @@ public class Data_Comparer_CategoriesAdapter extends BaseAdapter {
     }
 
     public void updateCategoryItems() {
-        if (items_adapter != null) //TODO cant update onresume because this is null?
+        notifyDataSetChanged();
+        if (items_adapter != null)
             items_adapter.notifyDataSetChanged();
-        else
-            Toast.makeText(context, "Data not updated. //bug", Toast.LENGTH_SHORT).show();
     }
 
     static class ViewHolder {

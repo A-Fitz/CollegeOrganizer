@@ -42,12 +42,48 @@ public class Stat {
 
     }
 
+    public void setData1Type(Enum data1Type) {
+        this.data1Type = data1Type;
+    }
+
+    public void setData2Type(Enum data2Type) {
+        this.data2Type = data2Type;
+    }
+
+    public void setData1(float data1) {
+        this.data1 = data1;
+    }
+
+    public void setData2(float data2) {
+        this.data2 = data2;
+    }
+
+    public float getData1() {
+        return data1;
+    }
+
+    public float getData2() {
+        return data2;
+    }
+
+    public void setComparisonOperator(ComparisonOperatorType comparisonOperator) {
+        this.comparisonOperator = comparisonOperator;
+    }
+
     public String getData1Type() {
         return data1Type.toString();
     }
 
     public String getData2Type() {
         return data2Type.toString();
+    }
+
+    public Enum enum_getData1Type() {
+        return data1Type;
+    }
+
+    public Enum enum_getData2Type() {
+        return data2Type;
     }
 
     public String getComparisonOperatorName() {

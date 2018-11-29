@@ -49,6 +49,8 @@ public class Activity_Data_Comparer extends AppCompatActivity {
                 showAddCategory();
             }
         });
+
+
     }
 
     private void showAddCategory() {
@@ -72,10 +74,5 @@ public class Activity_Data_Comparer extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        listAdapter.notifyDataSetChanged();
-        listAdapter.updateCategoryItems();
-    }
+
 }
