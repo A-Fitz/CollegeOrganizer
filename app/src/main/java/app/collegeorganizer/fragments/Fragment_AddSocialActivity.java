@@ -164,8 +164,8 @@ public class Fragment_AddSocialActivity extends DialogFragment {
             public void onClick(View v) {
                 if (checkInput()) {
                     name = edit_name.getText().toString();
-                    endTime = temp_endTime;
                     startTime = temp_startTime;
+                    endTime = temp_endTime;
                     details = edit_details.getText().toString();
                     location = edit_location.getText().toString();
                     color = temp_color;
@@ -187,9 +187,9 @@ public class Fragment_AddSocialActivity extends DialogFragment {
                             repeating.add("S");
 
                         repeatUntilDate = temp_repeatUntilDate;
-                        se = new SocialActivity(name, details, location, startTime, endTime, repeatUntilDate, repeating, color);
+                        se = new SocialActivity(name, startTime, endTime, color, details, location, repeating, repeatUntilDate);
                     } else
-                        se = new SocialActivity(name, details, location, startTime, endTime, color);
+                        se = new SocialActivity(name, startTime, endTime, color, details, location);
 
                     se.setScheduleId(se.hashCode());
 
@@ -209,16 +209,19 @@ public class Fragment_AddSocialActivity extends DialogFragment {
         });
     }
 
-    private void addRepeating(SocialActivity se) {
-        List<String> repeatingDaysTemp = se.getRepeating();
+    private void addRepeating(SocialActivity si) {
+        List<String> repeatingDaysTemp = si.getRepeating();
         List<Integer> repeatingDays = getRepeatingDays(repeatingDaysTemp);
 
-        Activity_Main._socialActivityList.add(se);
 
-        SocialActivity temp = new SocialActivity(se);
+        SocialActivity temp = new SocialActivity(si);
+
+        //Log.d("TESTF", String.valueOf("start: day(" + temp.getDay() + "), month(" + temp.getMonth() + "), year(" + temp.getYear() + ")"));
+        //Log.d("TESTF", String.valueOf("repeatUntil: day(" + temp.getRepeatEndDay() + "), month(" + temp.getRepeatEndMonth() + "), year(" + temp.getRepeatEndYear() + ")"));
+        //Log.d("TESTF", "-----------------------------------------------------");
 
         int counter = 0;
-        int startWeekDay = se.getStartTime().get(Calendar.DAY_OF_WEEK);
+        int startWeekDay = si.getStartTime().get(Calendar.DAY_OF_WEEK);
         while (true) {
             temp = new SocialActivity(temp);
             for (int i : repeatingDays) {
@@ -231,21 +234,22 @@ public class Fragment_AddSocialActivity extends DialogFragment {
                     return;
 
                 Activity_Main._socialActivityList.add(temp2);
-
+                counter++;
             }
         }
     }
 
-    private SocialActivity incrementSocialActivityDate(SocialActivity se, int nextDay) {
-        Calendar currDay = se.getStartTime();
+    private SocialActivity incrementSocialActivityDate(SocialActivity si, int nextDay) {
+        Calendar currDay = si.getStartTime();
 
         Calendar nextStartTime = getNextDay(currDay, nextDay);
         Calendar nextEndTime = (Calendar) nextStartTime.clone();
-        nextEndTime.set(Calendar.HOUR, se.getEndHour());
-        nextEndTime.set(Calendar.MINUTE, se.getEndMinute());
+        nextEndTime.set(Calendar.HOUR_OF_DAY, si.getEndHour());
+        nextEndTime.set(Calendar.MINUTE, si.getEndMinute());
 
-        return new SocialActivity(se);
+        return new SocialActivity(si);
     }
+
 
     private Calendar getNextDay(Calendar date, int dayOfWeek) {
 
@@ -291,7 +295,7 @@ public class Fragment_AddSocialActivity extends DialogFragment {
     }
 
     private boolean checkInput() {
-        boolean mainFields = (!isEditTextEmpty(edit_name) && !isEditTextEmpty(edit_location) && !isEditTextEmpty(edit_startTime) && !isEditTextEmpty(edit_endTime) && !isEditTextEmpty(edit_date) && temp_color != 0);
+        boolean mainFields = (!isEditTextEmpty(edit_name) && !isEditTextEmpty(edit_location) && !isEditTextEmpty(edit_details) && !isEditTextEmpty(edit_startTime) && !isEditTextEmpty(edit_endTime) && !isEditTextEmpty(edit_date) && temp_color != 0);
         boolean repeatingFields = isOneRepeatCheckBokChecked() && !isEditTextEmpty(edit_repeatUntilDate);
         if (!isRepeating)
             return mainFields;
@@ -355,7 +359,7 @@ public class Fragment_AddSocialActivity extends DialogFragment {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             temp_startTime.set(Calendar.YEAR, year);
-            temp_startTime.set(Calendar.MONTH, dayOfMonth);
+            temp_startTime.set(Calendar.MONTH, monthOfYear);
             temp_startTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
             edit_date.setText(format_date.format(temp_startTime.getTime()));
@@ -383,7 +387,7 @@ public class Fragment_AddSocialActivity extends DialogFragment {
          */
         Calendar calender = Calendar.getInstance();
         Bundle args = new Bundle();
-        args.putInt("hour", calender.get(Calendar.HOUR));
+        args.putInt("hour", calender.get(Calendar.HOUR_OF_DAY));
         args.putInt("minute", calender.get(Calendar.MINUTE));
         time.setArguments(args);
         /**
@@ -399,7 +403,7 @@ public class Fragment_AddSocialActivity extends DialogFragment {
     TimePickerDialog.OnTimeSetListener start_time_listener = new TimePickerDialog.OnTimeSetListener() {
 
         public void onTimeSet(TimePicker view, int hour, int minute) {
-            temp_startTime.set(Calendar.HOUR, hour);
+            temp_startTime.set(Calendar.HOUR_OF_DAY, hour);
             temp_startTime.set(Calendar.MINUTE, minute);
 
             edit_startTime.setText(String.valueOf(format_time.format(temp_startTime.getTime())));
@@ -410,13 +414,12 @@ public class Fragment_AddSocialActivity extends DialogFragment {
 
         public void onTimeSet(TimePicker view, int hour, int minute) {
             temp_endTime = (Calendar) temp_startTime.clone();
-            temp_endTime.set(Calendar.HOUR, hour);
+            temp_endTime.set(Calendar.HOUR_OF_DAY, hour);
             temp_endTime.set(Calendar.MINUTE, minute);
 
             edit_endTime.setText(String.valueOf(format_time.format(temp_endTime.getTime())));
         }
     };
-
 
     @Override
     public void onResume() {

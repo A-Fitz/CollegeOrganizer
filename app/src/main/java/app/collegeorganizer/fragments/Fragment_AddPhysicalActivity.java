@@ -70,9 +70,7 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
     private int temp_color = 0;
 
     private SimpleDateFormat format_time = new SimpleDateFormat("hh:mm a");
-    private SimpleDateFormat format_date = new SimpleDateFormat("MM/dd/yyy");
-
-    String[] dropdown_intensity_items = { "Light", "Heavy" };
+    private SimpleDateFormat format_date = new SimpleDateFormat("MM/dd/yyyy");
 
     public static Fragment_AddPhysicalActivity newInstance() {
         return new Fragment_AddPhysicalActivity();
@@ -115,7 +113,7 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
         edit_startTime.setText(String.valueOf(format_time.format(startTime.getTime())));
         edit_date.setText(String.valueOf(format_date.format(startTime.getTime())));
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, dropdown_intensity_items);
+        ArrayAdapter<PhysicalActivityIntensity> adapter = new ArrayAdapter<PhysicalActivityIntensity>(getContext(), android.R.layout.simple_spinner_item, PhysicalActivityIntensity.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         edit_intensity.setAdapter(adapter);
 
@@ -177,14 +175,7 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
                     startTime = temp_startTime;
                     endTime = temp_endTime;
                     details = edit_details.getText().toString();
-                    switch(edit_intensity.getSelectedItem().toString()) {
-                        case "Light":
-                            intensity = PhysicalActivityIntensity.LIGHT;
-                            break;
-                        case "Heavy":
-                            intensity = PhysicalActivityIntensity.HEAVY;
-                            break;
-                    }
+                    intensity = (PhysicalActivityIntensity) edit_intensity.getSelectedItem();
                     color = temp_color;
                     PhysicalActivity py;
                     if(isRepeating)
@@ -315,7 +306,7 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
 
     private boolean checkInput()
     {
-        boolean mainFields = (!isEditTextEmpty(edit_name) && !isEditTextEmpty(edit_startTime) && !isEditTextEmpty(edit_endTime) && !isEditTextEmpty(edit_date) && temp_color != 0);
+        boolean mainFields = (!isEditTextEmpty(edit_name) && !isEditTextEmpty(edit_details) && !isEditTextEmpty(edit_startTime) && !isEditTextEmpty(edit_endTime) && !isEditTextEmpty(edit_date) && temp_color != 0);
         boolean repeatingFields = isOneRepeatCheckBokChecked() && !isEditTextEmpty(edit_repeatUntilDate);
         if(!isRepeating)
             return mainFields;
@@ -382,8 +373,11 @@ public class Fragment_AddPhysicalActivity extends DialogFragment {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             temp_startTime.set(Calendar.YEAR, year);
-            temp_startTime.set(Calendar.MONTH, dayOfMonth);
+            temp_startTime.set(Calendar.MONTH, monthOfYear);
             temp_startTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            //Log.e("TESTF", String.valueOf(monthOfYear) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
+            //Log.e("TESTF", String.valueOf(temp_startTime.get(Calendar.MONTH)) + "/" + String.valueOf(temp_startTime.get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(temp_startTime.get(Calendar.YEAR)));
 
             edit_date.setText(format_date.format(temp_startTime.getTime()));
         }

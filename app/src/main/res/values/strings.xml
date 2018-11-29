@@ -103,6 +103,8 @@
     <!-- TODO: remove this placeholder text -->
     <string name="__sleep_quality_notification_placeholder_text_template">How did you sleep?</string>
 
-    <string name="title_activity__sleep_data">Sleep Data</string>
     <string name="title_activity__data__comparer">Data Comparer</string>
+    <string name="title_activity__physicalactivity_data">Physical Activity Data</string>
+    <string name="title_activity__socialactivity_data">Social Activity Data</string>
+    <string name="title_activity__sleep_data">Sleep Data</string>
 </resources>

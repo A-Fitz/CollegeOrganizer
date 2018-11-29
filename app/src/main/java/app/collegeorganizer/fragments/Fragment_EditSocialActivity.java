@@ -265,9 +265,9 @@ public class Fragment_EditSocialActivity extends DialogFragment {
                         if (edit_saturday.isChecked())
                             repeating.add("S");
 
-                        se = new SocialActivity(name, details, location, startTime, endTime, repeatUntilDate, repeating, color);
+                        se = new SocialActivity(name, startTime, endTime, color, details, location, repeating, repeatUntilDate);
                     } else
-                        se = new SocialActivity(name, details, location, startTime, endTime, color);
+                        se = new SocialActivity(name, startTime, endTime, color, details, location);
 
                     se.setScheduleId(se.hashCode());
 
@@ -310,47 +310,46 @@ public class Fragment_EditSocialActivity extends DialogFragment {
     private void deleteExtraActivities(long tempScheduleId) {
         Iterator<SocialActivity> itr = Activity_Main._socialActivityList.iterator();
         while (itr.hasNext()) {
-            SocialActivity py = itr.next();
+            SocialActivity si = itr.next();
 
-            if (py.getScheduleId() == tempScheduleId) {
-                if (py.getStartTime().after(py.getRepeatUntilDate())) {
+            if (si.getScheduleId() == tempScheduleId) {
+                if (si.getStartTime().after(si.getRepeatUntilDate())) {
                     itr.remove();
                 }
             }
         }
     }
 
-    private void addExtraActivities(SocialActivity se) {
-        SocialActivity temp = se;
+    private void addExtraActivities(SocialActivity si) {
+        SocialActivity temp = si;
 
         // gets the last spot of the activity and adds repeating on top of it
-        for (SocialActivity s : Activity_Main._socialActivityList) {
-            if (s.getScheduleId() == se.getScheduleId()) {
-                temp = s;
+        for (SocialActivity p : Activity_Main._socialActivityList) {
+            if (p.getScheduleId() == si.getScheduleId()) {
+                temp = p;
             }
         }
 
         addRepeating(temp);
     }
 
-    private void setAllActivities(SocialActivity se) {
+    private void setAllActivities(SocialActivity si) {
         long tempScheduleId = item.getScheduleId();
         for (SocialActivity that : Activity_Main._socialActivityList) {
             if (that.getScheduleId() == tempScheduleId) {
                 int index = Activity_Main._socialActivityList.indexOf(that);
-                that.setName(se.getName());
-                that.setDetails(se.getDetails());
-                that.setLocation(se.getLocation());
-                that.setRepeating(se.getRepeating());
-                that.setRepeatUntilDate(se.getRepeatUntilDate());
-                that.setColor(se.getColor());
+                that.setName(si.getName());
+                that.setDetails(si.getDetails());
+                that.setRepeating(si.getRepeating());
+                that.setRepeatUntilDate(si.getRepeatUntilDate());
+                that.setColor(si.getColor());
+                that.setLocation(si.getLocation());
+                that.setStartMinute(si.getStartMinute());
+                that.setStartHour(si.getStartHour());
 
-                that.setStartMinute(se.getStartMinute());
-                that.setStartHour(se.getStartHour());
-
-                that.setEndMinute(se.getEndMinute());
-                that.setEndHour(se.getEndHour());
-                that.setScheduleId(se.getScheduleId());
+                that.setEndMinute(si.getEndMinute());
+                that.setEndHour(si.getEndHour());
+                that.setScheduleId(si.getScheduleId());
 
                 Activity_Main._socialActivityList.set(index, that);
             }
@@ -360,24 +359,29 @@ public class Fragment_EditSocialActivity extends DialogFragment {
     private void deleteAll() {
         Iterator<SocialActivity> itr = Activity_Main._socialActivityList.iterator();
         while (itr.hasNext()) {
-            SocialActivity py = itr.next();
+            SocialActivity si = itr.next();
 
-            if (py.getScheduleId() == item.getScheduleId()) {
+            if (si.getScheduleId() == item.getScheduleId()) {
                 itr.remove();
             }
         }
     }
 
-    private void addRepeating(SocialActivity se) {
-        List<String> repeatingDaysTemp = se.getRepeating();
+    private void addRepeating(SocialActivity si) {
+        List<String> repeatingDaysTemp = si.getRepeating();
         List<Integer> repeatingDays = getRepeatingDays(repeatingDaysTemp);
+        //Log.d("TESTF", "-----------------------------------------------------");
+        //Log.d("TESTF", "given date:" + si.getMonth() + "/" + si.getDay() + "/" + si.getYear());
+        //Log.d("TESTF", "-----------------------------------------------------");
 
-        Activity_Main._socialActivityList.add(se);
+        SocialActivity temp = new SocialActivity(si);
 
-        SocialActivity temp = new SocialActivity(se);
+        //Log.d("TESTF", String.valueOf("start: day(" + temp.getDay() + "), month(" + temp.getMonth() + "), year(" + temp.getYear() + ")"));
+        //Log.d("TESTF", String.valueOf("repeatUntil: day(" + temp.getRepeatEndDay() + "), month(" + temp.getRepeatEndMonth() + "), year(" + temp.getRepeatEndYear() + ")"));
+        //Log.d("TESTF", "-----------------------------------------------------");
 
         int counter = 0;
-        int startWeekDay = se.getStartTime().get(Calendar.DAY_OF_WEEK);
+        int startWeekDay = si.getStartTime().get(Calendar.DAY_OF_WEEK);
         while (true) {
             temp = new SocialActivity(temp);
             for (int i : repeatingDays) {
@@ -395,15 +399,15 @@ public class Fragment_EditSocialActivity extends DialogFragment {
         }
     }
 
-    private SocialActivity incrementSocialActivityDate(SocialActivity se, int nextDay) {
-        Calendar currDay = se.getStartTime();
+    private SocialActivity incrementSocialActivityDate(SocialActivity si, int nextDay) {
+        Calendar currDay = si.getStartTime();
 
         Calendar nextStartTime = getNextDay(currDay, nextDay);
         Calendar nextEndTime = (Calendar) nextStartTime.clone();
-        nextEndTime.set(Calendar.HOUR, se.getEndHour());
-        nextEndTime.set(Calendar.MINUTE, se.getEndMinute());
+        nextEndTime.set(Calendar.HOUR_OF_DAY, si.getEndHour());
+        nextEndTime.set(Calendar.MINUTE, si.getEndMinute());
 
-        return new SocialActivity(se);
+        return new SocialActivity(si);
     }
 
 

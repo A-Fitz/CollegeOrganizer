@@ -71,6 +71,18 @@
         <activity
             android:name=".activities.Activity_Data_Comparer"
             android:label="@string/title_activity__data__comparer"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.Activity_SleepData"
+            android:label="@string/title_activity__sleep_data"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activities.Activity_PhysicalActivityData"
+            android:label="@string/title_activity__physicalactivity_data"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activities.Activity_SocialActivityData"
+            android:label="@string/title_activity__physicalactivity_data"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

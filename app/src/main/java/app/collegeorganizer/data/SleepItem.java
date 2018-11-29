@@ -74,6 +74,19 @@ public class SleepItem {
         this.color = color;
     }
 
+    public float getStart_Hour() {
+        return (this.start_time.get(Calendar.HOUR_OF_DAY) + (this.start_time.get(Calendar.MINUTE) / 100.0f));
+    }
+
+    public float getEnd_Hour() {
+        return (this.end_time.get(Calendar.HOUR_OF_DAY) + (this.end_time.get(Calendar.MINUTE) / 100.0f));
+    }
+
+    public float getLength_Hours() {
+        float secs = (end_time.getTime().getTime() - start_time.getTime().getTime()) / 1000;
+        return secs / 3600;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -90,5 +103,46 @@ public class SleepItem {
     public int hashCode() {
 
         return Objects.hash(sleepTimeType, sleepQualityTypesList, start_time, end_time, details);
+    }
+
+    public float getPSQIScore() {
+
+        //get point value related to checked boxes
+        int sum = 0;
+        if (sleepQualityTypesList.contains(SleepQualityTypes.NOT_WITHIN_30_MINUTES))
+            sum += 3;
+        if (sleepQualityTypesList.contains(SleepQualityTypes.WAKE_UP_IN_NIGHT))
+            sum += 3;
+        if (sleepQualityTypesList.contains(SleepQualityTypes.BATHROOM))
+            sum += 3;
+        if (sleepQualityTypesList.contains(SleepQualityTypes.BREATHING))
+            sum += 3;
+        if (sleepQualityTypesList.contains(SleepQualityTypes.COUGH_SNORE))
+            sum += 3;
+        if (sleepQualityTypesList.contains(SleepQualityTypes.COLD))
+            sum += 3;
+        if (sleepQualityTypesList.contains(SleepQualityTypes.HOT))
+            sum += 3;
+        if (sleepQualityTypesList.contains(SleepQualityTypes.BAD_DREAMS))
+            sum += 3;
+        if (sleepQualityTypesList.contains(SleepQualityTypes.PAIN))
+            sum += 3;
+
+        //get associated PSQI score from point value
+        if (sum == 0)
+            return 0;
+        else if (sum >= 1 && sum <= 5)
+            return 2.35f;
+        else if (sum >= 6 && sum <= 9)
+            return 4.7f;
+        else if (sum >= 10 && sum <= 14)
+            return 7.05f;
+        else if (sum >= 15 && sum <= 18)
+            return 9.4f;
+        else if (sum >= 19 && sum <= 23)
+            return 11.75f;
+        else
+            return 14.1f;
+
     }
 }

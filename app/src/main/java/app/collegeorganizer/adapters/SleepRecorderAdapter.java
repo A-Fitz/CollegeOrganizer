@@ -56,9 +56,7 @@ public class SleepRecorderAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.txtTimeType.setText(searchArrayList.get(position)
-                .getSleepTimeType().toString().substring(0, 1).toUpperCase() + searchArrayList.get(position)
-                .getSleepTimeType().toString().substring(1).toLowerCase());
+        holder.txtTimeType.setText(searchArrayList.get(position).getSleepTimeType().toString());
 
         holder.txtStartTime.setText(String.valueOf(format_time.format(searchArrayList.get(position).getStart_time().getTime())));
 

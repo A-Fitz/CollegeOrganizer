@@ -33,15 +33,9 @@ import app.collegeorganizer.R;
 import app.collegeorganizer.TimePreference;
 import app.collegeorganizer.data.DataComparerCategory;
 import app.collegeorganizer.data.DietItem;
-import app.collegeorganizer.data.GoogleCalendarColors;
 import app.collegeorganizer.data.PhysicalActivity;
 import app.collegeorganizer.data.SleepItem;
 import app.collegeorganizer.data.SocialActivity;
-import app.collegeorganizer.data.Stat;
-import app.collegeorganizer.enums.MealCategory;
-import app.collegeorganizer.enums.SleepQualityTypes;
-import app.collegeorganizer.enums.SleepStatTypes;
-import app.collegeorganizer.enums.SleepTimeType;
 
 public class Activity_Main extends AppCompatActivity {
     public static List<PhysicalActivity> physicalScheduleList = new ArrayList<PhysicalActivity>();
@@ -206,7 +200,7 @@ public class Activity_Main extends AppCompatActivity {
             }
         });
 
-        Calendar startCalendar = Calendar.getInstance();
+        /*Calendar startCalendar = Calendar.getInstance();
 
         dietItemList.add(new DietItem("test5 food", MealCategory.BREAKFAST, Calendar.getInstance(), "test5 amount", GoogleCalendarColors.blueberry));
         dietItemList.add(new DietItem("test6 food", MealCategory.LUNCH, startCalendar, "test6 amount", GoogleCalendarColors.peacock));
@@ -222,7 +216,7 @@ public class Activity_Main extends AppCompatActivity {
 
         List<Stat> statList = new ArrayList<Stat>();
         statList.add(new Stat(SleepStatTypes.PSQI_SCORE_ALL_TIME, 900));
-        dataComparerCategoryList.add(new DataComparerCategory("test category", statList, GoogleCalendarColors.basil));
+        dataComparerCategoryList.add(new DataComparerCategory("test category", statList, GoogleCalendarColors.basil));*/
     }
 
 
@@ -237,14 +231,16 @@ public class Activity_Main extends AppCompatActivity {
         final Button button_data_physical = findViewById(R.id.button_data_physical);
         button_data_physical.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                Intent intent = new Intent(Activity_Main.this, Activity_PhysicalActivityData.class);
+                startActivity(intent);
             }
         });
 
         final Button button_data_social = findViewById(R.id.button_data_social);
         button_data_social.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                Intent intent = new Intent(Activity_Main.this, Activity_SocialActivityData.class);
+                startActivity(intent);
             }
         });
 
@@ -258,6 +254,8 @@ public class Activity_Main extends AppCompatActivity {
         final Button button_data_sleep = findViewById(R.id.button_data_sleep);
         button_data_sleep.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Intent intent = new Intent(Activity_Main.this, Activity_SleepData.class);
+                startActivity(intent);
             }
         });
 

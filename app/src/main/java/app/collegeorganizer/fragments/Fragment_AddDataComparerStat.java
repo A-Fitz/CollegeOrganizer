@@ -10,11 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -26,6 +23,7 @@ import app.collegeorganizer.data.Stat;
 import app.collegeorganizer.enums.ComparisonOperatorType;
 import app.collegeorganizer.enums.PhysicalActivityStatTypes;
 import app.collegeorganizer.enums.SleepStatTypes;
+import app.collegeorganizer.enums.SocialActivityStatTypes;
 import app.collegeorganizer.enums.StatEnum;
 import app.collegeorganizer.stats.EvaluateStats;
 
@@ -39,15 +37,13 @@ public class Fragment_AddDataComparerStat extends DialogFragment {
     private StatEnum data1enum;
     private StatEnum data2enum;
 
-    private SleepStatTypes data1type;
-    private SleepStatTypes data2type;
+    private Enum data1type;
+    private Enum data2type;
 
     private float data1;
     private float data2;
 
     private ComparisonOperatorType comparisonOperatorType;
-
-    private boolean onlyOneData = true;
 
     private Spinner edit_dropdown_data1_enum;
     private Spinner edit_data1type;
@@ -57,10 +53,6 @@ public class Fragment_AddDataComparerStat extends DialogFragment {
 
     private Spinner edit_comparison_type;
 
-    private LinearLayout vbox_data2type;
-    private LinearLayout vbox_comparisontype;
-    private CheckBox edit_checkbox_compareTwo;
-    private TextView data_2_textview;
 
     private ImageButton cancel_button;
     private ImageButton save_button;
@@ -99,10 +91,6 @@ public class Fragment_AddDataComparerStat extends DialogFragment {
         edit_data2type = v.findViewById(R.id.dropdown_data2type);
 
         edit_comparison_type = v.findViewById(R.id.dropdown_comparisonType);
-        edit_checkbox_compareTwo = v.findViewById(R.id.checkbox_compareTwo);
-        vbox_data2type = v.findViewById(R.id.vbox_data2type);
-        vbox_comparisontype = v.findViewById(R.id.vbox_comparisontype);
-        data_2_textview = v.findViewById(R.id.data_2_textview);
 
         cancel_button = v.findViewById(R.id.cancel_button);
         save_button = v.findViewById(R.id.save_button);
@@ -132,13 +120,6 @@ public class Fragment_AddDataComparerStat extends DialogFragment {
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        edit_checkbox_compareTwo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onlyOneData = !onlyOneData;
-                changeData2Boxes();
-            }
-        });
         cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,8 +143,7 @@ public class Fragment_AddDataComparerStat extends DialogFragment {
                         data1type_adapter = new ArrayAdapter<PhysicalActivityStatTypes>(getContext(), android.R.layout.simple_spinner_item, PhysicalActivityStatTypes.values());
                         break;
                     case SOCIAL_ACTIVITY:
-                        //TODO
-                        data1type_adapter = new ArrayAdapter<PhysicalActivityStatTypes>(getContext(), android.R.layout.simple_spinner_item, PhysicalActivityStatTypes.values());
+                        data1type_adapter = new ArrayAdapter<SocialActivityStatTypes>(getContext(), android.R.layout.simple_spinner_item, SocialActivityStatTypes.values());
                         break;
                     case DIET:
                         //TODO
@@ -198,8 +178,7 @@ public class Fragment_AddDataComparerStat extends DialogFragment {
                         data2type_adapter = new ArrayAdapter<PhysicalActivityStatTypes>(getContext(), android.R.layout.simple_spinner_item, PhysicalActivityStatTypes.values());
                         break;
                     case SOCIAL_ACTIVITY:
-                        //TODO
-                        data2type_adapter = new ArrayAdapter<PhysicalActivityStatTypes>(getContext(), android.R.layout.simple_spinner_item, PhysicalActivityStatTypes.values());
+                        data2type_adapter = new ArrayAdapter<SocialActivityStatTypes>(getContext(), android.R.layout.simple_spinner_item, SocialActivityStatTypes.values());
                         break;
                     case DIET:
                         //TODO
@@ -221,51 +200,26 @@ public class Fragment_AddDataComparerStat extends DialogFragment {
             @Override
             public void onClick(View v) {
                 EvaluateStats evaluateStatType = new EvaluateStats();
-                if (onlyOneData) {
-                    data1enum = (StatEnum) edit_dropdown_data1_enum.getSelectedItem();
-                    data1type = (SleepStatTypes) edit_data1type.getSelectedItem();
-                    data1 = evaluateStatType.getData((StatEnum) edit_dropdown_data1_enum.getSelectedItem(), data1type);
+                data1enum = (StatEnum) edit_dropdown_data1_enum.getSelectedItem();
+                data1type = (Enum) edit_data1type.getSelectedItem();
+                data1 = evaluateStatType.getData(data1enum, data1type);
 
-                    List<Stat> statList = dataComparerCategory.getStatList();
+                data2enum = (StatEnum) edit_dropdown_data2_enum.getSelectedItem();
+                data2type = (Enum) edit_data2type.getSelectedItem();
+                data2 = evaluateStatType.getData(data2enum, data2type);
 
-                    statList.add(new Stat(data1type, data1));
+                comparisonOperatorType = (ComparisonOperatorType) edit_comparison_type.getSelectedItem();
 
-                    dataComparerCategory.setStatList(statList);
-                    Activity_Main.dataComparerCategoryList.set(indexOfCategory, dataComparerCategory);
-                    dismiss();
-                } else {
-                    data1enum = (StatEnum) edit_dropdown_data1_enum.getSelectedItem();
-                    data1type = (SleepStatTypes) edit_data1type.getSelectedItem();
-                    data1 = evaluateStatType.getData(data1enum, data1type);
+                List<Stat> statList = dataComparerCategory.getStatList();
 
-                    data2enum = (StatEnum) edit_dropdown_data2_enum.getSelectedItem();
-                    data2type = (SleepStatTypes) edit_data2type.getSelectedItem();
-                    data2 = evaluateStatType.getData(data2enum, data1type);
+                statList.add(new Stat(data1type, data1, data2type, data2, comparisonOperatorType));
 
-                    comparisonOperatorType = (ComparisonOperatorType) edit_comparison_type.getSelectedItem();
+                dataComparerCategory.setStatList(statList);
+                Activity_Main.dataComparerCategoryList.set(indexOfCategory, dataComparerCategory);
+                dismiss();
 
-                    List<Stat> statList = dataComparerCategory.getStatList();
-
-                    statList.add(new Stat(data1type, data1, data2type, data2, comparisonOperatorType));
-
-                    dataComparerCategory.setStatList(statList);
-                    Activity_Main.dataComparerCategoryList.set(indexOfCategory, dataComparerCategory);
-                    dismiss();
-                }
             }
         });
-    }
-
-    private void changeData2Boxes() {
-        if (onlyOneData) {
-            vbox_data2type.setVisibility(View.GONE);
-            vbox_comparisontype.setVisibility(View.GONE);
-            data_2_textview.setVisibility(View.GONE);
-        } else {
-            vbox_data2type.setVisibility(View.VISIBLE);
-            vbox_comparisontype.setVisibility(View.VISIBLE);
-            data_2_textview.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override

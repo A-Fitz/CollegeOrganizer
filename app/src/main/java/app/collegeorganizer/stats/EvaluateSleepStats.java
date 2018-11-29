@@ -24,18 +24,14 @@ public class EvaluateSleepStats {
             case TOTAL_HOURS_PER_SLEEP:
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
-                    long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                    long hours = secs / 3600;
-                    total += hours;
+                    total += si.getLength_Hours();
                 }
                 return total;
             case TOTAL_HOURS_PER_SLEEP_LAST_MONTH:
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().getTime().after(oneMonthAgo.getTime())) {
-                        long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        total += si.getLength_Hours();
                     }
                 }
                 return total;
@@ -43,9 +39,7 @@ public class EvaluateSleepStats {
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().getTime().after(oneWeekAgo.getTime())) {
-                        long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        total += si.getLength_Hours();
                     }
                 }
                 return total;
@@ -53,9 +47,7 @@ public class EvaluateSleepStats {
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                        long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        total += si.getLength_Hours();
                     }
                 }
                 return total;
@@ -63,9 +55,7 @@ public class EvaluateSleepStats {
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
-                        long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        total += si.getLength_Hours();
                     }
                 }
                 return total;
@@ -73,9 +63,7 @@ public class EvaluateSleepStats {
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {
-                        long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        total += si.getLength_Hours();
                     }
                 }
                 return total;
@@ -83,9 +71,7 @@ public class EvaluateSleepStats {
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {
-                        long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        total += si.getLength_Hours();
                     }
                 }
                 return total;
@@ -93,9 +79,7 @@ public class EvaluateSleepStats {
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) {
-                        long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        total += si.getLength_Hours();
                     }
                 }
                 return total;
@@ -103,9 +87,7 @@ public class EvaluateSleepStats {
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
-                        long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        total += si.getLength_Hours();
                     }
                 }
                 return total;
@@ -113,9 +95,7 @@ public class EvaluateSleepStats {
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
-                        long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        total += si.getLength_Hours();
                     }
                 }
                 return total;
@@ -124,9 +104,7 @@ public class EvaluateSleepStats {
                 total = 0;
                 count = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
-                    long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                    long hours = secs / 3600;
-                    total += hours;
+                    total += si.getLength_Hours();
                     count++;
                 }
                 return total / count;
@@ -135,9 +113,7 @@ public class EvaluateSleepStats {
                 count = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().getTime().after(oneMonthAgo.getTime())) {
-                        long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        total += si.getLength_Hours();
                         count++;
                     }
                 }
@@ -147,9 +123,7 @@ public class EvaluateSleepStats {
                 count = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().getTime().after(oneWeekAgo.getTime())) {
-                        long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        total += si.getLength_Hours();
                         count++;
                     }
                 }
@@ -159,9 +133,7 @@ public class EvaluateSleepStats {
                 count = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                        long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        total += si.getLength_Hours();
                         count++;
                     }
                 }
@@ -171,9 +143,7 @@ public class EvaluateSleepStats {
                 count = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
-                        long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        total += si.getLength_Hours();
                         count++;
                     }
                 }
@@ -183,9 +153,7 @@ public class EvaluateSleepStats {
                 count = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {
-                        long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        total += si.getLength_Hours();
                         count++;
                     }
                 }
@@ -195,9 +163,7 @@ public class EvaluateSleepStats {
                 count = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {
-                        long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        total += si.getLength_Hours();
                         count++;
                     }
                 }
@@ -207,9 +173,7 @@ public class EvaluateSleepStats {
                 count = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) {
-                        long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        total += si.getLength_Hours();
                         count++;
                     }
                 }
@@ -219,9 +183,7 @@ public class EvaluateSleepStats {
                 count = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
-                        long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        total += si.getLength_Hours();
                         count++;
                     }
                 }
@@ -231,9 +193,7 @@ public class EvaluateSleepStats {
                 count = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
-                        long secs = (si.getEnd_time().getTime().getTime() - si.getStart_time().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        total += si.getLength_Hours();
                         count++;
                     }
                 }
@@ -243,7 +203,7 @@ public class EvaluateSleepStats {
                 total = 0;
                 count = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
-                    total += getPSQIScore(si);
+                    total += si.getPSQIScore();
                     count++;
                 }
                 return total / count;
@@ -252,7 +212,7 @@ public class EvaluateSleepStats {
                 count = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().getTime().after(oneMonthAgo.getTime())) {
-                        total += getPSQIScore(si);
+                        total += si.getPSQIScore();
                         count++;
 
                     }
@@ -263,54 +223,12 @@ public class EvaluateSleepStats {
                 count = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().getTime().after(oneWeekAgo.getTime())) {
-                        total += getPSQIScore(si);
+                        total += si.getPSQIScore();
                         count++;
                     }
                 }
                 return total / count;
         }
         return 0;
-    }
-
-    private float getPSQIScore(SleepItem si) {
-        List<SleepQualityTypes> sleepItems = si.getSleepQualityTypesList();
-
-        //get point value related to checked boxes
-        int sum = 0;
-        if (sleepItems.contains(SleepQualityTypes.NOT_WITHIN_30_MINUTES))
-            sum+=3;
-        if (sleepItems.contains(SleepQualityTypes.WAKE_UP_IN_NIGHT))
-            sum+=3;
-        if (sleepItems.contains(SleepQualityTypes.BATHROOM))
-            sum+=3;
-        if (sleepItems.contains(SleepQualityTypes.BREATHING))
-            sum+=3;
-        if (sleepItems.contains(SleepQualityTypes.COUGH_SNORE))
-            sum+=3;
-        if (sleepItems.contains(SleepQualityTypes.COLD))
-            sum+=3;
-        if (sleepItems.contains(SleepQualityTypes.HOT))
-            sum+=3;
-        if (sleepItems.contains(SleepQualityTypes.BAD_DREAMS))
-            sum+=3;
-        if (sleepItems.contains(SleepQualityTypes.PAIN))
-            sum+=3;
-
-        //get associated PSQI score from point value
-        if (sum == 0)
-            return 0;
-        else if (sum >= 1 && sum <= 5)
-            return 2.35f;
-        else if (sum >= 6 && sum <= 9)
-            return 4.7f;
-        else if (sum >= 10 && sum <= 14)
-            return 7.05f;
-        else if (sum >= 15 && sum <= 18)
-            return 9.4f;
-        else if (sum >= 19 && sum <= 23)
-            return 11.75f;
-        else
-            return 14.1f;
-
     }
 }

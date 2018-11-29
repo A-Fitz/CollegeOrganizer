@@ -73,7 +73,6 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
     private SimpleDateFormat format_time = new SimpleDateFormat("hh:mm a");
     private SimpleDateFormat format_date = new SimpleDateFormat("MM/dd/yyy");
 
-    String[] dropdown_intensity_items = { "Light", "Heavy" };
 
     public static Fragment_EditPhysicalActivity newInstance() {
         return new Fragment_EditPhysicalActivity();
@@ -191,7 +190,7 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
         cancel_button = v.findViewById(R.id.cancel_button);
         save_button = v.findViewById(R.id.save_button);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, dropdown_intensity_items);
+        ArrayAdapter<PhysicalActivityIntensity> adapter = new ArrayAdapter<PhysicalActivityIntensity>(getContext(), android.R.layout.simple_spinner_item, PhysicalActivityIntensity.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         edit_intensity.setAdapter(adapter);
 
@@ -265,11 +264,11 @@ public class Fragment_EditPhysicalActivity extends DialogFragment {
                 {
                     name = edit_name.getText().toString();
                     details = edit_details.getText().toString();
-                    switch(edit_intensity.getSelectedItem().toString()) {
-                        case "Light":
+                    switch ((PhysicalActivityIntensity) edit_intensity.getSelectedItem()) {
+                        case LIGHT:
                             intensity = PhysicalActivityIntensity.LIGHT;
                             break;
-                        case "Heavy":
+                        case HEAVY:
                             intensity = PhysicalActivityIntensity.HEAVY;
                             break;
                     }

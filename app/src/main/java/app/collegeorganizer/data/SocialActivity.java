@@ -7,37 +7,34 @@ import java.util.Objects;
 
 public class SocialActivity {
     private String name;
-    private String details;
-    private String location;
-
     private Calendar startTime;
     private Calendar endTime;
-
-    private Calendar repeatUntilDate;
-    private List<String> repeating;
-
     private int color;
+    private String details;
+    private String location;
+    private List<String> repeating;
+    private Calendar repeatUntilDate;
 
     private long scheduleId; //schedule item sets this as its hashcode, same for all repeating types of it
 
-    public SocialActivity(String name, String details, String location, Calendar startTime, Calendar endTime, Calendar repeatUntilDate, List<String> repeating, int color) {
+    public SocialActivity(String name, Calendar startTime, Calendar endTime, int color, String details, String location, List<String> repeating, Calendar repeatUntilDate) {
         this.name = name;
-        this.details = details;
-        this.location = location;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.repeatUntilDate = repeatUntilDate;
-        this.repeating = repeating;
         this.color = color;
+        this.details = details;
+        this.location = location;
+        this.repeating = repeating;
+        this.repeatUntilDate = repeatUntilDate;
     }
 
-    public SocialActivity(String name, String details, String location, Calendar startTime, Calendar endTime, int color) {
+    public SocialActivity(String name, Calendar startTime, Calendar endTime, int color, String details, String location) {
         this.name = name;
-        this.details = details;
-        this.location = location;
         this.startTime = startTime;
         this.endTime = endTime;
         this.color = color;
+        this.details = details;
+        this.location = location;
     }
 
     public SocialActivity(SocialActivity copy) {
@@ -50,21 +47,7 @@ public class SocialActivity {
         this.repeating.addAll(copy.repeating);
         this.repeatUntilDate = (Calendar) copy.getRepeatUntilDate().clone();
         this.location = copy.getLocation();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDetails() {
-        if (details == null)
-            return "";
-        else
-            return details;
+        this.scheduleId = copy.getScheduleId();
     }
 
     public long getScheduleId() {
@@ -75,16 +58,12 @@ public class SocialActivity {
         this.scheduleId = scheduleId;
     }
 
-    public void setDetails(String details) {
-        this.details = details;
+    public String getName() {
+        return name;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Calendar getStartTime() {
@@ -103,12 +82,16 @@ public class SocialActivity {
         this.endTime = endTime;
     }
 
-    public Calendar getRepeatUntilDate() {
-        return repeatUntilDate;
+    public int getColor() {
+        return color;
     }
 
-    public void setRepeatUntilDate(Calendar repeatUntilDate) {
-        this.repeatUntilDate = repeatUntilDate;
+    public void setColor(int color) {
+        this.color = color;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 
     public List<String> getRepeating() {
@@ -119,12 +102,27 @@ public class SocialActivity {
         this.repeating = repeating;
     }
 
-    public int getColor() {
-        return color;
+    public Calendar getRepeatUntilDate() {
+        return repeatUntilDate;
     }
 
-    public void setColor(int color) {
-        this.color = color;
+    public void setRepeatUntilDate(Calendar repeatUntilDate) {
+        this.repeatUntilDate = repeatUntilDate;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getDetails() {
+        if (details == null)
+            return "";
+        else
+            return details;
     }
 
     public String getRepeatingDays() {
@@ -184,12 +182,12 @@ public class SocialActivity {
         return repeatUntilDate.get(Calendar.YEAR);
     }
 
-
     public void setStartMinute(int startMinute) {
         this.startTime.set(Calendar.MINUTE, startMinute);
     }
 
     public void setStartHour(int startHour) {
+        //Log.d("TESTF", "curr:" + getStartHour() + ", new:" + startHour);
         this.startTime.set(Calendar.HOUR_OF_DAY, startHour);
     }
 
@@ -232,22 +230,37 @@ public class SocialActivity {
         return "Social Activity : " + this.name;
     }
 
+    public float getStart_Hour() {
+        return (this.startTime.get(Calendar.HOUR_OF_DAY) + (this.startTime.get(Calendar.MINUTE) / 100.0f));
+    }
+
+    public float getEnd_Hour() {
+        return (this.endTime.get(Calendar.HOUR_OF_DAY) + (this.endTime.get(Calendar.MINUTE) / 100.0f));
+    }
+
+    public float getLength_Hours() {
+        return (float) Math.round(getEnd_Hour()) - (float) Math.round(getStart_Hour());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SocialActivity that = (SocialActivity) o;
         return color == that.color &&
+                scheduleId == that.scheduleId &&
                 Objects.equals(name, that.name) &&
+                Objects.equals(startTime, that.startTime) &&
+                Objects.equals(endTime, that.endTime) &&
                 Objects.equals(details, that.details) &&
                 Objects.equals(location, that.location) &&
-                Objects.equals(repeatUntilDate, that.repeatUntilDate) &&
-                Objects.equals(repeating, that.repeating);
+                Objects.equals(repeating, that.repeating) &&
+                Objects.equals(repeatUntilDate, that.repeatUntilDate);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(name, details, location, startTime, endTime, repeatUntilDate, repeating, color);
+        return Objects.hash(name, startTime, endTime, color, details, location, repeating, repeatUntilDate, scheduleId);
     }
 }

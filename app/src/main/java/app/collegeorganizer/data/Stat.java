@@ -1,17 +1,16 @@
 package app.collegeorganizer.data;
 
 import app.collegeorganizer.enums.ComparisonOperatorType;
-import app.collegeorganizer.enums.SleepStatTypes;
 
 public class Stat {
-    private SleepStatTypes data1Type;
-    private SleepStatTypes data2Type;
+    private Enum data1Type;
+    private Enum data2Type;
 
     private float data1;
     private float data2;
     private ComparisonOperatorType comparisonOperator;
 
-    public Stat(SleepStatTypes data1Type, float data1, SleepStatTypes data2Type, float data2, ComparisonOperatorType comparisonOperator) {
+    public Stat(Enum data1Type, float data1, Enum data2Type, float data2, ComparisonOperatorType comparisonOperator) {
         this.data1Type = data1Type;
         this.data1 = data1;
         this.data2Type = data2Type;
@@ -19,7 +18,7 @@ public class Stat {
         this.comparisonOperator = comparisonOperator;
     }
 
-    public Stat(SleepStatTypes data1Type, float data1) {
+    public Stat(Enum data1Type, float data1) {
         this.data1Type = data1Type;
         this.data1 = data1;
     }
@@ -48,7 +47,7 @@ public class Stat {
     }
 
     public String getData2Type() {
-        return data1Type.toString();
+        return data2Type.toString();
     }
 
     public String getComparisonOperatorName() {

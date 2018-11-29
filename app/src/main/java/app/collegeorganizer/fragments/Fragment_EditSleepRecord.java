@@ -68,7 +68,6 @@ public class Fragment_EditSleepRecord extends DialogFragment {
 
     private SimpleDateFormat format_time = new SimpleDateFormat("hh:mm a");
 
-    String[] dropdown_sleep_time_type_items = {"Night", "Nap"};
 
     public static Fragment_EditSleepRecord newInstance() {
         return new Fragment_EditSleepRecord();
@@ -112,7 +111,7 @@ public class Fragment_EditSleepRecord extends DialogFragment {
         cancel_button = v.findViewById(R.id.cancel_button);
         save_button = v.findViewById(R.id.save_button);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, dropdown_sleep_time_type_items);
+        ArrayAdapter<SleepTimeType> adapter = new ArrayAdapter<SleepTimeType>(getContext(), android.R.layout.simple_spinner_item, SleepTimeType.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         edit_sleepTimeType.setAdapter(adapter);
 
@@ -210,11 +209,11 @@ public class Fragment_EditSleepRecord extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (checkInput()) {
-                    switch (edit_sleepTimeType.getSelectedItem().toString()) {
-                        case "Night":
+                    switch ((SleepTimeType) edit_sleepTimeType.getSelectedItem()) {
+                        case NIGHT:
                             sleepTimeType = SleepTimeType.NIGHT;
                             break;
-                        case "Lunch":
+                        case NAP:
                             sleepTimeType = SleepTimeType.NAP;
                             break;
                     }

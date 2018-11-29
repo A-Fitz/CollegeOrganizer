@@ -125,19 +125,22 @@ public class Activity_Calendar extends AppCompatActivity implements WeekView.Eve
             if (se.getMonth() == newMonth - 1 && se.getYear() == newYear) {
                 Calendar startTime = Calendar.getInstance();
                 startTime.set(Calendar.DAY_OF_MONTH, se.getDay());
-                startTime.set(Calendar.HOUR, se.getStartHour());
+                startTime.set(Calendar.HOUR_OF_DAY, se.getStartHour());
                 startTime.set(Calendar.MINUTE, se.getStartMinute());
                 startTime.set(Calendar.MONTH, newMonth - 1);
                 startTime.set(Calendar.YEAR, newYear);
 
                 Calendar endTime = (Calendar) startTime.clone();
-                endTime.set(Calendar.HOUR, se.getEndHour());
+                endTime.set(Calendar.HOUR_OF_DAY, se.getEndHour());
                 endTime.set(Calendar.MINUTE, se.getEndMinute());
                 endTime.set(Calendar.MONTH, newMonth - 1);
+
 
                 WeekViewEvent event = new WeekViewEvent(se.hashCode(), se.getTitle(), startTime, endTime);
 
                 event.setColor(se.getColor());
+
+                //Log.d("TESTF", String.valueOf(se.getStartHour()));
                 tempEvents.add(event);
             }
         }
@@ -155,6 +158,7 @@ public class Activity_Calendar extends AppCompatActivity implements WeekView.Eve
                 return se;
         }
 
+        //Log.d("TESTF", "returning null");
         return null;
     }
 

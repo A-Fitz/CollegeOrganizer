@@ -181,7 +181,7 @@
                     android:id="@+id/checkbox_PAIN"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Feel pain" />
+                    android:text="Feel pain " />
 
             </LinearLayout>
 

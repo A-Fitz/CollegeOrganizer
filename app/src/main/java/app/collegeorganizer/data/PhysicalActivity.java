@@ -1,7 +1,5 @@
 package app.collegeorganizer.data;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -194,7 +192,7 @@ public class PhysicalActivity {
     }
 
     public void setStartHour(int startHour) {
-        Log.d("TESTF", "curr:" + getStartHour() + ", new:" + startHour);
+        //Log.d("TESTF", "curr:" + getStartHour() + ", new:" + startHour);
         this.startTime.set(Calendar.HOUR_OF_DAY, startHour);
     }
 
@@ -235,6 +233,20 @@ public class PhysicalActivity {
 
     public String getTitle() {
         return "Physical Activity : " + this.name;
+    }
+
+    public float getStart_Hour() {
+        return (this.startTime.get(Calendar.HOUR_OF_DAY) + (this.startTime.get(Calendar.MINUTE) / 100.0f));
+    }
+
+    public float getEnd_Hour() {
+        return (this.endTime.get(Calendar.HOUR_OF_DAY) + (this.endTime.get(Calendar.MINUTE) / 100.0f));
+    }
+
+    public float getLength_Hours() {
+        //Log.e("TESTF", String.valueOf(getStart_Hour()) + " " + String.valueOf(getEnd_Hour()));
+        //Log.e("TESTF", String.valueOf(Float.valueOf(Float.valueOf(Math.round(getEnd_Hour())) - Float.valueOf(Math.round(getStart_Hour())))));
+        return (float) Math.round(getEnd_Hour()) - (float) Math.round(getStart_Hour());
     }
 
     @Override

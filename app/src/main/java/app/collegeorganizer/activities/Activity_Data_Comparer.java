@@ -71,4 +71,11 @@ public class Activity_Data_Comparer extends AppCompatActivity {
             listAdapter.updateCategoryItems();
         }
     };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listAdapter.notifyDataSetChanged();
+        listAdapter.updateCategoryItems();
+    }
 }

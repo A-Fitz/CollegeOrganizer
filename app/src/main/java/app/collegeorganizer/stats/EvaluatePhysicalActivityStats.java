@@ -1,5 +1,7 @@
 package app.collegeorganizer.stats;
 
+import android.util.Log;
+
 import java.util.Calendar;
 
 import app.collegeorganizer.activities.Activity_Main;
@@ -17,6 +19,8 @@ public class EvaluatePhysicalActivityStats {
         oneWeekAgo.add(Calendar.WEEK_OF_MONTH, -1);
         oneWeekAgo.add(Calendar.DAY_OF_MONTH, -1);
 
+        Calendar now = Calendar.getInstance();
+
         float total = 0;
         int count = 0;
 
@@ -24,19 +28,23 @@ public class EvaluatePhysicalActivityStats {
 
             case TOTAL_HOURS_PER_PHYSICAL_ACTIVITY:
                 total = 0;
+                count = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
-                    long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                    long hours = secs / 3600;
-                    total += hours;
+                    if (py.getStartTime().getTime().before(now.getTime())) {
+                        total += py.getLength_Hours();
+                        count++;
+                        Log.e("TESTF", "numinlist:" + Activity_Main._physicalActivityList.size() + " , Count:" + count + " , Total:" + total);
+                        Log.e("TESTF", "********************" + py.getMonth() + "/" + py.getDay() + "/" + py.getYear());
+                    }
+
                 }
                 return total;
             case TOTAL_HOURS_PER_PHYSICAL_ACTIVITY_LAST_MONTH:
                 total = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().getTime().after(oneMonthAgo.getTime())) {
-                        long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        if (py.getStartTime().getTime().before(now.getTime()))
+                            total += py.getLength_Hours();
                     }
                 }
                 return total;
@@ -44,9 +52,8 @@ public class EvaluatePhysicalActivityStats {
                 total = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().getTime().after(oneWeekAgo.getTime())) {
-                        long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        if (py.getStartTime().getTime().before(now.getTime()))
+                            total += py.getLength_Hours();
                     }
                 }
                 return total;
@@ -54,9 +61,8 @@ public class EvaluatePhysicalActivityStats {
                 total = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                        long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        if (py.getStartTime().getTime().before(now.getTime()))
+                            total += py.getLength_Hours();
                     }
                 }
                 return total;
@@ -64,9 +70,8 @@ public class EvaluatePhysicalActivityStats {
                 total = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
-                        long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        if (py.getStartTime().getTime().before(now.getTime()))
+                            total += py.getLength_Hours();
                     }
                 }
                 return total;
@@ -74,9 +79,8 @@ public class EvaluatePhysicalActivityStats {
                 total = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {
-                        long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        if (py.getStartTime().getTime().before(now.getTime()))
+                            total += py.getLength_Hours();
                     }
                 }
                 return total;
@@ -84,9 +88,8 @@ public class EvaluatePhysicalActivityStats {
                 total = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {
-                        long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        if (py.getStartTime().getTime().before(now.getTime()))
+                            total += py.getLength_Hours();
                     }
                 }
                 return total;
@@ -94,9 +97,8 @@ public class EvaluatePhysicalActivityStats {
                 total = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) {
-                        long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        if (py.getStartTime().getTime().before(now.getTime()))
+                            total += py.getLength_Hours();
                     }
                 }
                 return total;
@@ -104,9 +106,8 @@ public class EvaluatePhysicalActivityStats {
                 total = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
-                        long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        if (py.getStartTime().getTime().before(now.getTime()))
+                            total += py.getLength_Hours();
                     }
                 }
                 return total;
@@ -114,9 +115,8 @@ public class EvaluatePhysicalActivityStats {
                 total = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
-                        long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
+                        if (py.getStartTime().getTime().before(now.getTime()))
+                            total += py.getLength_Hours();
                     }
                 }
                 return total;
@@ -125,10 +125,10 @@ public class EvaluatePhysicalActivityStats {
                 total = 0;
                 count = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
-                    long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                    long hours = secs / 3600;
-                    total += hours;
-                    count++;
+                    if (py.getStartTime().getTime().before(now.getTime())) {
+                        total += py.getLength_Hours();
+                        count++;
+                    }
                 }
                 return total / count;
             case AVERAGE_HOURS_PER_PHYSICAL_ACTIVITY_LAST_MONTH:
@@ -136,10 +136,10 @@ public class EvaluatePhysicalActivityStats {
                 count = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().getTime().after(oneMonthAgo.getTime())) {
-                        long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
-                        count++;
+                        if (py.getStartTime().getTime().before(now.getTime())) {
+                            total += py.getLength_Hours();
+                            count++;
+                        }
                     }
                 }
                 return total / count;
@@ -148,10 +148,10 @@ public class EvaluatePhysicalActivityStats {
                 count = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().getTime().after(oneWeekAgo.getTime())) {
-                        long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
-                        count++;
+                        if (py.getStartTime().getTime().before(now.getTime())) {
+                            total += py.getLength_Hours();
+                            count++;
+                        }
                     }
                 }
                 return total / count;
@@ -160,10 +160,10 @@ public class EvaluatePhysicalActivityStats {
                 count = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                        long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
-                        count++;
+                        if (py.getStartTime().getTime().before(now.getTime())) {
+                            total += py.getLength_Hours();
+                            count++;
+                        }
                     }
                 }
                 return total / count;
@@ -172,10 +172,10 @@ public class EvaluatePhysicalActivityStats {
                 count = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
-                        long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
-                        count++;
+                        if (py.getStartTime().getTime().before(now.getTime())) {
+                            total += py.getLength_Hours();
+                            count++;
+                        }
                     }
                 }
                 return total / count;
@@ -184,10 +184,10 @@ public class EvaluatePhysicalActivityStats {
                 count = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {
-                        long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
-                        count++;
+                        if (py.getStartTime().getTime().before(now.getTime())) {
+                            total += py.getLength_Hours();
+                            count++;
+                        }
                     }
                 }
                 return total / count;
@@ -196,10 +196,10 @@ public class EvaluatePhysicalActivityStats {
                 count = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {
-                        long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
-                        count++;
+                        if (py.getStartTime().getTime().before(now.getTime())) {
+                            total += py.getLength_Hours();
+                            count++;
+                        }
                     }
                 }
                 return total / count;
@@ -208,10 +208,10 @@ public class EvaluatePhysicalActivityStats {
                 count = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) {
-                        long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
-                        count++;
+                        if (py.getStartTime().getTime().before(now.getTime())) {
+                            total += py.getLength_Hours();
+                            count++;
+                        }
                     }
                 }
                 return total / count;
@@ -220,10 +220,10 @@ public class EvaluatePhysicalActivityStats {
                 count = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
-                        long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
-                        count++;
+                        if (py.getStartTime().getTime().before(now.getTime())) {
+                            total += py.getLength_Hours();
+                            count++;
+                        }
                     }
                 }
                 return total / count;
@@ -232,10 +232,10 @@ public class EvaluatePhysicalActivityStats {
                 count = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
-                        long secs = (py.getEndTime().getTime().getTime() - py.getStartTime().getTime().getTime()) / 1000;
-                        long hours = secs / 3600;
-                        total += hours;
-                        count++;
+                        if (py.getStartTime().getTime().before(now.getTime())) {
+                            total += py.getLength_Hours();
+                            count++;
+                        }
                     }
                 }
                 return total / count;
