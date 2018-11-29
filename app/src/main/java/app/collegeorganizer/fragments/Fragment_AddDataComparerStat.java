@@ -74,7 +74,7 @@ public class Fragment_AddDataComparerStat extends DialogFragment {
         }
     }
 
-    public void setSleepDataCategory(DataComparerCategory dataComparerCategory, int index) {
+    public void setDataCategory(DataComparerCategory dataComparerCategory, int index) {
         this.dataComparerCategory = dataComparerCategory;
         this.indexOfCategory = index;
     }

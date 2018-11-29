@@ -20,6 +20,12 @@ public class DataComparerCategory {
         this.color = color;
     }
 
+    public DataComparerCategory(DataComparerCategory d) {
+        this.name = d.name;
+        this.color = d.color;
+        this.statList.addAll(d.getStatList());
+    }
+
     public String getName() {
         return name;
     }
