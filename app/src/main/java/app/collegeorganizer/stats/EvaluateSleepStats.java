@@ -21,13 +21,13 @@ public class EvaluateSleepStats {
         int count = 0;
 
         switch (sleepStatTypes) {
-            case TOTAL_HOURS_PER_SLEEP:
+            case TOTAL_HOURS_SLEEPING:
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     total += si.getLength_Hours();
                 }
                 return total;
-            case TOTAL_HOURS_PER_SLEEP_LAST_MONTH:
+            case TOTAL_HOURS_SLEEPING_LAST_MONTH:
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().getTime().after(oneMonthAgo.getTime())) {
@@ -35,7 +35,7 @@ public class EvaluateSleepStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_SLEEP_LAST_WEEK:
+            case TOTAL_HOURS_SLEEPING_LAST_WEEK:
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().getTime().after(oneWeekAgo.getTime())) {
@@ -43,7 +43,7 @@ public class EvaluateSleepStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_SLEEP_ON_SUNDAYS:
+            case TOTAL_HOURS_SLEEPING_SUNDAYS:
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
@@ -51,7 +51,7 @@ public class EvaluateSleepStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_SLEEP_ON_MONDAYS:
+            case TOTAL_HOURS_SLEEPING_MONDAYS:
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
@@ -59,7 +59,7 @@ public class EvaluateSleepStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_SLEEP_ON_TUESDAYS:
+            case TOTAL_HOURS_SLEEPING_TUESDAYS:
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {
@@ -67,7 +67,7 @@ public class EvaluateSleepStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_SLEEP_ON_WEDNESDAYS:
+            case TOTAL_HOURS_SLEEPING_WEDNESDAYS:
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {
@@ -75,7 +75,7 @@ public class EvaluateSleepStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_SLEEP_ON_THURSDAYS:
+            case TOTAL_HOURS_SLEEPING_THURSDAYS:
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) {
@@ -83,7 +83,7 @@ public class EvaluateSleepStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_SLEEP_ON_FRIDAYS:
+            case TOTAL_HOURS_SLEEPING_FRIDAYS:
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
@@ -91,7 +91,7 @@ public class EvaluateSleepStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_SLEEP_ON_SATURDAYS:
+            case TOTAL_HOURS_SLEEPING_SATURDAYS:
                 total = 0;
                 for (SleepItem si : Activity_Main.sleepItemList) {
                     if (si.getStart_time().get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {

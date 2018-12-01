@@ -12,10 +12,12 @@ import java.util.List;
 import app.collegeorganizer.AddNewStatListener;
 import app.collegeorganizer.R;
 import app.collegeorganizer.data.Stat;
+import app.collegeorganizer.enums.ClassStatTypes;
 import app.collegeorganizer.enums.PhysicalActivityStatTypes;
 import app.collegeorganizer.enums.SleepStatTypes;
 import app.collegeorganizer.enums.SocialActivityStatTypes;
 import app.collegeorganizer.enums.StatEnum;
+import app.collegeorganizer.enums.StudyStatTypes;
 import app.collegeorganizer.stats.EvaluateStats;
 
 public class Data_Comparer_StatsAdapter extends BaseAdapter {
@@ -121,6 +123,14 @@ public class Data_Comparer_StatsAdapter extends BaseAdapter {
         for (Enum e : SocialActivityStatTypes.values())
             if (find == e)
                 return StatEnum.SOCIAL_ACTIVITY;
+
+        for (Enum e : ClassStatTypes.values())
+            if (find == e)
+                return StatEnum.CLASS;
+
+        for (Enum e : StudyStatTypes.values())
+            if (find == e)
+                return StatEnum.STUDY;
 
         return null;
     }

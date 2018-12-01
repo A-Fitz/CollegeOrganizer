@@ -4,7 +4,9 @@ public enum StatEnum {
     SLEEP("Sleep"),
     PHYSICAL_ACTIVITY("Physical Activity"),
     SOCIAL_ACTIVITY("Social Activity"),
-    DIET("Diet");
+    DIET("Diet"),
+    CLASS("Class"),
+    STUDY("Study");
 
     private String friendlyName;
 

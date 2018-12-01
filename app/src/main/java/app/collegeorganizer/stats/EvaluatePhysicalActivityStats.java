@@ -26,7 +26,7 @@ public class EvaluatePhysicalActivityStats {
 
         switch (physicalActivityStatTypes) {
 
-            case TOTAL_HOURS_PER_PHYSICAL_ACTIVITY:
+            case TOTAL_HOURS_PHYSICAL:
                 total = 0;
                 count = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
@@ -39,7 +39,7 @@ public class EvaluatePhysicalActivityStats {
 
                 }
                 return total;
-            case TOTAL_HOURS_PER_PHYSICAL_ACTIVITY_LAST_MONTH:
+            case TOTAL_HOURS_PHYSICAL_LAST_MONTH:
                 total = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().getTime().after(oneMonthAgo.getTime())) {
@@ -48,7 +48,7 @@ public class EvaluatePhysicalActivityStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_PHYSICAL_ACTIVITY_LAST_WEEK:
+            case TOTAL_HOURS_PHYSICAL_LAST_WEEK:
                 total = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().getTime().after(oneWeekAgo.getTime())) {
@@ -57,7 +57,7 @@ public class EvaluatePhysicalActivityStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_PHYSICAL_ACTIVITY_ON_SUNDAYS:
+            case TOTAL_HOURS_PHYSICAL_SUNDAYS:
                 total = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
@@ -66,7 +66,7 @@ public class EvaluatePhysicalActivityStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_PHYSICAL_ACTIVITY_ON_MONDAYS:
+            case TOTAL_HOURS_PHYSICAL_MONDAYS:
                 total = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
@@ -75,7 +75,7 @@ public class EvaluatePhysicalActivityStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_PHYSICAL_ACTIVITY_ON_TUESDAYS:
+            case TOTAL_HOURS_PHYSICAL_TUESDAYS:
                 total = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {
@@ -84,7 +84,7 @@ public class EvaluatePhysicalActivityStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_PHYSICAL_ACTIVITY_ON_WEDNESDAYS:
+            case TOTAL_HOURS_PHYSICAL_WEDNESDAYS:
                 total = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {
@@ -93,7 +93,7 @@ public class EvaluatePhysicalActivityStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_PHYSICAL_ACTIVITY_ON_THURSDAYS:
+            case TOTAL_HOURS_PHYSICAL_THURSDAYS:
                 total = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) {
@@ -102,7 +102,7 @@ public class EvaluatePhysicalActivityStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_PHYSICAL_ACTIVITY_ON_FRIDAYS:
+            case TOTAL_HOURS_PHYSICAL_FRIDAYS:
                 total = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
@@ -111,7 +111,7 @@ public class EvaluatePhysicalActivityStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_PHYSICAL_ACTIVITY_ON_SATURDAYS:
+            case TOTAL_HOURS_PHYSICAL_SATURDAYS:
                 total = 0;
                 for (PhysicalActivity py : Activity_Main._physicalActivityList) {
                     if (py.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {

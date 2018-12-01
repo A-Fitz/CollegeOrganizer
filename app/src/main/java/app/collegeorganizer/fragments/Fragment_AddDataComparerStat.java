@@ -20,11 +20,13 @@ import app.collegeorganizer.R;
 import app.collegeorganizer.activities.Activity_Main;
 import app.collegeorganizer.data.DataComparerCategory;
 import app.collegeorganizer.data.Stat;
+import app.collegeorganizer.enums.ClassStatTypes;
 import app.collegeorganizer.enums.ComparisonOperatorType;
 import app.collegeorganizer.enums.PhysicalActivityStatTypes;
 import app.collegeorganizer.enums.SleepStatTypes;
 import app.collegeorganizer.enums.SocialActivityStatTypes;
 import app.collegeorganizer.enums.StatEnum;
+import app.collegeorganizer.enums.StudyStatTypes;
 import app.collegeorganizer.stats.EvaluateStats;
 
 @SuppressLint("NewApi")
@@ -149,6 +151,12 @@ public class Fragment_AddDataComparerStat extends DialogFragment {
                         //TODO
                         data1type_adapter = new ArrayAdapter<PhysicalActivityStatTypes>(getContext(), android.R.layout.simple_spinner_item, PhysicalActivityStatTypes.values());
                         break;
+                    case CLASS:
+                        data1type_adapter = new ArrayAdapter<ClassStatTypes>(getContext(), android.R.layout.simple_spinner_item, ClassStatTypes.values());
+                        break;
+                    case STUDY:
+                        data1type_adapter = new ArrayAdapter<StudyStatTypes>(getContext(), android.R.layout.simple_spinner_item, StudyStatTypes.values());
+                        break;
                 }
 
 
@@ -183,6 +191,12 @@ public class Fragment_AddDataComparerStat extends DialogFragment {
                     case DIET:
                         //TODO
                         data2type_adapter = new ArrayAdapter<PhysicalActivityStatTypes>(getContext(), android.R.layout.simple_spinner_item, PhysicalActivityStatTypes.values());
+                        break;
+                    case CLASS:
+                        data2type_adapter = new ArrayAdapter<ClassStatTypes>(getContext(), android.R.layout.simple_spinner_item, ClassStatTypes.values());
+                        break;
+                    case STUDY:
+                        data2type_adapter = new ArrayAdapter<StudyStatTypes>(getContext(), android.R.layout.simple_spinner_item, StudyStatTypes.values());
                         break;
                 }
 

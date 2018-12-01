@@ -23,10 +23,14 @@ import java.util.List;
 import java.util.Locale;
 
 import app.collegeorganizer.R;
+import app.collegeorganizer.data.ClassItem;
 import app.collegeorganizer.data.PhysicalActivity;
 import app.collegeorganizer.data.SocialActivity;
+import app.collegeorganizer.data.StudyItem;
+import app.collegeorganizer.fragments.Fragment_ViewClassEvent;
 import app.collegeorganizer.fragments.Fragment_ViewPhysicalActivityEvent;
 import app.collegeorganizer.fragments.Fragment_ViewSocialActivityEvent;
+import app.collegeorganizer.fragments.Fragment_ViewStudyEvent;
 
 
 public class Activity_Calendar extends AppCompatActivity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, WeekView.EmptyViewClickListener, WeekView.AddEventClickListener, WeekView.DropListener {
@@ -38,6 +42,8 @@ public class Activity_Calendar extends AppCompatActivity implements WeekView.Eve
 
     private static List<PhysicalActivity> _physicalActivityList = Activity_Main._physicalActivityList;
     private static List<SocialActivity> _socialActivityList = Activity_Main._socialActivityList;
+    private static List<ClassItem> _classList = Activity_Main._classList;
+    private static List<StudyItem> _studyList = Activity_Main._studyList;
     private List<WeekViewEvent> events;
 
     @Override
@@ -116,7 +122,6 @@ public class Activity_Calendar extends AppCompatActivity implements WeekView.Eve
 
                 event.setColor(py.getColor());
 
-                //Log.d("TESTF", String.valueOf(py.getStartHour()));
                 tempEvents.add(event);
             }
         }
@@ -140,7 +145,52 @@ public class Activity_Calendar extends AppCompatActivity implements WeekView.Eve
 
                 event.setColor(se.getColor());
 
-                //Log.d("TESTF", String.valueOf(se.getStartHour()));
+                tempEvents.add(event);
+            }
+        }
+
+        for (ClassItem c : _classList) {
+            if (c.getMonth() == newMonth - 1 && c.getYear() == newYear) {
+                Calendar startTime = Calendar.getInstance();
+                startTime.set(Calendar.DAY_OF_MONTH, c.getDay());
+                startTime.set(Calendar.HOUR_OF_DAY, c.getStartHour());
+                startTime.set(Calendar.MINUTE, c.getStartMinute());
+                startTime.set(Calendar.MONTH, newMonth - 1);
+                startTime.set(Calendar.YEAR, newYear);
+
+                Calendar endTime = (Calendar) startTime.clone();
+                endTime.set(Calendar.HOUR_OF_DAY, c.getEndHour());
+                endTime.set(Calendar.MINUTE, c.getEndMinute());
+                endTime.set(Calendar.MONTH, newMonth - 1);
+
+
+                WeekViewEvent event = new WeekViewEvent(c.hashCode(), c.getTitle(), startTime, endTime);
+
+                event.setColor(c.getColor());
+
+                tempEvents.add(event);
+            }
+        }
+
+        for (StudyItem s : _studyList) {
+            if (s.getMonth() == newMonth - 1 && s.getYear() == newYear) {
+                Calendar startTime = Calendar.getInstance();
+                startTime.set(Calendar.DAY_OF_MONTH, s.getDay());
+                startTime.set(Calendar.HOUR_OF_DAY, s.getStartHour());
+                startTime.set(Calendar.MINUTE, s.getStartMinute());
+                startTime.set(Calendar.MONTH, newMonth - 1);
+                startTime.set(Calendar.YEAR, newYear);
+
+                Calendar endTime = (Calendar) startTime.clone();
+                endTime.set(Calendar.HOUR_OF_DAY, s.getEndHour());
+                endTime.set(Calendar.MINUTE, s.getEndMinute());
+                endTime.set(Calendar.MONTH, newMonth - 1);
+
+
+                WeekViewEvent event = new WeekViewEvent(s.hashCode(), s.getTitle(), startTime, endTime);
+
+                event.setColor(s.getColor());
+
                 tempEvents.add(event);
             }
         }
@@ -156,6 +206,14 @@ public class Activity_Calendar extends AppCompatActivity implements WeekView.Eve
         for (SocialActivity se : _socialActivityList) {
             if (se.hashCode() == id)
                 return se;
+        }
+        for (ClassItem c : _classList) {
+            if (c.hashCode() == id)
+                return c;
+        }
+        for (StudyItem s : _studyList) {
+            if (s.hashCode() == id)
+                return s;
         }
 
         //Log.d("TESTF", "returning null");
@@ -287,6 +345,16 @@ public class Activity_Calendar extends AppCompatActivity implements WeekView.Eve
             DialogFragment newFragment = Fragment_ViewSocialActivityEvent.newInstance();
             newFragment.show(getSupportFragmentManager(), "View Event");
             ((Fragment_ViewSocialActivityEvent) newFragment).setEvent(item);
+        } else if (eventByID instanceof ClassItem) {
+            ClassItem item = (ClassItem) eventByID;
+            DialogFragment newFragment = Fragment_ViewClassEvent.newInstance();
+            newFragment.show(getSupportFragmentManager(), "View Event");
+            ((Fragment_ViewClassEvent) newFragment).setEvent(item);
+        } else if (eventByID instanceof StudyItem) {
+            StudyItem item = (StudyItem) eventByID;
+            DialogFragment newFragment = Fragment_ViewStudyEvent.newInstance();
+            newFragment.show(getSupportFragmentManager(), "View Event");
+            ((Fragment_ViewStudyEvent) newFragment).setEvent(item);
         }
     }
 
@@ -302,6 +370,12 @@ public class Activity_Calendar extends AppCompatActivity implements WeekView.Eve
         } else if (activity instanceof SocialActivity) {
             SocialActivity item = (SocialActivity) activity;
             _socialActivityList.remove(item);
+        } else if (activity instanceof ClassItem) {
+            ClassItem item = (ClassItem) activity;
+            _classList.remove(item);
+        } else if (activity instanceof StudyItem) {
+            StudyItem item = (StudyItem) activity;
+            _studyList.remove(item);
         }
 
         //refresh

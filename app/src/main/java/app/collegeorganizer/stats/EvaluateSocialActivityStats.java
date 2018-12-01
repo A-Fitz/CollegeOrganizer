@@ -24,14 +24,14 @@ public class EvaluateSocialActivityStats {
 
         switch (socialActivityStatTypes) {
 
-            case TOTAL_HOURS_PER_SOCIAL_ACTIVITY:
+            case TOTAL_HOURS_SOCIAL:
                 total = 0;
                 for (SocialActivity sa : Activity_Main._socialActivityList) {
                     if (sa.getStartTime().getTime().before(now.getTime()))
                         total += sa.getLength_Hours();
                 }
                 return total;
-            case TOTAL_HOURS_PER_SOCIAL_ACTIVITY_LAST_MONTH:
+            case TOTAL_HOURS_SOCIAL_LAST_MONTH:
                 total = 0;
                 for (SocialActivity sa : Activity_Main._socialActivityList) {
                     if (sa.getStartTime().getTime().after(oneMonthAgo.getTime())) {
@@ -40,7 +40,7 @@ public class EvaluateSocialActivityStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_SOCIAL_ACTIVITY_LAST_WEEK:
+            case TOTAL_HOURS_SOCIAL_LAST_WEEK:
                 total = 0;
                 for (SocialActivity sa : Activity_Main._socialActivityList) {
                     if (sa.getStartTime().getTime().after(oneWeekAgo.getTime())) {
@@ -49,7 +49,7 @@ public class EvaluateSocialActivityStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_SOCIAL_ACTIVITY_ON_SUNDAYS:
+            case TOTAL_HOURS_SOCIAL_SUNDAYS:
                 total = 0;
                 for (SocialActivity sa : Activity_Main._socialActivityList) {
                     if (sa.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
@@ -58,7 +58,7 @@ public class EvaluateSocialActivityStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_SOCIAL_ACTIVITY_ON_MONDAYS:
+            case TOTAL_HOURS_SOCIAL_MONDAYS:
                 total = 0;
                 for (SocialActivity sa : Activity_Main._socialActivityList) {
                     if (sa.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
@@ -67,7 +67,7 @@ public class EvaluateSocialActivityStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_SOCIAL_ACTIVITY_ON_TUESDAYS:
+            case TOTAL_HOURS_SOCIAL_TUESDAYS:
                 total = 0;
                 for (SocialActivity sa : Activity_Main._socialActivityList) {
                     if (sa.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {
@@ -76,7 +76,7 @@ public class EvaluateSocialActivityStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_SOCIAL_ACTIVITY_ON_WEDNESDAYS:
+            case TOTAL_HOURS_SOCIAL_WEDNESDAYS:
                 total = 0;
                 for (SocialActivity sa : Activity_Main._socialActivityList) {
                     if (sa.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {
@@ -85,7 +85,7 @@ public class EvaluateSocialActivityStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_SOCIAL_ACTIVITY_ON_THURSDAYS:
+            case TOTAL_HOURS_SOCIAL_THURSDAYS:
                 total = 0;
                 for (SocialActivity sa : Activity_Main._socialActivityList) {
                     if (sa.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) {
@@ -94,7 +94,7 @@ public class EvaluateSocialActivityStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_SOCIAL_ACTIVITY_ON_FRIDAYS:
+            case TOTAL_HOURS_SOCIAL_FRIDAYS:
                 total = 0;
                 for (SocialActivity sa : Activity_Main._socialActivityList) {
                     if (sa.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
@@ -103,7 +103,7 @@ public class EvaluateSocialActivityStats {
                     }
                 }
                 return total;
-            case TOTAL_HOURS_PER_SOCIAL_ACTIVITY_ON_SATURDAYS:
+            case TOTAL_HOURS_SOCIAL_SATUDAYS:
                 total = 0;
                 for (SocialActivity sa : Activity_Main._socialActivityList) {
                     if (sa.getStartTime().get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {

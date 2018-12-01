@@ -34,8 +34,8 @@
             android:label="@string/title_activity_physical_scheduler"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.Activity_AcademicSchedulerRecorder"
-            android:label="@string/title_activity_academic"
+            android:name=".activities.Activity_Academic_Scheduler_Recorder"
+            android:label="@string/title_activity_academic_scheduler_recorder"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.Activity_SocialScheduler"

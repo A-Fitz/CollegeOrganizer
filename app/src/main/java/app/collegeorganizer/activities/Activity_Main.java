@@ -31,21 +31,27 @@ import app.collegeorganizer.AlarmReceiver;
 import app.collegeorganizer.DeviceBootReceiver;
 import app.collegeorganizer.R;
 import app.collegeorganizer.TimePreference;
+import app.collegeorganizer.data.ClassItem;
 import app.collegeorganizer.data.DataComparerCategory;
 import app.collegeorganizer.data.DietItem;
 import app.collegeorganizer.data.PhysicalActivity;
 import app.collegeorganizer.data.SleepItem;
 import app.collegeorganizer.data.SocialActivity;
+import app.collegeorganizer.data.StudyItem;
 
 public class Activity_Main extends AppCompatActivity {
     public static List<PhysicalActivity> physicalScheduleList = new ArrayList<PhysicalActivity>();
     public static List<SocialActivity> socialScheduleList = new ArrayList<SocialActivity>();
+    public static List<ClassItem> classScheduleList = new ArrayList<ClassItem>();
+    public static List<StudyItem> studyScheduleList = new ArrayList<StudyItem>();
 
     public static List<DietItem> dietItemList = new ArrayList<DietItem>();
     public static List<SleepItem> sleepItemList = new ArrayList<SleepItem>();
 
     public static List<PhysicalActivity> _physicalActivityList = new ArrayList<PhysicalActivity>();
     public static List<SocialActivity> _socialActivityList = new ArrayList<SocialActivity>();
+    public static List<ClassItem> _classList = new ArrayList<ClassItem>();
+    public static List<StudyItem> _studyList = new ArrayList<StudyItem>();
 
     public static List<DataComparerCategory> dataComparerCategoryList = new ArrayList<DataComparerCategory>();
 
@@ -287,7 +293,7 @@ public class Activity_Main extends AppCompatActivity {
         final Button button_applet_academic = findViewById(R.id.button_applet_academic);
         button_applet_academic.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(Activity_Main.this, Activity_AcademicSchedulerRecorder.class);
+                Intent myIntent = new Intent(Activity_Main.this, Activity_Academic_Scheduler_Recorder.class);
                 Activity_Main.this.startActivity(myIntent);
             }
         });
