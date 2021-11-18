@@ -2,7 +2,7 @@
 
 Not currently being worked on. The source is full of code smells by the way, likely will not be fixed as the project has been mostly abandoned.
 
-WIP Android Application built in Java. Supposed to act as a all-in-one organizer app for college students. 
+Android Application built in Java. Supposed to act as a all-in-one organizer app for college students. 
 
 Students can enter their class schedule and it will be added to the calendar as well as their gradebook. They can then enter their grades for certain assignments. They can also schedule social activities, physical activities, and meal times. Students can record their diet, sleep time/quality, and mood. 
 
